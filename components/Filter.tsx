@@ -1,31 +1,19 @@
 'use client'
-import React, { useState } from 'react'
-import CustomSelect from './CustomSelect'
+import { useState } from 'react';
+import CustomSelect from './CustomSelect';
 import { fuels, yearsOfProduction } from '@/constants';
 import { useRouter } from 'next/navigation';
+import { updateSearchParams } from '@/utils';
 
 const Filter = () => {
     const router = useRouter();
     const [query, setQuery] = useState({ fuel: 'Fuel', year: 'Year' });
     const handleChange = (value: string, name: string) => {
         setQuery({ ...query, [name]: value });
-        if (name === 'fuel') {
-            updateSearchParams('fuel_type', value.toLowerCase());
-        } else{
+        const pathname = name === 'fuel' ?
+            updateSearchParams('fuel_type', value.toLowerCase()) :
             updateSearchParams('year', value);
-        }
-    }
-    const updateSearchParams = (type:string,value:string) => {
-        const searchParams = new URLSearchParams(window.location.search);
-        console.log({ searchParams })
-        if (value) {
-            searchParams.set(type, value);
-        } else {
-            searchParams.delete(type);
-        }
-
-        const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
-        router.push(newPathname);
+        router.push(pathname);
     }
 
     return (

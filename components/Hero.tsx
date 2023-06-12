@@ -1,5 +1,6 @@
-import { CustomButton } from '@/components'
-import Image from 'next/image'
+import { CustomButton } from '@/components';
+import Image from 'next/image';
+
 const Hero = () => {
   return (
     <section className='max-w-[1440px] mx-auto relative flex flex-col md:flex-row items-center'>
@@ -17,7 +18,7 @@ const Hero = () => {
             fill
             className='absolute top-0 bottom-0 left-0 right-0 w-[90%] h-[590px] lg:h-full lg:w-full object-contain scale-125 animate-car' />
         </div>
-        <div className='absolute  md:-top-16 xl:-top-24 -right-[50%] md:-right-[33%] top-32 xl:-right-[40%] h-full w-full -z-10'>
+        <div className='absolute  md:-top-16 xl:-top-24 -right-[55%] md:-right-[33%] top-32 xl:-right-[40%] h-full w-full -z-10'>
           <Image src={'/images/hero-bg.png'} alt='hero bg' fill className='object-contain w-[90%] md:w-full h-[590px]' />
         </div>
       </div>
