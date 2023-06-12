@@ -1,6 +1,6 @@
-import { Catalogue, Hero } from "@/components";
-import { FetchCarProps } from "@/types";
-import { fetchCars } from "@/utils";
+import { Catalogue, Hero } from '@/components';
+import { FetchCarProps } from '@/types';
+import { fetchCars } from '@/utils';
 
 export default async function Home({ searchParams }: { searchParams: FetchCarProps }) {
   const { manufacturer, year, fuel, limit, model } = searchParams;

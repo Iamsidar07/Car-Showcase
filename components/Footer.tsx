@@ -9,7 +9,13 @@ const Footer = () => {
                 <div className='flex flex-col items-start  md:flex-row md:justify-between py-12 px-4 w-full  md:items-start gap-4'>
                     <div>
                         <Link href={'/'} className='h-16 w-32' >
-                            <Image src={'/icons/logo.svg'} alt='logo' width={200} height={40} className='h-full object-contain' />
+                            <Image
+                                src={'/icons/logo.svg'}
+                                alt='logo'
+                                width={200}
+                                height={40}
+                                className='h-full object-contain'
+                            />
                         </Link>
                         <p className='mt-4'>Carhub 2023 <br /> All Rights Reserved &copy;</p>
                     </div>
@@ -35,4 +41,4 @@ const Footer = () => {
     )
 }
 
-export default Footer
+export default Footer;

@@ -53,7 +53,13 @@ const Searchbar = () => {
     return (
         <form className='w-full flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 max-w-3xl' onSubmit={handleSearch}>
             <div className='flex items-center p-2.5 bg-[#3b3c9808] rounded shadow-sm w-full relative'>
-                <Image src={'/icons/car-logo.svg'} alt='car company logo' width={20} height={20} className='object-contain' />
+                <Image
+                    src={'/icons/car-logo.svg'}
+                    alt='car company logo'
+                    width={20}
+                    height={20}
+                    className='object-contain'
+                />
                 <input
                     type="text"
                     placeholder='Volkswagen...'
@@ -63,21 +69,39 @@ const Searchbar = () => {
                 />
 
                 <button type='submit'>
-                    <Image src={'/icons/magnifying-glass.svg'} alt='car company logo' width={30} height={30} className='object-contain flex md:hidden' />
+                    <Image
+                        src={'/icons/magnifying-glass.svg'}
+                        alt='magnifying glass'
+                        width={30}
+                        height={30}
+                        className='object-contain flex md:hidden'
+                    />
                 </button>
                 {
                     (manufacturer && isManufacturerListShown) && <div className='absolute top-9 left-0 right-0 w-full max-h-60 overflow-y-auto z-20 rounded-lg shadow-lg mt-4'>
                         {
                             filteredManufacturers.map((item, i) => {
-                                return <button type='button' key={i} className='bg-white hover:bg-blue-500 hover:text-white px-4 py-2 cursor-pointer w-full text-left text-sm' onClick={() => handleManfacturerItemClick(item)}>{item}</button>
+                                return <button
+                                    key={i}
+                                    type='button'
+                                    className='bg-white hover:bg-blue-500 hover:text-white px-4 py-2 cursor-pointer w-full text-left text-sm'
+                                    onClick={() => handleManfacturerItemClick(item)}
+                                >
+                                    {item}
+                                </button>
                             })
                         }
-
                     </div>
                 }
             </div>
             <div className='flex items-center bg-[#3b3c9808] p-2.5 rounded shadow-sm w-full '>
-                <Image src={'/images/model-icon.png'} alt='car company logo' width={20} height={20} className='object-contain' />
+                <Image
+                    src={'/images/model-icon.png'}
+                    alt='model icon'
+                    width={20}
+                    height={20}
+                    className='object-contain'
+                />
                 <input
                     type="text"
                     placeholder='Teguan...'
@@ -86,14 +110,26 @@ const Searchbar = () => {
                     onChange={handleCarNameChange}
                 />
                 <button type='submit'>
-                    <Image src={'/icons/magnifying-glass.svg'} alt='car company logo' width={30} height={30} className='object-contain flex md:hidden' />
+                    <Image
+                        src={'/icons/magnifying-glass.svg'}
+                        alt='magnifying glass'
+                        width={30}
+                        height={30}
+                        className='object-contain flex md:hidden'
+                    />
                 </button>
             </div>
             <button type='submit'>
-                <Image src={'/icons/magnifying-glass.svg'} alt='car company logo' width={100} height={100} className='object-contain hidden md:flex' />
+                <Image
+                    src={'/icons/magnifying-glass.svg'}
+                    alt='magnifying glass'
+                    width={100}
+                    height={100}
+                    className='object-contain hidden md:flex'
+                />
             </button>
         </form>
     )
 }
 
-export default Searchbar
+export default Searchbar;

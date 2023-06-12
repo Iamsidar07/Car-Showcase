@@ -3,14 +3,12 @@ import Filter from './Filter';
 import Searchbar from './Searchbar';
 import CarCard from './CarCard';
 import CustomButton from './CustomButton';
-import { Car } from '@/types';
+import { CatalogueProps } from '@/types';
 import { updateSearchParams } from '@/utils';
 import { useRouter } from 'next/navigation';
-interface CatalogueProps {
-    allCars: Car[];
-    limit: number;
-}
+
 const Catalogue = ({ allCars, limit }: CatalogueProps) => {
+    
     const router = useRouter();
 
     const handleClick = () => {
@@ -32,7 +30,7 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
             >
                 {
                     allCars?.length === 0 ?
-                        (<p className='text-center text-xl'>No cars found</p>) :
+                        (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
                             allCars?.map((car, i) => <CarCard key={i} car={car} />)
                         )
@@ -40,10 +38,15 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
 
             </div>
             {
-                (limit < allCars?.length) && (<CustomButton title='Show More' type='button' containerStyle='mt-12 mx-auto bg-blue-600 text-white px-6 ' handleClick={handleClick} />)
+                (limit < allCars?.length) &&
+                    (
+                    <CustomButton title='Show More'
+                        type='button'
+                        containerStyle='mt-12 mx-auto bg-blue-600 text-white px-6' handleClick={handleClick}
+                    />)
             }
         </section>
     )
 }
 
-export default Catalogue
+export default Catalogue;

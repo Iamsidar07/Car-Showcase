@@ -1,12 +1,8 @@
 'use client'
+import { CustomSelectProps } from '@/types';
 import Image from 'next/image';
 import { useState } from 'react';
-interface CustomSelectProps {
-    options: { value: string, title: string }[];
-    query: { fuel: string; year: string; };
-    name: keyof { fuel: string; year: string; };
-    onChange: (value: string, name: string) => void;
-}
+
 const CustomSelect = ({ options, query, name, onChange }: CustomSelectProps) => {
     const [isShownOptions, setIsShownOptions] = useState(false);
     return (

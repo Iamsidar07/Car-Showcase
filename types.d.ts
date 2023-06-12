@@ -1,8 +1,9 @@
+import { MouseEventHandler } from "react";
+
 export interface Fuels {
     fuel: string;
     id: number;
 }
-
 export interface Models {
     model: string;
     id: number;
@@ -29,4 +30,28 @@ export interface FetchCarProps {
     model?: string;
     limit?: number;
     fuel?: string;
+}
+
+export interface CardCardProps {
+    car:Car;
+}
+
+export interface CatalogueProps {
+    allCars: Car[];
+    limit: number;
+}
+
+export interface CustomButtonProps {
+    title: string;
+    type: 'button'|'submit'|'reset';
+    handleClick?: MouseEventHandler<HTMLButtonElement>;
+    icon?:JSX.Element;
+    containerStyle?:string;
+}
+
+export interface CustomSelectProps {
+    options: {value:string, title:string}[];
+    query:{ fuel:string, year:string };
+    name: keyof { fuel:string, year:string };
+    onChange:(value:string, name:string)=>void;
 }
