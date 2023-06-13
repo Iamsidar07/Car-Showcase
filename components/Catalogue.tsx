@@ -18,9 +18,9 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
     }
 
     return (
-        <section className='w-full relative mt-12 p-4 md:p-16 max-w-[1440px] mx-auto'>
+        <section id='explore' className='w-full relative mt-12 p-4 md:p-16 max-w-[1440px] mx-auto'>
             <h1 className='font-bold text-2xl md:text-4xl'>Car Catalogue</h1>
-            <p className='mt-2 text-sm'>Explore out cars you might like</p>
+            <p className='mt-2 text-sm md:text-lg'>Explore out cars you might like</p>
             <div className='w-full flex flex-col md:flex-row items-center justify-center  md:justify-between gap-2 mt-6'>
                 <Searchbar />
                 <Filter />

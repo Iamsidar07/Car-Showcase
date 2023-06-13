@@ -6,13 +6,13 @@ const Footer = () => {
     return (
         <footer>
             <div className='flex flex-col items-center justify-between md:flex-row mt-16 border-t group group-hover:shadow-lg gap-2'>
-                <div className='flex flex-col items-start  md:flex-row md:justify-between py-12 px-4 w-full  md:items-start gap-4'>
+                <div className='flex flex-col items-start  md:flex-row md:justify-between py-12 px-4 md:p-12 w-full  md:items-start gap-4'>
                     <div>
                         <Link href={'/'} className='h-16 w-32' >
                             <Image
                                 src={'/icons/logo.svg'}
                                 alt='logo'
-                                width={200}
+                                width={100}
                                 height={40}
                                 className='h-full object-contain'
                             />
