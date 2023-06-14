@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,8 +8,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Manrope", sans-serif;
+  font-family: "Sen", sans-serif;
   scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f5f8ff;
 }
 
 .animate-car {

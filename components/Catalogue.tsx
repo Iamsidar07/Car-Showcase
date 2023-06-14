@@ -8,7 +8,7 @@ import { updateSearchParams } from '@/utils';
 import { useRouter } from 'next/navigation';
 
 const Catalogue = ({ allCars, limit }: CatalogueProps) => {
-    
+
     const router = useRouter();
 
     const handleClick = () => {
@@ -25,21 +25,33 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
                 <Searchbar />
                 <Filter />
             </div>
-
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-2 md:gap-3 mt-12 md:mt-20'
+            <h2 className='text-gray-500 text-left mt-6'>Recommonded Cars</h2>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 mt-6'
             >
                 {
                     allCars?.length === 0 ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars?.map((car, i) => <CarCard key={i} car={car} />)
+                            allCars.slice(0,4).map((car, i) => <CarCard key={i} car={car} />)
+                        )
+                }
+
+            </div>
+            <h2 className='text-gray-500 text-left mt-6'>Popuplar Cars</h2>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 mt-6'
+            >
+                {
+                    allCars?.length === 0 ?
+                        (<p className='text-center text-xl w-full'>No cars found</p>) :
+                        (
+                            allCars.slice(4).map((car, i) => <CarCard key={i} car={car} />)
                         )
                 }
 
             </div>
             {
                 (limit < allCars?.length) &&
-                    (
+                (
                     <CustomButton title='Show More'
                         type='button'
                         containerStyle='mt-12 mx-auto bg-blue-600 text-white px-6' handleClick={handleClick}
