@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { generateCarImageUrl } from '@/utils';
 
 const CarCard = ({ car }: CardCardProps) => {
-  const { model, drive, combination_mpg, make,displacement } = car;
-  
+  const { model, drive, combination_mpg, make, displacement } = car;
+
   // Convert the car object into a compatible format
   const queryParams = Object.entries(car)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -16,13 +16,9 @@ const CarCard = ({ car }: CardCardProps) => {
   const url = `/cars?${queryParams}`;
 
   return (
-    <div className='w-full h-full  max-w-lg bg-[#f5f8ff] md:hover:bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-xl group '>
-      <h1 className='text-lg md:text-xl font-bold capitalize'>{make} {model}</h1>
-      <div className='relative w-16 mt-3'>
-        <span className='absolute top-0 text-xs'>$</span>
-        <span className='text-lg md:text-2xl font-bold text-center ml-2'>{(combination_mpg * displacement).toFixed(1)}</span>
-        <span className='absolute bottom-0 text-xs'>/day</span>
-      </div>
+    <div className='w-full h-full  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-sm group '>
+      <h1 className='text-lg md:text-xl font-bold capitalize truncate'>{make} {model}</h1>
+
       <div className='relative w-full h-40'>
         <Image
           src={generateCarImageUrl(car)}
@@ -32,7 +28,7 @@ const CarCard = ({ car }: CardCardProps) => {
         />
       </div>
       <div className='w-full mt-2 p-2 h-fit'>
-        <div className='flex w-full items-center justify-between md:group-hover:hidden '>
+        <div className='flex w-full items-center justify-between '>
           <div className='flex flex-col items-center justify-center space-y-2'>
             <Image
               src={'/icons/steering-wheel.svg'}
@@ -65,20 +61,20 @@ const CarCard = ({ car }: CardCardProps) => {
           </div>
 
         </div>
-        <Link href={url} className='flex mt-4 md:mt-0 md:hidden md:group-hover:flex w-full'>
-          <CustomButton
-            title='View more'
-            type='button'
-            containerStyle='bg-blue-600 text-white w-full '
-            icon={
-              (<Image src={'/icons/right-arrow.svg'}
-                alt='right arrow'
-                width={20}
-                height={20}
-                className='obejct-contain'
-              />)}
-          />
-        </Link>
+        <div className='flex items-center justify-between mt-6'>
+          <div className='relative '>
+            <span className='absolute top-0 text-xs font-bold'>$</span>
+            <span className='text-lg md:text-2xl font-bold text-center ml-2'>{(combination_mpg * displacement).toFixed(1)}</span>
+            <span className='absolute bottom-0 text-xs font-bold'>/day</span>
+          </div>
+          <Link href={url} >
+            <CustomButton
+              title='More Info'
+              type='button'
+              containerStyle='bg-blue-600 text-white w-full px-5 '
+            />
+          </Link>
+        </div>
       </div>
     </div>
   )

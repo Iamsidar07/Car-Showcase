@@ -12,6 +12,10 @@
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: #f5f8ff;
+}
+
 .animate-car {
   animation-name: animate-car;
   animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);

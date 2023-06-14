@@ -8,14 +8,14 @@ export default async function Home({ searchParams }: { searchParams: FetchCarPro
     manufacturer: manufacturer || '',
     year: year || 2022,
     model: model || '',
-    limit: limit || 12,
+    limit: limit || 20,
     fuel: fuel || '',
   });
 
   return (
     <main className='overflow-hidden'>
       <Hero />
-      <Catalogue allCars={allCars} limit={(limit || 10) / 10} />
+      <Catalogue allCars={allCars} limit={(limit || 20) / 10} />
     </main>
   )
 }
