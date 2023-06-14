@@ -50,7 +50,7 @@ const CardDetails = ({ searchParams }: { searchParams: Car }) => {
                     </div>
                 </div>
                 <div className='w-full max-w-lg h-full flex flex-col text-left gap-3 md:border-l px-4 py-3'>
-                    <h1 className='font-bold text-lg md:text-3xl '>{car.make} {car.model}</h1>
+                    <h1 className='font-bold text-lg md:text-3xl capitalize'>{car.make} {car.model}</h1>
                     {
                         Object.entries(car).map(([key, value], i) => <div key={i} className='flex items-center justify-between gap-2'>
                             <p className='text-gray-400 capitalize'>{key.replaceAll('_', ' ')}</p>
