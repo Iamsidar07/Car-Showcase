@@ -6,10 +6,29 @@ import CustomButton from './CustomButton';
 import { CatalogueProps } from '@/types';
 import { updateSearchParams } from '@/utils';
 import { useRouter } from 'next/navigation';
+import { ChangeEvent, useState } from 'react';
 
 const Catalogue = ({ allCars, limit }: CatalogueProps) => {
 
     const router = useRouter();
+    // State to store all filetered cars
+    const [filteredCars, setFilteredCars] = useState(allCars);
+
+    // Used localstorage so that on back from car details page carRentalPriceValue reinitialized made it persistent
+    const [carRentalPrice, setCarRentalPrice] = useState(Number(localStorage.getItem('carRentalPrice')) || 1);
+
+    // function to filter cars by rental price
+    const filterCarsByCarRentPrice = (e: ChangeEvent<HTMLInputElement>) => {
+        setCarRentalPrice(Number(e.target.value));
+        localStorage.setItem('carRentalPrice',e.target.value);
+        const tempCarRentalPrice = Number(e.target.value);
+        const filteredCarResults = allCars.filter(({ combination_mpg, displacement }) => {
+            //car rental price calculation
+            const carRent = (combination_mpg * displacement);
+            return carRent <= tempCarRentalPrice;
+        });
+        setFilteredCars(filteredCarResults);
+    }
 
     const handleClick = () => {
         const newLimit = (limit + 1) * 10;
@@ -25,14 +44,19 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
                 <Searchbar />
                 <Filter />
             </div>
+            <div className='flex flex-col gap-2 md:max-w-xs mt-4'>
+                <span className='text-gray-400 font-bold'>Price</span>
+                <input type="range" value={carRentalPrice} onChange={filterCarsByCarRentPrice} min={10} max={100} className='' />
+                <p className='font-bold text-lg'>Max ${carRentalPrice}</p>
+            </div>
             <h2 className='text-gray-500 text-left mt-6'>Recommonded Cars</h2>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 mt-6'
             >
                 {
-                    allCars?.length === 0 ?
+                    filteredCars?.length === 0 ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars.slice(0,4).map((car, i) => <CarCard key={i} car={car} />)
+                            filteredCars.slice(0, 4).map((car, i) => <CarCard key={i} car={car} />)
                         )
                 }
 
@@ -41,14 +65,15 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 mt-6'
             >
                 {
-                    allCars?.length === 0 ?
+                    filteredCars?.length === 0 ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars.slice(4).map((car, i) => <CarCard key={i} car={car} />)
+                            filteredCars.slice(4).map((car, i) => <CarCard key={i} car={car} />)
                         )
                 }
 
             </div>
+            
             {
                 (limit < allCars?.length) &&
                 (

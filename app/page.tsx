@@ -15,7 +15,9 @@ export default async function Home({ searchParams }: { searchParams: FetchCarPro
   return (
     <main className='overflow-hidden'>
       <Hero />
-      <Catalogue allCars={allCars} limit={(limit || 20) / 10} />
+      {
+        allCars && <Catalogue allCars={allCars} limit={(limit || 20) / 10} />
+      }
     </main>
   )
 }
