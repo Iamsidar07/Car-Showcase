@@ -52,7 +52,7 @@ const Searchbar = () => {
 
     return (
         <form className='w-full flex flex-col md:flex-row items-center justify-center gap-2 max-w-3xl bg-white  rounded border' onSubmit={handleSearch}>
-            <div className='flex items-center w-full py-1.4 px-4 relative md:border-r '>
+            <div className='flex items-center w-full py-2.5 px-4 relative md:border-r '>
                 <Image
                     src={'/icons/car-logo.svg'}
                     alt='car company logo'
@@ -94,7 +94,7 @@ const Searchbar = () => {
                     </div>
                 }
             </div>
-            <div className='flex items-center w-full py-1.4 px-4 '>
+            <div className='flex items-center w-full py-2.5 px-4 '>
                 <Image
                     src={'/images/model-icon.png'}
                     alt='model icon'
