@@ -60,5 +60,8 @@ export interface CustomSelectProps {
 export interface FilterProps {
     brand: string[],
     cylinders: string[],
+    type: string[],
+    drive: string[],
+    fuelType: string[],
     rentPriceRange: string;
 }

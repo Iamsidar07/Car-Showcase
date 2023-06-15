@@ -174,8 +174,36 @@ export const availableFilterBrandOptions = [
     {label:'All',value:''},
     {label:'Kia',value:'kia'},
     {label:'Hyundai',value:'hyundai'},
+    {label:'Mitsubishi',value:'mitsubishi'},
+    {label:'Acura',value:'acura'},
+    {label:'Genesis',value:'genesis'},
+    {label:'Mini',value:'mini'},
+    {label:'BMW',value:'bmw'},
+    {label:'Chevrolet',value:'chevrolet'},
+    {label:'Buick',value:'buick'},
 ]
 export const availableFilterCylindersOptions = [
     {label:"4'C",value:'4'},
     {label:"6'C",value:'6'},
+]
+export const availableFilterDriveOptions = [
+    {label:"All",value:''},
+    {label:"FWD",value:'fwd'},
+    {label:"AWD",value:'awd'},
+]
+export const availableFilterFuelTypeOptions = [
+    {label:"All",value:''},
+    {label:"Gas",value:'gas'},
+    {label:"Electricity",value:'electricity'},
+]
+export const availableFilterTypeOptions = [
+    {label:"All",value:''},
+    {label:"Sports Car🏎️",value:'sport'},
+    {label:"Mini Van",value:'minivan'},
+    {label:"Midsize",value:'midsize'},
+    {label:"Small",value:'small'},
+    {label:"Subcompact Car",value:'subcompact'},
+    {label:"Compact Car",value:'compact'},
+    {label:"Large Car",value:'large'},
+    
 ]

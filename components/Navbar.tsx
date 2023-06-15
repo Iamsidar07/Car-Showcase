@@ -16,11 +16,17 @@ const Navbar = () => {
             className='h-full object-contain'
           />
         </Link>
+        <div className='flex items-center gap-3'>
+        <Link href={'/view-all'} >
+          <span>Rent car</span>
+        </Link>
+
         <CustomButton
           title='Sign in'
           type='button'
           containerStyle='bg-white text-blue-500 border rounded-full'
         />
+        </div>
       </div>
     </nav>
   )

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import CustomButton from './CustomButton';
 import CarCard from './CarCard';
-import { availableFilterBrandOptions, availableFilterCylindersOptions } from '@/constants';
+import { availableFilterBrandOptions, availableFilterCylindersOptions, availableFilterDriveOptions, availableFilterFuelTypeOptions, availableFilterTypeOptions } from '@/constants';
 import Image from 'next/image';
 interface ShowAllCarsProps {
   allCars: Car[],
@@ -14,9 +14,13 @@ interface ShowAllCarsProps {
 const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   const router = useRouter();
   const [searchInputVal, setSearchInputVal] = useState('');
+  const [searchCarResults, setSearchCarResults] = useState<Car[]>([]);
   const [filters, setFilters] = useState<FilterProps>({
     brand: [],
     cylinders: [],
+    type: [],
+    drive: [],
+    fuelType: [],
     rentPriceRange: ''
   });
 
@@ -27,13 +31,17 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
     }));
   };
 
-  const filteredCars = allCars.filter((car) => {
-    const { brand, cylinders, rentPriceRange } = filters;
+  let filteredCars = allCars.filter((car) => {
+    const { brand, cylinders, rentPriceRange, type, drive, fuelType } = filters;
     const calcRentalPrice = car.combination_mpg * car.displacement;
+
     return (
-      (brand.length === 0 || brand.includes(car.make.toLowerCase())) &&
+      (brand.length === 0 || brand.includes(car.make) || brand.includes(car.make)) &&
       (cylinders.length === 0 || cylinders.includes(`${car.cylinders}`)) &&
-      (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange))
+      (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange)) &&
+      (type.length === 0 || car.class.includes(type[0])) &&
+      (drive.length === 0 || drive.includes(car.drive)) &&
+      (fuelType.length === 0 || car.fuel_type.includes(fuelType[0])) 
     );
   })
 
@@ -45,13 +53,12 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
   const handleSearchValChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputVal(e.target.value);
+    const searchFilteredCar = allCars.filter((car) => car.class.includes(searchInputVal.toLowerCase()) ||
+      car.model.includes(searchInputVal.toLowerCase()) ||
+      car.make.includes(searchInputVal.toLowerCase()));
+    setSearchCarResults(searchFilteredCar);
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const pathName = updateSearchParams('make', `${searchInputVal}`);
-    router.push(pathName);
-  }
 
   return (
     <section className='w-full'>
@@ -59,8 +66,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
         <div className='px-4 md:p-6 py-3 flex md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen '>
           {/* <Searchbar /> */}
-          <form className='py-1.5 border-b hidden md:flex' onSubmit={handleSubmit}>
-            <div className='flex items-center'>
+            <div className='items-center py-1.5 border-b hidden md:flex'>
               <Image
                 src={'/icons/magnifying-glass.svg'}
                 alt='search icon'
@@ -74,16 +80,8 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
                 placeholder='Search by brand or title'
                 className='outline-none bg-transparent text-sm'
               />
-              <button type='submit'>
-                <Image
-                  src={'/icons/magnifying-glass.svg'}
-                  alt='search icon'
-                  width={20}
-                  height={20}
-                />
-              </button>
             </div>
-          </form>
+
           <div className='flex flex-col'>
             <h2 className='text-gray-400 font-bold my-3'>Brand</h2>
             {
@@ -92,6 +90,54 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
                   type="checkbox"
                   checked={filters.brand.includes(value)}
                   onChange={() => handleFilterChange('brand', value === '' ? '' : [value])}
+                  className='gap-2 checked:bg-violet-600'
+                />
+                <span className='ml-2'>
+                  {label}
+                </span>
+              </label>)
+            }
+          </div>
+          <div className='flex flex-col'>
+            <h2 className='text-gray-400 font-bold my-3'>Class</h2>
+            {
+              availableFilterTypeOptions.map(({ value, label }, i) => <label key={i}>
+                <input
+                  type="checkbox"
+                  checked={filters.type.includes(value)}
+                  onChange={() => handleFilterChange('type', [value])}
+                  className='gap-2 checked:bg-violet-600'
+                />
+                <span className='ml-2'>
+                  {label}
+                </span>
+              </label>)
+            }
+          </div>
+          <div className='flex flex-col'>
+            <h2 className='text-gray-400 font-bold my-3'>Drive</h2>
+            {
+              availableFilterDriveOptions.map(({ value, label }, i) => <label key={i}>
+                <input
+                  type="checkbox"
+                  checked={filters.drive.includes(value)}
+                  onChange={() => handleFilterChange('drive', [value])}
+                  className='gap-2 checked:bg-violet-600'
+                />
+                <span className='ml-2'>
+                  {label}
+                </span>
+              </label>)
+            }
+          </div>
+          <div className='flex flex-col'>
+            <h2 className='text-gray-400 font-bold my-3'>Fuel Type⛽</h2>
+            {
+              availableFilterFuelTypeOptions.map(({ value, label }, i) => <label key={i}>
+                <input
+                  type="checkbox"
+                  checked={filters.fuelType.includes(value)}
+                  onChange={() => handleFilterChange('fuelType', [value])}
                   className='gap-2 checked:bg-violet-600'
                 />
                 <span className='ml-2'>
@@ -132,10 +178,12 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 md:flex-1 p-2 '
         >
           {
-            filteredCars?.length === 0 ?
+            (filteredCars?.length === 0) || (searchCarResults.length === 0 && searchInputVal) ?
               (<p className='text-center text-xl w-full'>No cars found</p>) :
               (
-                filteredCars.map((car, i) => <CarCard key={i} car={car} />)
+                searchInputVal ?
+                  searchCarResults.map((car, i) => <CarCard key={i} car={car} />) :
+                  filteredCars.map((car, i) => <CarCard key={i} car={car} />)
               )
           }
 

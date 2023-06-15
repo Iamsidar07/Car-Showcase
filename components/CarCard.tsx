@@ -16,8 +16,9 @@ const CarCard = ({ car }: CardCardProps) => {
   const url = `/cars?${queryParams}`;
 
   return (
-    <div className='w-full h-full  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-sm group '>
+    <div className='w-full h-fit  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-sm group '>
       <h1 className='text-lg md:text-xl font-bold capitalize truncate'>{make} {model}</h1>
+      <p className='text-gray-400 capitalize mt-1'>{car.class}</p>
 
       <div className='relative w-full h-40'>
         <Image
