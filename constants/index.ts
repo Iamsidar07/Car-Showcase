@@ -101,16 +101,81 @@ export const footerLinks = [
 ];
 
 export const carDetails = [
-    { title:'City Mpg',value:'19' },
-    { title:'Class',value:'Minivan' },
-    { title:'Combination Mpg',value:'29' },
-    { title:'Cylinders',value:'6' },
-    { title:'Displacement',value:'19' },
-    { title:'Drive',value:'FWD' },
-    { title:'Fuel Type',value:'gas' },
-    { title:'Highway Mpg',value:'29' },
-    { title:'Make',value:'Honda' },
-    { title:'Model',value:'Odyssey' },
-    { title:'Transmission',value:'a' },
-    { title:'year',value:'2022' },
+    { title: 'City Mpg', value: '19' },
+    { title: 'Class', value: 'Minivan' },
+    { title: 'Combination Mpg', value: '29' },
+    { title: 'Cylinders', value: '6' },
+    { title: 'Displacement', value: '19' },
+    { title: 'Drive', value: 'FWD' },
+    { title: 'Fuel Type', value: 'gas' },
+    { title: 'Highway Mpg', value: '29' },
+    { title: 'Make', value: 'Honda' },
+    { title: 'Model', value: 'Odyssey' },
+    { title: 'Transmission', value: 'a' },
+    { title: 'year', value: '2022' },
+]
+
+export const mpgOptions = [
+    {
+        title: "17 MPG",
+        value: '17'
+    },
+    {
+        title: "19 MPG",
+        value: '19'
+    },
+    {
+        title: "20 MPG",
+        value: '20'
+    },
+    {
+        title: "21 MPG",
+        value: '21'
+    },
+    {
+        title: "23 MPG",
+        value: '23'
+    },
+    {
+        title: "24 MPG",
+        value: '24'
+    },
+    {
+        title: "25 MPG",
+        value: '25'
+    },
+    {
+        title: "26 MPG",
+        value: '26'
+    },
+    {
+        title: "27 MPG",
+        value: '27'
+    },
+    {
+        title: "28 MPG",
+        value: '28'
+    },
+    {
+        title: "29 MPG",
+        value: '29'
+    },
+    {
+        title: "30 MPG",
+        value: '30'
+    },
+    {
+        title: "31 MPG",
+        value: '31'
+    },
+]
+
+export const availableFilterBrandOptions = [
+    {label:'All',value:''},
+    {label:'Kia',value:'kia'},
+    {label:'Hyundai',value:'hyundai'},
+]
+export const availableFilterCylindersOptions = [
+    {label:"4'C",value:'4'},
+    {label:"6'C",value:'6'},
 ]

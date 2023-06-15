@@ -33,7 +33,7 @@ export interface FetchCarProps {
 }
 
 export interface CardCardProps {
-    car:Car;
+    car: Car;
 }
 
 export interface CatalogueProps {
@@ -43,15 +43,22 @@ export interface CatalogueProps {
 
 export interface CustomButtonProps {
     title: string;
-    type: 'button'|'submit'|'reset';
+    type: 'button' | 'submit' | 'reset';
     handleClick?: MouseEventHandler<HTMLButtonElement>;
-    icon?:JSX.Element;
-    containerStyle?:string;
+    icon?: JSX.Element;
+    containerStyle?: string;
 }
 
 export interface CustomSelectProps {
-    options: {value:string, title:string}[];
-    query:{ fuel:string, year:string };
-    name: keyof { fuel:string, year:string };
-    onChange:(value:string, name:string)=>void;
+    options: { value: string, title: string }[];
+    label: string;
+    containerStyle?: string;
+    onChange: (value: string,) => void;
+
+}
+
+export interface FilterProps {
+    brand: string[],
+    cylinders: string[],
+    rentPriceRange: string;
 }
