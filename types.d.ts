@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 export interface Fuels {
     fuel: string;
@@ -64,4 +64,9 @@ export interface FilterProps {
     drive: string[],
     fuelType: string[],
     rentPriceRange: string;
+}
+
+export interface ProviderProps {
+    children: ReactNode;
+    session: any;
 }

@@ -11,6 +11,11 @@ interface ShowAllCarsProps {
   allCars: Car[],
   limit: number
 }
+interface FilterCardProps {
+  title: string,
+  category: keyof FilterProps,
+  options: { value: string, label: string }[]
+}
 const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   const router = useRouter();
   const [searchInputVal, setSearchInputVal] = useState('');
@@ -21,7 +26,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
     type: [],
     drive: [],
     fuelType: [],
-    rentPriceRange: ''
+    rentPriceRange: '100'
   });
 
   const handleFilterChange = (category: string, value: string[] | string) => {
@@ -41,7 +46,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
       (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange)) &&
       (type.length === 0 || car.class.includes(type[0])) &&
       (drive.length === 0 || drive.includes(car.drive)) &&
-      (fuelType.length === 0 || car.fuel_type.includes(fuelType[0])) 
+      (fuelType.length === 0 || car.fuel_type.includes(fuelType[0]))
     );
   })
 
@@ -59,6 +64,35 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
     setSearchCarResults(searchFilteredCar);
   }
 
+  const FilterCard = ({ title, options, category }: FilterCardProps) => {
+    return (
+      <div className='flex flex-col'>
+        <h2 className='text-gray-400 font-bold my-3'>{title}</h2>
+        {
+          options.map(({ value, label }, i) => <label key={i}>
+            <input
+              type="checkbox"
+              checked={filters[`${category}`].includes(value)}
+              onChange={() => handleFilterChange(`${category}`, value === '' ? '' : [value])}
+              className='gap-2 checked:bg-violet-600'
+            />
+            <span className='ml-2'>
+              {label}
+            </span>
+          </label>)
+        }
+      </div>
+    )
+  }
+
+  const filterData:FilterCardProps[] = [
+    { title: 'Brand', category: 'brand', options: availableFilterBrandOptions },
+    { title: 'Drive', category: 'drive', options: availableFilterDriveOptions },
+    { title: 'Class', category: 'type', options: availableFilterTypeOptions },
+    { title: 'Fuel Type', category: 'fuelType', options: availableFilterFuelTypeOptions },
+    { title: 'Cylinders', category: 'cylinders', options: availableFilterCylindersOptions },
+  ]
+
 
   return (
     <section className='w-full'>
@@ -66,102 +100,25 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
         <div className='px-4 md:p-6 py-3 flex md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen '>
           {/* <Searchbar /> */}
-            <div className='items-center py-1.5 border-b hidden md:flex'>
-              <Image
-                src={'/icons/magnifying-glass.svg'}
-                alt='search icon'
-                width={20}
-                height={20}
-              />
-              <input
-                type='text'
-                value={searchInputVal}
-                onChange={handleSearchValChange}
-                placeholder='Search by brand or title'
-                className='outline-none bg-transparent text-sm'
-              />
-            </div>
+          <div className='items-center py-1.5 border-b hidden md:flex'>
+            <Image
+              src={'/icons/magnifying-glass.svg'}
+              alt='search icon'
+              width={20}
+              height={20}
+            />
+            <input
+              type='text'
+              value={searchInputVal}
+              onChange={handleSearchValChange}
+              placeholder='Search by brand or title'
+              className='outline-none bg-transparent text-sm'
+            />
+          </div>
+          {
+            filterData.map(({ title, category, options }, i) => (<FilterCard key={i} title={title} options={options} category={category} />))
+          }
 
-          <div className='flex flex-col'>
-            <h2 className='text-gray-400 font-bold my-3'>Brand</h2>
-            {
-              availableFilterBrandOptions.map(({ value, label }, i) => <label key={i}>
-                <input
-                  type="checkbox"
-                  checked={filters.brand.includes(value)}
-                  onChange={() => handleFilterChange('brand', value === '' ? '' : [value])}
-                  className='gap-2 checked:bg-violet-600'
-                />
-                <span className='ml-2'>
-                  {label}
-                </span>
-              </label>)
-            }
-          </div>
-          <div className='flex flex-col'>
-            <h2 className='text-gray-400 font-bold my-3'>Class</h2>
-            {
-              availableFilterTypeOptions.map(({ value, label }, i) => <label key={i}>
-                <input
-                  type="checkbox"
-                  checked={filters.type.includes(value)}
-                  onChange={() => handleFilterChange('type', [value])}
-                  className='gap-2 checked:bg-violet-600'
-                />
-                <span className='ml-2'>
-                  {label}
-                </span>
-              </label>)
-            }
-          </div>
-          <div className='flex flex-col'>
-            <h2 className='text-gray-400 font-bold my-3'>Drive</h2>
-            {
-              availableFilterDriveOptions.map(({ value, label }, i) => <label key={i}>
-                <input
-                  type="checkbox"
-                  checked={filters.drive.includes(value)}
-                  onChange={() => handleFilterChange('drive', [value])}
-                  className='gap-2 checked:bg-violet-600'
-                />
-                <span className='ml-2'>
-                  {label}
-                </span>
-              </label>)
-            }
-          </div>
-          <div className='flex flex-col'>
-            <h2 className='text-gray-400 font-bold my-3'>Fuel Type⛽</h2>
-            {
-              availableFilterFuelTypeOptions.map(({ value, label }, i) => <label key={i}>
-                <input
-                  type="checkbox"
-                  checked={filters.fuelType.includes(value)}
-                  onChange={() => handleFilterChange('fuelType', [value])}
-                  className='gap-2 checked:bg-violet-600'
-                />
-                <span className='ml-2'>
-                  {label}
-                </span>
-              </label>)
-            }
-          </div>
-          <div className='flex flex-col'>
-            <h2 className='text-gray-400 font-bold my-3'>Cylinders</h2>
-            {
-              availableFilterCylindersOptions.map(({ value, label }, i) => <label key={i}>
-                <input
-                  type="checkbox"
-                  checked={filters.cylinders.includes(value)}
-                  onChange={() => handleFilterChange('cylinders', [value])}
-                  className='gap-2 checked:bg-violet-600'
-                />
-                <span className='ml-2'>
-                  {label}
-                </span>
-              </label>)
-            }
-          </div>
           <div className='flex flex-col'>
             <h2 className='text-gray-400 font-bold my-3'>Price</h2>
             <input

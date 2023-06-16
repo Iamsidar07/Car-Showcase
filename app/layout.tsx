@@ -1,4 +1,4 @@
-import { Footer, Navbar } from '@/components';
+import { Footer, Navbar, Provider } from '@/components';
 import '@/styles/globals.css';
 import { ReactNode } from 'react';
 
@@ -9,18 +9,22 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  session
 }: {
-  children: ReactNode
+  children: ReactNode,
+  session: any
 }) {
   return (
-    <html lang="en">
-      <body className='app'>
-        <main>
-          <Navbar/>
-          {children}
-        </main>
-        <Footer/>
-      </body>
-    </html>
+    <Provider session={session}>
+      <html lang="en">
+        <body className='app'>
+          <main>
+            <Navbar />
+            {children}
+          </main>
+          <Footer />
+        </body>
+      </html>
+    </Provider>
   )
 }

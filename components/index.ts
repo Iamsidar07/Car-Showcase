@@ -8,6 +8,7 @@ import Footer from './Footer';
 import Searchbar from './Searchbar';
 import Filter from './Filter';
 import ShowAllCars from './ShowAllCars';
+import Provider from './Provider';
 export {
     Hero,
     CustomButton,
@@ -18,5 +19,6 @@ export {
     Footer,
     Searchbar,
     Filter,
-    ShowAllCars
+    ShowAllCars,
+    Provider
 };
