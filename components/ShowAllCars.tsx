@@ -76,7 +76,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
               onChange={() => handleFilterChange(`${category}`, value === '' ? '' : [value])}
               className='gap-2 checked:bg-violet-600'
             />
-            <span className='ml-2'>
+            <span className='ml-2 text-sm'>
               {label}
             </span>
           </label>)
@@ -98,7 +98,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
     <section className='w-full'>
       <div className='flex flex-col md:flex-row gap-4'>
 
-        <div className='px-4 md:p-6 py-3 flex md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen '>
+        <div className='px-4 md:p-6 py-3 flex md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap '>
           {/* <Searchbar /> */}
           <div className='items-center py-1.5 border-b hidden md:flex'>
             <Image
@@ -132,7 +132,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
           </div>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 md:flex-1 p-2 '
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 md:flex-1 px-2 '
         >
           {
             (filteredCars?.length === 0) || (searchCarResults.length === 0 && searchInputVal) ?

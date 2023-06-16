@@ -1,11 +1,14 @@
+'use client'
 import Image from 'next/image';
 import CustomButton from './CustomButton';
 import { CardCardProps } from '@/types';
 import Link from 'next/link';
 import { generateCarImageUrl } from '@/utils';
+import { useState } from 'react';
 
 const CarCard = ({ car }: CardCardProps) => {
   const { model, drive, combination_mpg, make, displacement } = car;
+  const [isFavoriteBtnActive,setIsFavoriteBtnActive] = useState(false);
 
   // Convert the car object into a compatible format
   const queryParams = Object.entries(car)
@@ -17,7 +20,19 @@ const CarCard = ({ car }: CardCardProps) => {
 
   return (
     <div className='w-full h-fit  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-sm group '>
-      <h1 className='text-lg md:text-xl font-bold capitalize truncate'>{make} {model}</h1>
+      <div className='flex items-center justify-between'>
+        <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{make} {model}
+        </h1>
+        <button type='button' onClick={() => setIsFavoriteBtnActive((prevState) => !prevState)}>
+        <Image
+          src={`/icons/${isFavoriteBtnActive?'heart-filled':'heart-outline'}.svg`}
+          alt='favorite buttn'
+          width={20}
+          height={20}
+          className='object-contain cursor-pointer'
+        />
+        </button>
+      </div>
       <p className='text-gray-400 capitalize mt-1'>{car.class}</p>
 
       <div className='relative w-full h-40'>

@@ -71,9 +71,9 @@ const Navbar = () => {
         </div>
         {/* Mobile navigation  */}
         <Image
-          src={'/icons/logo.svg'}
+          src={'/icons/menu.svg'}
           alt='logo'
-          width={100}
+          width={20}
           height={20}
           onClick={() => setIsDropdownShown((prevState) => !prevState)}
           className=' flex md:hidden h-full object-contain absolute top-0 right-4 cursor-pointer'
