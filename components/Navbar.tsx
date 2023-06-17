@@ -10,6 +10,7 @@ const Navbar = () => {
   const [providers, setProviders] = useState<any>(null);
   const [isDropdownShown, setIsDropdownShown] = useState(false);
   const isUser = session?.user;
+  const id = session?.user.id;
 
   useEffect(() => {
     const setupProviders = async () => {
@@ -36,6 +37,9 @@ const Navbar = () => {
         <div className='hidden md:flex items-center gap-3'>
           <Link href={'/view-all'} >
             <span>Rent car</span>
+          </Link>
+          <Link href={`/favorites/${id}`} >
+            <span>Favorites</span>
           </Link>
           {
             isUser ? (
@@ -83,6 +87,9 @@ const Navbar = () => {
             <div className='bg-slate-100/30 min-w-[290px]  rounded-md shadow backdrop-blur absolute top-16 right-8 p-3 flex flex-col gap-4 text-left md:hidden'>
               <Link href={'/view-all'} onClick={() => setIsDropdownShown(false)}>
                 <span>Rent car</span>
+              </Link>
+              <Link href={`/favorites/${id}`} onClick={() => setIsDropdownShown(false)}>
+                <span>Favorites</span>
               </Link>
               {
                 isUser ? (

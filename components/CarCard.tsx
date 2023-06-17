@@ -1,14 +1,55 @@
 'use client'
 import Image from 'next/image';
 import CustomButton from './CustomButton';
-import { CardCardProps } from '@/types';
+import { CardCardProps, FavoriteCarProps } from '@/types';
 import Link from 'next/link';
 import { generateCarImageUrl } from '@/utils';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 const CarCard = ({ car }: CardCardProps) => {
-  const { model, drive, combination_mpg, make, displacement } = car;
-  const [isFavoriteBtnActive,setIsFavoriteBtnActive] = useState(false);
+  const { data:session } = useSession();
+  const userId = session?.user?.id;
+  const { model, drive, combination_mpg, make, displacement,city_mpg,cylinders,fuel_type,highway_mpg,transmission,year } = car;
+  console.log(car?.typeOfClass?.length !== 0)
+  const [isFavoriteBtnActive,setIsFavoriteBtnActive] = useState(car?.typeOfClass?.length !== 0);
+  const typeOfClass = car.class || car.typeOfClass;
+  const addToFavorite =async () => {
+    try {
+      const response = await fetch('/api/favorite/add', {
+        method: 'POST',
+        body: JSON.stringify({
+          city_mpg,
+          combination_mpg,
+          cylinders,
+          displacement,
+          drive,
+          fuel_type,
+          highway_mpg,
+          make,
+          model,
+          transmission,
+          year,
+          userId,
+          typeOfClass
+        })
+      });
+      console.log(response)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(car)
+  const removeFromFavorite =async () => {
+    const id =car._id;
+    try {
+      await fetch(`/api/favorite/remove/${id}`,{
+        method:'DELETE',
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // Convert the car object into a compatible format
   const queryParams = Object.entries(car)
@@ -18,12 +59,21 @@ const CarCard = ({ car }: CardCardProps) => {
   // Construct the URL with the query string
   const url = `/cars?${queryParams}`;
 
+  const handleHeartClick = ()=>{
+    if (isFavoriteBtnActive) {
+      removeFromFavorite();
+    }else{
+      addToFavorite();
+    }
+    setIsFavoriteBtnActive((prevState) => !prevState);
+  }
+
   return (
     <div className='w-full h-fit  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-sm group '>
       <div className='flex items-center justify-between'>
         <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{make} {model}
         </h1>
-        <button type='button' onClick={() => setIsFavoriteBtnActive((prevState) => !prevState)}>
+        <button type='button' onClick={handleHeartClick}>
         <Image
           src={`/icons/${isFavoriteBtnActive?'heart-filled':'heart-outline'}.svg`}
           alt='favorite buttn'

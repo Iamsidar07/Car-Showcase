@@ -21,9 +21,22 @@ export interface Car {
     make: string
     model: string
     transmission: string
-    year: number
+    year: number,
+    typeOfClass?:string,
+    _id?:string,
 }
 
+export interface Creator {
+    _id:string,
+    email:string,
+    username:string,
+    email:string,
+}
+export interface FavoriteCarProps extends Car{
+    typeOfClass:string,
+    _id:string,
+    creator:Creator,
+}
 export interface FetchCarProps {
     manufacturer?: string;
     year?: number;
@@ -33,7 +46,7 @@ export interface FetchCarProps {
 }
 
 export interface CardCardProps {
-    car: Car;
+    car: Car | FavoriteCarProps;
 }
 
 export interface CatalogueProps {
