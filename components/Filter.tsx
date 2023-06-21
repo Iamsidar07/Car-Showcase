@@ -22,8 +22,8 @@ const Filter = () => {
 
     return (
         <div className='flex items-center space-x-2 w-full md:w-fit'>
-            <CustomSelect label='Choose Model' onChange={handleModelChange} options={yearsOfProduction} containerStyle='z-40'/>
-            <CustomSelect label='Choose Fuel Type' onChange={handleFuelTypeChange} options={fuels} />
+            <CustomSelect label='Choose Model' onChange={handleModelChange} options={yearsOfProduction} containerStyle='z-40 border bg-white' name='model'/>
+            <CustomSelect label='Choose Fuel Type' onChange={handleFuelTypeChange} options={fuels} containerStyle='border bg-white' name='fueltype'/>
         </div>
     )
 }

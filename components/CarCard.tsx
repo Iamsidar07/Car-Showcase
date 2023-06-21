@@ -7,14 +7,13 @@ import { generateCarImageUrl } from '@/utils';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-const CarCard = ({ car }: CardCardProps) => {
-  const { data:session } = useSession();
+const CarCard = ({ car, isFavorite }: CardCardProps) => {
+  const { data: session } = useSession();
   const userId = session?.user?.id;
-  const { model, drive, combination_mpg, make, displacement,city_mpg,cylinders,fuel_type,highway_mpg,transmission,year } = car;
-  console.log(car?.typeOfClass?.length !== 0)
-  const [isFavoriteBtnActive,setIsFavoriteBtnActive] = useState(car?.typeOfClass?.length !== 0);
+  const { model, drive, combination_mpg, make, displacement, city_mpg, cylinders, fuel_type, highway_mpg, transmission, year } = car;
+  const [isFavoriteBtnActive, setIsFavoriteBtnActive] = useState(isFavorite);
   const typeOfClass = car.class || car.typeOfClass;
-  const addToFavorite =async () => {
+  const addToFavorite = async () => {
     try {
       const response = await fetch('/api/favorite/add', {
         method: 'POST',
@@ -31,21 +30,29 @@ const CarCard = ({ car }: CardCardProps) => {
           transmission,
           year,
           userId,
-          typeOfClass
+          typeOfClass,
+          isFavorite: true
         })
       });
-      console.log(response)
+      if (response.ok) {
+        alert('Added to favorite');
+      }
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(car)
-  const removeFromFavorite =async () => {
-    const id =car._id;
+  const removeFromFavorite = async (id: string | undefined) => {
+    if (!id) {
+      alert('Missing id');
+      return;
+    }
+    const isReallyWantToDelete = confirm(`Do you really want to delete this car with id:${id}`);
+    if (!isReallyWantToDelete) return;
     try {
-      await fetch(`/api/favorite/remove/${id}`,{
-        method:'DELETE',
-      })
+      await fetch(`/api/favorite/remove/${id}`, {
+        method: 'DELETE',
+      });
+      console.log('Deleted successfully.');
     } catch (error) {
       console.log(error);
     }
@@ -59,10 +66,15 @@ const CarCard = ({ car }: CardCardProps) => {
   // Construct the URL with the query string
   const url = `/cars?${queryParams}`;
 
-  const handleHeartClick = ()=>{
+  const handleHeartClick = (id: string | undefined) => {
+    console.log(car._id);
+    if (!userId) {
+      alert('Login/sign in to add to favorite 💖');
+      return;
+    }
     if (isFavoriteBtnActive) {
-      removeFromFavorite();
-    }else{
+      removeFromFavorite(id);
+    } else {
       addToFavorite();
     }
     setIsFavoriteBtnActive((prevState) => !prevState);
@@ -73,14 +85,14 @@ const CarCard = ({ car }: CardCardProps) => {
       <div className='flex items-center justify-between'>
         <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{make} {model}
         </h1>
-        <button type='button' onClick={handleHeartClick}>
-        <Image
-          src={`/icons/${isFavoriteBtnActive?'heart-filled':'heart-outline'}.svg`}
-          alt='favorite buttn'
-          width={20}
-          height={20}
-          className='object-contain cursor-pointer'
-        />
+        <button type='button' onClick={() => handleHeartClick(car._id)}>
+          <Image
+            src={`/icons/${isFavoriteBtnActive ? 'heart-filled' : 'heart-outline'}.svg`}
+            alt='favorite buttn'
+            width={20}
+            height={20}
+            className={`object-contain cursor-pointer`}
+          />
         </button>
       </div>
       <p className='text-gray-400 capitalize mt-1'>{car.class}</p>

@@ -12,6 +12,7 @@ export default async function Home({ searchParams }: { searchParams: FetchCarPro
     fuel: fuel || '',
   });
 
+
   return (
     <main className='overflow-hidden'>
       <Hero />

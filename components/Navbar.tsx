@@ -36,7 +36,10 @@ const Navbar = () => {
         {/* Desktop navigation  */}
         <div className='hidden md:flex items-center gap-3'>
           <Link href={'/view-all'} >
-            <span>Rent car</span>
+            <span>View All</span>
+          </Link>
+          <Link href={'/rent-car'} onClick={() => setIsDropdownShown(false)}>
+            <span>Rent A Car</span>
           </Link>
           <Link href={`/favorites/${id}`} >
             <span>Favorites</span>
@@ -84,9 +87,12 @@ const Navbar = () => {
         />
         {
           isDropdownShown && (
-            <div className='bg-slate-100/30 min-w-[290px]  rounded-md shadow backdrop-blur absolute top-16 right-8 p-3 flex flex-col gap-4 text-left md:hidden'>
+            <div className='bg-white/40 min-w-[290px]  rounded-md shadow backdrop-blur absolute top-16 right-8 p-3 flex flex-col gap-2 text-left md:hidden'>
               <Link href={'/view-all'} onClick={() => setIsDropdownShown(false)}>
-                <span>Rent car</span>
+                <span>View All</span>
+              </Link>
+              <Link href={'/rent-car'} onClick={() => setIsDropdownShown(false)}>
+                <span>Rent A Car</span>
               </Link>
               <Link href={`/favorites/${id}`} onClick={() => setIsDropdownShown(false)}>
                 <span>Favorites</span>

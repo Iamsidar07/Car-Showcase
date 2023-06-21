@@ -20,6 +20,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   const router = useRouter();
   const [searchInputVal, setSearchInputVal] = useState('');
   const [searchCarResults, setSearchCarResults] = useState<Car[]>([]);
+  const [isShownFilter, setIsShownFilter] = useState(false);
   const [filters, setFilters] = useState<FilterProps>({
     brand: [],
     cylinders: [],
@@ -44,7 +45,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
       (brand.length === 0 || brand.includes(car.make) || brand.includes(car.make)) &&
       (cylinders.length === 0 || cylinders.includes(`${car.cylinders}`)) &&
       (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange)) &&
-      (type.length === 0 || car.class.includes(type[0])) &&
+      (type.length === 0 || car.class?.includes(type[0])) &&
       (drive.length === 0 || drive.includes(car.drive)) &&
       (fuelType.length === 0 || car.fuel_type.includes(fuelType[0]))
     );
@@ -58,7 +59,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
   const handleSearchValChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputVal(e.target.value);
-    const searchFilteredCar = allCars.filter((car) => car.class.includes(searchInputVal.toLowerCase()) ||
+    const searchFilteredCar = allCars.filter((car) => car.class?.includes(searchInputVal.toLowerCase()) ||
       car.model.includes(searchInputVal.toLowerCase()) ||
       car.make.includes(searchInputVal.toLowerCase()));
     setSearchCarResults(searchFilteredCar);
@@ -66,7 +67,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
   const FilterCard = ({ title, options, category }: FilterCardProps) => {
     return (
-      <div className='flex flex-col'>
+      <div className={`flex flex-col`}>
         <h2 className='text-gray-400 font-bold my-3'>{title}</h2>
         {
           options.map(({ value, label }, i) => <label key={i}>
@@ -85,7 +86,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
     )
   }
 
-  const filterData:FilterCardProps[] = [
+  const filterData: FilterCardProps[] = [
     { title: 'Brand', category: 'brand', options: availableFilterBrandOptions },
     { title: 'Drive', category: 'drive', options: availableFilterDriveOptions },
     { title: 'Class', category: 'type', options: availableFilterTypeOptions },
@@ -97,8 +98,10 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   return (
     <section className='w-full'>
       <div className='flex flex-col md:flex-row gap-4'>
-
-        <div className='px-4 md:p-6 py-3 flex md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap '>
+        <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2' onClick={()=>setIsShownFilter((prevState)=>!prevState)}>
+          Filters
+        </button>
+        <div className={`px-4 md:p-6 py-3 md:flex  md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter?'flex':'hidden'}`}>
           {/* <Searchbar /> */}
           <div className='items-center py-1.5 border-b hidden md:flex'>
             <Image
@@ -115,6 +118,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
               className='outline-none bg-transparent text-sm'
             />
           </div>
+          
           {
             filterData.map(({ title, category, options }, i) => (<FilterCard key={i} title={title} options={options} category={category} />))
           }

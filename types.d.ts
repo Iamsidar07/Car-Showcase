@@ -11,7 +11,7 @@ export interface Models {
 
 export interface Car {
     city_mpg: number
-    class: string
+    class?: string
     combination_mpg: number
     cylinders: number
     displacement: number
@@ -22,20 +22,21 @@ export interface Car {
     model: string
     transmission: string
     year: number,
-    typeOfClass?:string,
-    _id?:string,
+    typeOfClass?: string,
+    _id?: string,
 }
 
 export interface Creator {
-    _id:string,
-    email:string,
-    username:string,
-    email:string,
+    _id: string,
+    email: string,
+    username: string,
+    email: string,
 }
-export interface FavoriteCarProps extends Car{
-    typeOfClass:string,
-    _id:string,
-    creator:Creator,
+export interface FavoriteCarProps extends Car {
+    typeOfClass: string,
+    isFavorite: boolean,
+    _id: string,
+    creator: Creator,
 }
 export interface FetchCarProps {
     manufacturer?: string;
@@ -47,6 +48,7 @@ export interface FetchCarProps {
 
 export interface CardCardProps {
     car: Car | FavoriteCarProps;
+    isFavorite?: boolean;
 }
 
 export interface CatalogueProps {
@@ -66,7 +68,9 @@ export interface CustomSelectProps {
     options: { value: string, title: string }[];
     label: string;
     containerStyle?: string;
-    onChange: (value: string,) => void;
+    parentContainerStyle?: string;
+    onChange: (value: string, name: string) => void;
+    name: string;
 
 }
 
@@ -82,4 +86,38 @@ export interface FilterProps {
 export interface ProviderProps {
     children: ReactNode;
     session: any;
+}
+
+export interface FileProps {
+    path: string;
+    lastModified: number;
+    lastModifiedDate: Date;
+    name: string
+    size: number
+    type: string;
+    webkitRelativePath: string;
+    base64:string;
+}
+
+export interface CarInfoProps {
+    carTitle: string;
+    location: string;
+    rentPrice: number;
+    capacity: number;
+    fuelCapacity: number;
+    shortDescription: string;
+    typeOfclass: string;
+    model: string;
+    manufacturer: string;
+    cylinders: number;
+    cityMPG: number;
+    combinationMPG: number;
+    highwayMPG: number;
+    year: string;
+    transmission: string;
+    fuelType: string;
+    carType: string;
+    drive: string;
+    // imageFiles: ImageFilesProps[];
+    imageFiles: {file:FileProps}[];
 }

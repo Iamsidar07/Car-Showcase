@@ -14,7 +14,8 @@ export const POST = async (req: Request) => {
         make,
         model,
         transmission,
-        year, userId } = await req.json();
+        year, 
+        userId } = await req.json();
     try {
         await connectToDatabase();
         const newFavorite = new Favorite({
@@ -30,6 +31,7 @@ export const POST = async (req: Request) => {
             model,
             transmission,
             year,
+            isFavorite:true,
             creator: userId
         });
         await newFavorite.save();

@@ -52,3 +52,20 @@ export const updateSearchParams = (type: string, value: string) => {
     const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
     return newPathname;
 }
+
+export function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const base64String = reader.result.split(",")[1]; // Extract base64 string from data URL
+            resolve(base64String);
+        };
+
+        reader.onerror = (error) => {
+            reject(error);
+        };
+
+        reader.readAsDataURL(file);
+    });
+}

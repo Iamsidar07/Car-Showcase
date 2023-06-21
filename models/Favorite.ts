@@ -49,6 +49,10 @@ const FavoriteSchema = new Schema({
         type: Number,
         required: [true, 'year is required']
     },
+    isFavorite:{
+      type: Boolean,
+      required: [true, 'isFavorite is required']
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
