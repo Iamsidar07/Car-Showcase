@@ -36,24 +36,26 @@ const Navbar = () => {
         {/* Desktop navigation  */}
         <div className='hidden md:flex items-center gap-3'>
           <Link href={'/view-all'} >
-            <span>View All</span>
+            <span>Search</span>
           </Link>
           <Link href={'/rent-car'} onClick={() => setIsDropdownShown(false)}>
-            <span>Rent A Car</span>
-          </Link>
-          <Link href={`/favorites/${id}`} >
-            <span>Favorites</span>
+            <span>AddCar</span>
           </Link>
           {
             isUser ? (
               <>
-                <Image
-                  src={session?.user?.image || '/assets/images/user.svg'}
-                  alt='Profile Picture'
-                  width={40}
-                  height={40}
-                  className='cursor-pointer objcet-contain rounded-full'
-                />
+                <Link href={`/favorites/${id}`} >
+                  <span>Favorites</span>
+                </Link>
+                <Link href={`/profile`} onClick={() => setIsDropdownShown(false)} >
+                  <Image
+                    src={session?.user?.image || '/assets/images/user.svg'}
+                    alt='Profile Picture'
+                    width={40}
+                    height={40}
+                    className='cursor-pointer objcet-contain rounded-full'
+                  />
+                </Link>
                 <CustomButton
                   title='Logout'
                   type='button'
@@ -68,7 +70,7 @@ const Navbar = () => {
                   key={provider.id}
                   handleClick={() => signIn(provider.id)}
                   type='button'
-                  title={`Sign in with ${provider.name}`}
+                  title={`${provider.name}`}
                   containerStyle='bg-white text-blue-500 border rounded-full'
                 />
                 )}
@@ -89,24 +91,27 @@ const Navbar = () => {
           isDropdownShown && (
             <div className='bg-white/40 min-w-[290px]  rounded-md shadow backdrop-blur absolute top-16 right-8 p-3 flex flex-col gap-2 text-left md:hidden'>
               <Link href={'/view-all'} onClick={() => setIsDropdownShown(false)}>
-                <span>View All</span>
+                <span>Search</span>
               </Link>
               <Link href={'/rent-car'} onClick={() => setIsDropdownShown(false)}>
-                <span>Rent A Car</span>
-              </Link>
-              <Link href={`/favorites/${id}`} onClick={() => setIsDropdownShown(false)}>
-                <span>Favorites</span>
+                <span>AddCar</span>
               </Link>
               {
                 isUser ? (
                   <>
-                    <Image
-                      src={session?.user?.image || '/assets/images/user.svg'}
-                      alt='Profile Picture'
-                      width={40}
-                      height={40}
-                      className='cursor-pointer objcet-contain rounded-full'
-                    />
+                    <Link href={`/favorites/${id}`} onClick={() => setIsDropdownShown(false)}>
+                      <span>Favorites</span>
+                    </Link>
+                    <Link href={'/profile'} className='flex items-center' onClick={() => setIsDropdownShown(false)}>
+                      <Image
+                        src={session?.user?.image || '/assets/images/user.svg'}
+                        alt='Profile Picture'
+                        width={40}
+                        height={40}
+                        className='cursor-pointer objcet-contain rounded-full'
+                      />
+                      <span className='ml-2'>My Profile</span>
+                    </Link>
                     <CustomButton
                       title='Logout'
                       type='button'
@@ -121,7 +126,7 @@ const Navbar = () => {
                       key={provider.id}
                       handleClick={() => signIn(provider.id)}
                       type='button'
-                      title={`Sign in with ${provider.name}`}
+                      title={`${provider.name}`}
                       containerStyle='bg-white text-blue-500 border rounded-full w-full'
                     />
                     )}

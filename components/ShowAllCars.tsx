@@ -75,7 +75,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
               type="checkbox"
               checked={filters[`${category}`].includes(value)}
               onChange={() => handleFilterChange(`${category}`, value === '' ? '' : [value])}
-              className='gap-2 checked:bg-violet-600'
+              className='w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 gap-2'
             />
             <span className='ml-2 text-sm'>
               {label}
@@ -98,17 +98,19 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   return (
     <section className='w-full'>
       <div className='flex flex-col md:flex-row gap-4'>
-        <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2' onClick={()=>setIsShownFilter((prevState)=>!prevState)}>
-          Filters
+        <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2 flex items-center' onClick={()=>setIsShownFilter((prevState)=>!prevState)}>
+          <span>Filters</span>
+          <Image src={'/icons/filter.svg'} alt='filter icon' width={17} height={17} className='object-contain ml-1'/>
         </button>
         <div className={`px-4 md:p-6 py-3 md:flex  md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter?'flex':'hidden'}`}>
           {/* <Searchbar /> */}
-          <div className='items-center py-1.5 border-b hidden md:flex'>
+          <div className='items-center py-1.5 border-b-[0.5px] hidden md:flex '>
             <Image
-              src={'/icons/magnifying-glass.svg'}
+              src={'/icons/search.svg'}
               alt='search icon'
               width={20}
               height={20}
+              className='object-contain mr-2'
             />
             <input
               type='text'

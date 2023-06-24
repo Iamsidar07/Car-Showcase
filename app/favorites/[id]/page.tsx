@@ -1,13 +1,20 @@
 'use client'
 import { CarCard } from '@/components';
 import { FavoriteCarProps } from '@/types';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
 
 const Favorites = ({ params }: { params: { id: string } }) => {
   const [favoriteCars, setFavoriteCars] = useState<FavoriteCarProps[]>([]);
+  const { data:session } = useSession();
+  const router = useRouter();
   const { id } = params;
+  
+
   useEffect(() => {
     const fetchFavCars = async () => {
+
       try {
         const response = await fetch(`/api/favorite/${id}`);
         const data = await response.json();

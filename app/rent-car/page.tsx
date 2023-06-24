@@ -38,6 +38,13 @@ const RentACar = () => {
         event.preventDefault();
         // Perform any additional validation or data processing here
         console.log(carInfo);
+
+        // check if there is a user
+        if(!userId) {
+            alert('Login/Signup to rent a car.');
+            return;
+        }
+        
         try {
             const response = await fetch(`/api/register-car/${userId}`, {
                 method: 'POST',
