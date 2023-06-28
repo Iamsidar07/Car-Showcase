@@ -4,6 +4,7 @@ import Car from '@/models/Car';
 
 // get all cars
 export const GET = async (req: Request) => {
+
     try {
         await connectToDatabase();
         const allCars = await Car.find({});
@@ -12,4 +13,5 @@ export const GET = async (req: Request) => {
         console.error({ error });
         return NextResponse.json('Failed to create a  Car', { status: 500 });
     }
+    
 }
