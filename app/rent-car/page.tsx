@@ -2,8 +2,6 @@
 import { CustomButton, CustomInput, CustomSelect, ImageUploader } from '@/components'
 import { yearsOfProduction } from '@/constants';
 import { CarInfoProps } from '@/types';
-import { fileToBase64, } from '@/utils';
-import { error } from 'console';
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
