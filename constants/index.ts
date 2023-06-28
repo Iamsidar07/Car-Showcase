@@ -101,16 +101,109 @@ export const footerLinks = [
 ];
 
 export const carDetails = [
-    { title:'City Mpg',value:'19' },
-    { title:'Class',value:'Minivan' },
-    { title:'Combination Mpg',value:'29' },
-    { title:'Cylinders',value:'6' },
-    { title:'Displacement',value:'19' },
-    { title:'Drive',value:'FWD' },
-    { title:'Fuel Type',value:'gas' },
-    { title:'Highway Mpg',value:'29' },
-    { title:'Make',value:'Honda' },
-    { title:'Model',value:'Odyssey' },
-    { title:'Transmission',value:'a' },
-    { title:'year',value:'2022' },
+    { title: 'City Mpg', value: '19' },
+    { title: 'Class', value: 'Minivan' },
+    { title: 'Combination Mpg', value: '29' },
+    { title: 'Cylinders', value: '6' },
+    { title: 'Displacement', value: '19' },
+    { title: 'Drive', value: 'FWD' },
+    { title: 'Fuel Type', value: 'gas' },
+    { title: 'Highway Mpg', value: '29' },
+    { title: 'Make', value: 'Honda' },
+    { title: 'Model', value: 'Odyssey' },
+    { title: 'Transmission', value: 'a' },
+    { title: 'year', value: '2022' },
+]
+
+export const mpgOptions = [
+    {
+        title: "17 MPG",
+        value: '17'
+    },
+    {
+        title: "19 MPG",
+        value: '19'
+    },
+    {
+        title: "20 MPG",
+        value: '20'
+    },
+    {
+        title: "21 MPG",
+        value: '21'
+    },
+    {
+        title: "23 MPG",
+        value: '23'
+    },
+    {
+        title: "24 MPG",
+        value: '24'
+    },
+    {
+        title: "25 MPG",
+        value: '25'
+    },
+    {
+        title: "26 MPG",
+        value: '26'
+    },
+    {
+        title: "27 MPG",
+        value: '27'
+    },
+    {
+        title: "28 MPG",
+        value: '28'
+    },
+    {
+        title: "29 MPG",
+        value: '29'
+    },
+    {
+        title: "30 MPG",
+        value: '30'
+    },
+    {
+        title: "31 MPG",
+        value: '31'
+    },
+]
+
+export const availableFilterBrandOptions = [
+    {label:'All',value:''},
+    {label:'Kia',value:'kia'},
+    {label:'Hyundai',value:'hyundai'},
+    {label:'Mitsubishi',value:'mitsubishi'},
+    {label:'Acura',value:'acura'},
+    {label:'Genesis',value:'genesis'},
+    {label:'Mini',value:'mini'},
+    {label:'BMW',value:'bmw'},
+    {label:'Chevrolet',value:'chevrolet'},
+    {label:'Buick',value:'buick'},
+]
+export const availableFilterCylindersOptions = [
+    {label:"4'C",value:'4'},
+    {label:"6'C",value:'6'},
+]
+export const availableFilterDriveOptions = [
+    {label:"All",value:''},
+    {label:"FWD",value:'fwd'},
+    {label:"AWD",value:'awd'},
+]
+export const availableFilterFuelTypeOptions = [
+    {label:"All",value:''},
+    {label:"Gas",value:'gas'},
+    {label:"Electricity",value:'electricity'},
+]
+export const availableFilterTypeOptions = [
+    {label:"All",value:''},
+    {label:"Sports Car🏎️",value:'sport'},
+    {label:"Mini Van",value:'minivan'},
+    {label:"Midsize",value:'midsize'},
+    {label:"Small",value:'small'},
+    {label:"Subcompact Car",value:'subcompact'},
+    {label:"Compact Car",value:'compact'},
+    {label:"Large Car",value:'large'},
+    
 ]

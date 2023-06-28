@@ -17,6 +17,17 @@ export const fetchCars = async ({ manufacturer, year, model, limit, fuel }: Fetc
     }
 }
 
+export const fetchFavoriteCars =async () => {
+    try {
+        const response = await fetch('/api/favorite');
+        console.log(response);
+        return response;
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
 export const generateCarImageUrl = (car: Car, angle?: string) => {
     const url = new URL(`https://cdn.imagin.studio/getimage`);
     const { make, year, model } = car;
@@ -41,3 +52,4 @@ export const updateSearchParams = (type: string, value: string) => {
     const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
     return newPathname;
 }
+

@@ -1,12 +1,21 @@
+'use client'
 import { CustomButton } from '@/components';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const Hero = () => {
+  const { data: session, } = useSession();
+  const isUser = session?.user;
   return (
     <section className='max-w-[1440px] mx-auto relative flex flex-col md:flex-row items-center'>
       <div className='flex-1 p-4 md:p-16 pt-32 md:pt-28'>
-        <h1 className='text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4b71fd] to-black '>Find, book, rent a car—quick and super easy!</h1>
+        <h1 className='text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-zinc-500 to-zinc-800 '>
+          {
+            isUser && <span className='text-black text-lg'>Hey🙋‍♀️, {session.user?.name?.split(' ')[0]} <br /></span>
+          }
+          Find, book, rent a car—quick and super easy!</h1>
+
         <p className='text-xl md:text-2xl md:mt-6 mt-4 mb-4 lg:mb-8'>Streamline your car rental experience with our effortless booking process.</p>
         <Link href={'#explore'}>
           <CustomButton
