@@ -119,5 +119,5 @@ export interface CarInfoProps {
     carType: string;
     drive: string;
     // imageFiles: ImageFilesProps[];
-    imageFiles: {file:FileProps}[];
+    imageFiles: string[];
 }

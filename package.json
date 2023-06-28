@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/node": "20.2.5",
     "autoprefixer": "10.4.14",
+    "cloudinary": "^1.37.3",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "imagekit": "^4.1.3",

@@ -2,9 +2,10 @@
 import { CustomButton, CustomInput, CustomSelect, ImageUploader } from '@/components'
 import { yearsOfProduction } from '@/constants';
 import { CarInfoProps } from '@/types';
-import { fileToBase64,} from '@/utils';
+import { fileToBase64, } from '@/utils';
+import { error } from 'console';
 import { useSession } from 'next-auth/react';
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 
 const RentACar = () => {
@@ -34,17 +35,36 @@ const RentACar = () => {
 
     const [accepetedFiles, setAccepetedFiles] = useState<File[]>([]);
 
+    // convert image into base64 for that I have to use useeffect
+    useEffect(() => {
+        const getBase64 = (file:File)=>{
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                // store reader.result
+                carInfo.imageFiles.push(reader.result as string);
+            };
+            reader.onerror = () => {
+                // log the error
+                console.log(reader.error);
+            }
+        };
+        accepetedFiles?.map((file) => getBase64(file));
+
+    }, [accepetedFiles,carInfo]);
+
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // Perform any additional validation or data processing here
         console.log(carInfo);
 
         // check if there is a user
-        if(!userId) {
+        if (!userId) {
             alert('Login/Signup to rent a car.');
             return;
         }
-        
+
         try {
             const response = await fetch(`/api/register-car/${userId}`, {
                 method: 'POST',
@@ -84,33 +104,6 @@ const RentACar = () => {
             return;
         }
         setAccepetedFiles(files);
-        const accepetedFilesUrls = files.map(async(file) => {
-            const base64 = await fileToBase64(file);
-            const { name, lastModified, lastModifiedDate, path, size, type, webkitRelativePath } = file;
-            return (
-                {
-                   file:{
-                    name,
-                    lastModified,
-                    lastModifiedDate,
-                    path,
-                    size,
-                    type,
-                    webkitRelativePath,
-                    base64
-                   }
-                }
-            )
-        });
-        console.log(accepetedFilesUrls);
-        setCarInfo((prevCarInfo) => {
-            const res = accepetedFilesUrls;
-            return ({
-                ...prevCarInfo,
-                // imageFiles: files
-                imageFiles: res
-            })
-        });
     }
 
     return (

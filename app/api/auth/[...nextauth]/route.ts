@@ -30,6 +30,7 @@ const handler = NextAuth({
                     await User.create({
                         username: profile.name?.replace(' ', '').toLowerCase(),
                         email: profile.email,
+                        coverImage:'https://images.pexels.com/photos/1590067/pexels-photo-1590067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
                         image,
                     });
                 }
