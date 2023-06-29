@@ -5,7 +5,8 @@ const nextConfig = {
             "cdn.imagin.studio",
             "avatars.githubusercontent.com",
             "images.pexels.com" ,
-            "res.cloudinary.com"
+            "res.cloudinary.com",
+            "lh3.googleusercontent.com"
         ]
     }
 }
