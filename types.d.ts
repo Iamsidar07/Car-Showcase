@@ -1,58 +1,67 @@
 import { MouseEventHandler, ReactNode } from "react";
 
-export interface Fuels {
+export interface FuelsProps {
     fuel: string;
     id: number;
 }
-export interface Models {
+export interface ModelsProps {
     model: string;
     id: number;
 }
 
-export interface Car {
-    city_mpg: number
-    class?: string
-    combination_mpg: number
-    cylinders: number
-    displacement: number
-    drive: string
-    fuel_type: string
-    highway_mpg: number
-    make: string
-    model: string
-    transmission: string
-    year: number,
-    typeOfClass?: string,
-    _id?: string,
+export interface CarProps {
+    capacity: number;
+    carTitle: string;
+    carType: string;
+    cityMPG: number;
+    cylinders:number;
+    combinationMPG: number;
+    creator: Creator;
+    drive: string;
+    fuelCapacity: number;
+    fuelType: string;
+    highwayMPG: number;
+    imageFiles: string[];
+    location: string;
+    manufacturer: string;
+    model: string;
+    rentPrice: number
+    shortDescription: string;
+    transmission: string;
+    typeOfclass: string;
+    year: string;
+    _id: string;
 }
 
-export interface Creator {
-    _id: string,
-    email: string,
-    username: string,
-    email: string,
+export interface CreatorProps {
+    _id: string;
+    email: string;
+    username: string;
+    email: string;
 }
 export interface FavoriteCarProps extends Car {
-    typeOfClass: string,
-    isFavorite: boolean,
-    _id: string,
-    creator: Creator,
+    typeOfClass: string;
+    isFavorite: boolean;
+    _id: string;
+    creator: CreatorProps;
 }
 export interface FetchCarProps {
     manufacturer?: string;
     year?: number;
     model?: string;
     limit?: number;
-    fuel?: string;
+    fuelType?: string;
 }
 
 export interface CardCardProps {
-    car: Car | FavoriteCarProps;
+    car: CarProps;
     isFavorite?: boolean;
+    handleDelete?:(id: string) => void;
+    handleEdit?:(id: string) => void;
 }
 
 export interface CatalogueProps {
-    allCars: Car[];
+    allCars: CarProps[];
     limit: number;
 }
 
@@ -65,7 +74,7 @@ export interface CustomButtonProps {
 }
 
 export interface CustomSelectProps {
-    options: { value: string, title: string }[];
+    options: { value: string; title: string }[];
     label: string;
     containerStyle?: string;
     parentContainerStyle?: string;
@@ -75,11 +84,11 @@ export interface CustomSelectProps {
 }
 
 export interface FilterProps {
-    brand: string[],
-    cylinders: string[],
-    type: string[],
-    drive: string[],
-    fuelType: string[],
+    brand: string[];
+    cylinders: string[];
+    type: string[];
+    drive: string[];
+    fuelType: string[];
     rentPriceRange: string;
 }
 
@@ -96,7 +105,7 @@ export interface FileProps {
     size: number
     type: string;
     webkitRelativePath: string;
-    base64:string;
+    base64: string;
 }
 
 export interface CarInfoProps {
@@ -118,6 +127,5 @@ export interface CarInfoProps {
     fuelType: string;
     carType: string;
     drive: string;
-    // imageFiles: ImageFilesProps[];
     imageFiles: string[];
 }

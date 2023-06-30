@@ -1,12 +1,12 @@
 'use client'
 import { CarCard } from '@/components';
-import { FavoriteCarProps } from '@/types';
+import { CarProps,} from '@/types';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
 
 const Favorites = ({ params }: { params: { id: string } }) => {
-  const [favoriteCars, setFavoriteCars] = useState<FavoriteCarProps[]>([]);
+  const [favoriteCars, setFavoriteCars] = useState<CarProps[]>([]);
   const { data:session } = useSession();
   const router = useRouter();
   const { id } = params;
@@ -14,7 +14,6 @@ const Favorites = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const fetchFavCars = async () => {
-
       try {
         const response = await fetch(`/api/favorite/${id}`);
         const data = await response.json();
@@ -22,12 +21,12 @@ const Favorites = ({ params }: { params: { id: string } }) => {
           setFavoriteCars(data);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         alert('Something went wrong');
       }
     }
     fetchFavCars();
-  }, [id]);
+  }, [id,favoriteCars]);
   console.log(favoriteCars)
   return (
     <section className='max-w-[1440px] mx-auto relative pt-16 px-2 md:px-6'>

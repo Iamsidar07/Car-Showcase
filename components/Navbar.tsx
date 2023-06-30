@@ -89,7 +89,7 @@ const Navbar = () => {
         />
         {
           isDropdownShown && (
-            <div className='bg-white/40 min-w-[290px]  rounded-md shadow backdrop-blur absolute top-16 right-8 p-3 flex flex-col gap-2 text-left md:hidden'>
+            <div className='bg-white/30 min-w-[290px]  rounded-md shadow backdrop-blur-sm absolute top-16 right-8 p-3 flex flex-col gap-2 text-left md:hidden z-50'>
               <Link href={'/view-all'} onClick={() => setIsDropdownShown(false)}>
                 <span>Search</span>
               </Link>

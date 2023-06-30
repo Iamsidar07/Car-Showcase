@@ -11,6 +11,7 @@ import ShowAllCars from './ShowAllCars';
 import Provider from './Provider';
 import CustomInput from './CustomInput';
 import ImageUploader from './ImageUploader';
+import Form from './Form';
 export {
     Hero,
     CustomButton,
@@ -24,5 +25,6 @@ export {
     ShowAllCars,
     Provider,
     CustomInput,
-    ImageUploader
+    ImageUploader,
+    Form
 };

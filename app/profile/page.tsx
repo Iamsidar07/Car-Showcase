@@ -2,10 +2,12 @@
 import { CarCard } from "@/components"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { ChangeEvent, useEffect, useState } from "react"
 
 const Profile = () => {
     const { data: session } = useSession();
+    const router = useRouter();
     const [coverImageSource, setCoverImageSource] = useState<string | null>(null);
     const [accepetedFile, SetAcceptedFile] = useState<File>();
     const [cars, setCars] = useState<any[]>([]);
@@ -67,8 +69,25 @@ const Profile = () => {
         }
         getUserProfile();
         getCars();
-    }, [session?.user?.id, accepetedFile]);
+    }, [session?.user?.id, accepetedFile,cars]);
     console.log({ cars });
+
+    const handleDelete = async(_id:string)=>{
+        const doYouReallyWannaToDelete = confirm('Do you really want to delete?');
+        if (!doYouReallyWannaToDelete) return;
+        try {
+            await fetch(`/api/car/user/${_id}`,{ 
+                method:'DELETE'
+             })
+        } catch (error) {
+            alert('failed to delete.');
+        }finally{
+            alert('deleted successfully.');
+        }
+    };
+    const handleEdit = async(_id:string)=>{
+         router.push(`/cars/edit/${_id}`);
+    }
 
 
     return (
@@ -98,16 +117,16 @@ const Profile = () => {
                     <p className='text-gray-500 text-sm'>{session?.user?.email}</p>
                     <small className='text-gray-400'>#{session?.user?.id}</small>
                 </div>
-                <div className='mt-12'>
+                <div className='mt-12 p-2'>
                     {
                         cars.length === 0 ? (
                             <h1>Add your first car...</h1>
-                        ) : <div className='p-2'>
+                        ) : <div>
                             <h1 className='text-lg md:text-2xl font-bold'>My Cars</h1>
                             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2'>
                                 {
                                     cars.map((car, index) => (
-                                        <CarCard key={index} car={car} />
+                                        <CarCard key={index} car={car} handleDelete={handleDelete} handleEdit={handleEdit} />
                                     ))
                                 }
                             </div>

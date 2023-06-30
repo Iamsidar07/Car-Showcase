@@ -9,7 +9,7 @@ export const DELETE = async (req: Request, { params }: { params:{ id:string } })
         await Favorite.findByIdAndRemove(id);
         return NextResponse.json('Deleted successfull with id', { status: 201 });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json(`Failed to delete with id:${id}`, { status: 500 });
 
     }
