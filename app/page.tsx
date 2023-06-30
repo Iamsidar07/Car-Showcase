@@ -1,5 +1,5 @@
 'use client'
-import { Catalogue, Hero } from '@/components';
+import { Catalogue, CustomButton, Hero, Loader } from '@/components';
 import { CarProps, FetchCarProps } from '@/types';
 import { fetchCars } from '@/utils';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 export default  function Home({ searchParams }: { searchParams: FetchCarProps }) {
   const { manufacturer, year, fuelType, limit, model } = searchParams;
   const [allCars,setAllCars] = useState<CarProps[]>([]);
+  const [isLoading,setIsLoading] = useState(true);
 
   useEffect(()=>{
     const fetchAllCars =async () => {
@@ -16,19 +17,21 @@ export default  function Home({ searchParams }: { searchParams: FetchCarProps })
         setAllCars(data);
       } catch (error) {
         console.error(error);
+      }finally{
+        setIsLoading(false);
       }
     };
     fetchAllCars();
   },[model,year,manufacturer,fuelType,limit]);
-  console.log(allCars)
 
 
   return (
     <main className='overflow-hidden'>
       <Hero />
       {
-        allCars && <Catalogue allCars={allCars} limit={(limit || 20) / 10} />
+        allCars && <Catalogue isLoading={isLoading} allCars={allCars} limit={(limit || 20) / 10} />
       }
+
     </main>
   )
 }

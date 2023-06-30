@@ -5,11 +5,9 @@ import { NextResponse } from "next/server";
 // get a car by id
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
     const { id } = params;
-    console.log({ id });
     try {
         await connectToDatabase();
         const specificCar = await Car.findById(id);
-        console.log(specificCar);
         return NextResponse.json(specificCar, { status: 200 });
     } catch (error) {
         console.error({ error });

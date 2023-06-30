@@ -63,14 +63,16 @@ export interface CardCardProps {
 export interface CatalogueProps {
     allCars: CarProps[];
     limit: number;
+    isLoading:boolean;
 }
 
 export interface CustomButtonProps {
     title: string;
     type: 'button' | 'submit' | 'reset';
     handleClick?: MouseEventHandler<HTMLButtonElement>;
-    icon?: JSX.Element;
+    icon?: JSX.Element|undefined;
     containerStyle?: string;
+    isLoading?: boolean;
 }
 
 export interface CustomSelectProps {

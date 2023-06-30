@@ -26,20 +26,25 @@ const EditCar = ({ params }: { params: { id: string } }) => {
         drive: '',
         imageFiles: [],
     });
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         const getCarInfo = async () => {
-            const res = await fetch(`/api/car/${id}`);
-            const data = await res.json();
-            setCarInfo(data);
+            try {
+                const res = await fetch(`/api/car/${id}`);
+                const data = await res.json();
+                setCarInfo(data);
+            } catch (error) {
+                alert('Something went wrong!');
+                console.error(error);
+            }
         }
         getCarInfo();
     }, [id]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setIsLoading(true);
         // Perform any additional validation or data processing here
-        console.log(carInfo);
-
         try {
             const response = await fetch(`/api/car/user/${id}`, {
                 method: 'PATCH',
@@ -48,16 +53,17 @@ const EditCar = ({ params }: { params: { id: string } }) => {
             if (response.ok) {
                 alert('Car has been edited successfully.');
             }
-            console.log(response);
         } catch (error) {
             console.error(error);
             alert('Something went wrong!');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
-            <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Edit Car' title='Edit your car to rent' handleSubmit={handleSubmit} />
+            <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Edit Car' title='Edit your car to rent' handleSubmit={handleSubmit} isLoading={isLoading} />
         </section>
     )
 }

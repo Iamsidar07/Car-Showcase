@@ -7,14 +7,16 @@ import ImageUploader from './ImageUploader';
 import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import { yearsOfProduction } from '@/constants';
+import Loader from './Loader';
 interface AddCarProps {
     carInfo: CarInfoProps;
     setCarInfo: React.Dispatch<React.SetStateAction<CarInfoProps>>;
-    submitBtnTitle:string;
-    title:string;
+    submitBtnTitle: string;
+    title: string;
     handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+    isLoading?: boolean;
 }
-const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddCarProps) => {
+const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoading }: AddCarProps) => {
     const { data: session } = useSession();
     const [accepetedFiles, setAccepetedFiles] = useState<File[]>([]);
 
@@ -25,6 +27,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddC
             reader.readAsDataURL(file);
             reader.onload = () => {
                 // store reader.result
+                carInfo.imageFiles = [];
                 carInfo.imageFiles.push(reader.result as string);
             };
             reader.onerror = () => {
@@ -55,7 +58,6 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddC
 
     // Handle drop files
     const handleOnDrop = (files: File[]) => {
-        console.log(files);
         if (files.length > 5) {
             alert('You can upload upto 4 images only');
             return;
@@ -64,24 +66,24 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddC
     }
 
     return (
-        <form className='max-w-5xl mx-auto bg-white border p-3 md:p-5 rounded-lg' onSubmit={handleSubmit}>
+        <form className='max-w-[1440px] mx-auto bg-white border p-3 md:p-5 rounded-lg' onSubmit={handleSubmit}>
             <h1 className='text-lg font-bold'>{title}</h1>
             <p className='text-gray-400 text-sm font-light'>Please enter your car ℹ️info.</p>
             <h2 className='text-xl md:text-2xl text-blue-500 tracking-wide font-bold my-6 uppercase'>Car info</h2>
-            <div className='flex flex-col gap-4'>
-                <div className='flex flex-col md:flex-row items-center w-full gap-1'>
+            <div className='flex flex-col gap-6 md:gap-7'>
+                <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='Car Title' name='carTitle' placeholder='Your title' value={carInfo.carTitle} onChange={handleInputChange} />
                     <CustomInput label='Location' name='location' placeholder='📌 location' value={carInfo.location} onChange={handleInputChange} />
                 </div>
-                <div className='flex flex-col md:flex-row items-center w-full gap-1'>
+                <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='Rent Price' name='rentPrice' placeholder='Price in dollar $' type='number' value={carInfo.rentPrice} onChange={handleInputChange} />
                     <CustomInput label='Capacity' name='capacity' placeholder='Capacity in person' type='number' value={carInfo.capacity} onChange={handleInputChange} />
                 </div>
-                <div className='flex flex-col md:flex-row items-center w-full gap-1'>
+                <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='Fuel Capacity' name='fuelCapacity' placeholder='Fuel capacity in liters' type='number' value={carInfo.fuelCapacity} onChange={handleInputChange} />
                     <CustomInput label='Short Description' name='shortDescription' placeholder='Enter a short description' value={carInfo.shortDescription} onChange={handleInputChange} />
                 </div>
-                <div className='flex flex-col md:flex-row items-center w-full gap-1'>
+                <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='Class' name='typeOfclass' placeholder='Enter a class' value={carInfo.typeOfclass} onChange={handleInputChange} />
                     <CustomInput label='Model' name='model' placeholder='Enter car model.' value={carInfo.model} onChange={handleInputChange} />
                     <CustomInput label='Manufacturer' name='manufacturer' placeholder='Enter manufacturer of car.' value={carInfo.manufacturer} onChange={handleInputChange} />
@@ -90,7 +92,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddC
                         <CustomSelect label='Cylinders' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: '4', value: '4' }, { title: '6', value: '6' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' parentContainerStyle='z-40' name='cylinders' />
                     </div>
                 </div>
-                <div className='flex flex-col md:flex-row items-center w-full gap-1'>
+                <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='City Mpg' name='cityMPG' placeholder='12' type='number' value={carInfo.cityMPG} onChange={handleInputChange} />
                     <CustomInput label='Combination MPG' name='combinationMPG' placeholder='24' type='number' value={carInfo.combinationMPG} onChange={handleInputChange} />
                     <CustomInput label='Highway MPG' name='highwayMPG' placeholder='24' type='number' value={carInfo.highwayMPG} onChange={handleInputChange} />
@@ -100,7 +102,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddC
                     </div>
                 </div>
 
-                <div className='flex flex-col md:flex-row items-center w-full gap-1'>
+                <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Transmission</h2>
                         <CustomSelect label='Transmission' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'A', value: 'a' }, { title: 'M', value: 'm' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' name='transmission' />
@@ -119,7 +121,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit }: AddC
                     </div>
                 </div>
                 <ImageUploader files={accepetedFiles} handleOnDrop={handleOnDrop} carInfo={carInfo} />
-                <CustomButton title={submitBtnTitle} type='submit' containerStyle='bg-blue-600 text-white ml-auto mt-4 w-fit' />
+                <CustomButton title={submitBtnTitle} type='submit' containerStyle='bg-blue-600 text-white ml-auto mt-4 w-fit' isLoading={isLoading} />
             </div>
         </form>
     )

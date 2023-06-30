@@ -28,11 +28,12 @@ const RentACar = () => {
         drive: '',
         imageFiles: [],
     });
+    const [isLoading,setIsLoading] = useState(false);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // Perform any additional validation or data processing here
-        console.log(carInfo);
+        setIsLoading(true);
 
         // check if there is a user
         if (!session?.user?.id) {
@@ -48,16 +49,17 @@ const RentACar = () => {
             if (response.ok) {
                 alert('Car has been registered successfully.');
             }
-            console.log(response);
         } catch (error) {
             console.error(error);
             alert('Something went wrong!');
+        }finally{
+            setIsLoading(false);
         }
     };
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
-           <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Register car' title='Add your car to rent' handleSubmit={handleSubmit} />
+           <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Register car' title='Add your car to rent' handleSubmit={handleSubmit} isLoading={isLoading} />
         </section>
     )
 }

@@ -7,16 +7,18 @@ import CustomButton from './CustomButton';
 import CarCard from './CarCard';
 import { availableFilterBrandOptions, availableFilterCylindersOptions, availableFilterDriveOptions, availableFilterFuelTypeOptions, availableFilterTypeOptions } from '@/constants';
 import Image from 'next/image';
+import { CarCardSkeleton } from './skeleton';
 interface ShowAllCarsProps {
-  allCars: CarProps[],
-  limit: number
+  allCars: CarProps[];
+  limit: number;
+  isLoading: boolean;
 }
 interface FilterCardProps {
   title: string,
   category: keyof FilterProps,
   options: { value: string, label: string }[]
 }
-const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
+const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
   const router = useRouter();
   const [searchInputVal, setSearchInputVal] = useState('');
   const [searchCarResults, setSearchCarResults] = useState<CarProps[]>([]);
@@ -40,16 +42,17 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   let filteredCars = allCars.filter((car) => {
     const { brand, cylinders, rentPriceRange, type, drive, fuelType } = filters;
     const calcRentalPrice = car.rentPrice;
-
     return (
-      (brand.length === 0 || brand.includes(car.manufacturer) || brand.includes(car.model)) &&
+      (brand.length === 0 || brand.includes(car.manufacturer) || brand.includes(car.model) || brand.includes(car.carTitle)) &&
       (cylinders.length === 0 || cylinders.includes(`${car.cylinders}`)) &&
       (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange)) &&
-      (type.length === 0 || car.typeOfclass?.includes(type[0])) &&
+      (type.length === 0 || type[0].includes(car.typeOfclass.replaceAll(' ', '').toLowerCase())) &&
       (drive.length === 0 || drive.includes(car.drive)) &&
       (fuelType.length === 0 || car.fuelType.includes(fuelType[0]))
+
     );
-  })
+  });
+
 
   const handleClick = () => {
     const newLimit = ((limit || 20) + 1) * 10;
@@ -98,11 +101,11 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   return (
     <section className='w-full'>
       <div className='flex flex-col md:flex-row gap-4'>
-        <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2 flex items-center' onClick={()=>setIsShownFilter((prevState)=>!prevState)}>
+        <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2 flex items-center' onClick={() => setIsShownFilter((prevState) => !prevState)}>
           <span>Filters</span>
-          <Image src={'/icons/filter.svg'} alt='filter icon' width={17} height={17} className='object-contain ml-1'/>
+          <Image src={'/icons/filter.svg'} alt='filter icon' width={17} height={17} className='object-contain ml-1' />
         </button>
-        <div className={`px-4 md:p-6 py-3 md:flex  md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter?'flex':'hidden'}`}>
+        <div className={`px-4 md:p-6 py-3 md:flex  md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter ? 'flex' : 'hidden'}`}>
           {/* <Searchbar /> */}
           <div className='items-center py-1.5 border-b-[0.5px] hidden md:flex '>
             <Image
@@ -120,7 +123,7 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
               className='outline-none bg-transparent text-sm'
             />
           </div>
-          
+
           {
             filterData.map(({ title, category, options }, i) => (<FilterCard key={i} title={title} options={options} category={category} />))
           }
@@ -131,17 +134,17 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
               type="range"
               value={filters.rentPriceRange}
               onChange={(e: ChangeEvent<HTMLInputElement>) => handleFilterChange('rentPriceRange', e.target.value)}
-              min={35}
+              min={2}
               max={100}
             />
             <span className='font-bold'>Max {filters.rentPriceRange && `$${filters.rentPriceRange}`}</span>
           </div>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 md:flex-1 px-2 '
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3  px-2 w-full h-fit'
         >
           {
-            (filteredCars?.length === 0) || (searchCarResults.length === 0 && searchInputVal) ?
+            (((filteredCars?.length === 0) || (searchCarResults.length === 0 && searchInputVal)) && (!isLoading)) ?
               (<p className='text-center text-xl w-full'>No cars found</p>) :
               (
                 searchInputVal ?
@@ -149,11 +152,15 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
                   filteredCars.map((car, i) => <CarCard key={i} car={car} />)
               )
           }
-
+          {
+            isLoading && (
+              Array(12).fill(0).map((_, i) => <CarCardSkeleton key={i} />)
+            )
+          }
         </div>
       </div>
       {
-        (limit || 20 < filteredCars?.length) &&
+        (limit || 10 < filteredCars?.length) &&
         (
           <CustomButton title='Show More'
             type='button'

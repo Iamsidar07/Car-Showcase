@@ -19,7 +19,7 @@ const CustomInput = ({  label, placeholder,name, type = 'text',value,onChange}:C
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder.slice(0,251)}
-                className='pl-4 py-2.5 bg-[#f5f8ff] rounded-sm outline-none w-full'
+                className='pl-4 py-2.5 bg-[#f5f8ff] rounded-lg outline-none w-full'
             />
         </div>
     )

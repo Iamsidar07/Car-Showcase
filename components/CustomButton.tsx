@@ -1,16 +1,18 @@
 import { CustomButtonProps } from "@/types";
+import Loader from "./Loader";
 
-const CustomButton = ({ title, handleClick, icon, containerStyle, type }: CustomButtonProps) => {
+const CustomButton = ({ title, handleClick, containerStyle, type,isLoading,icon }: 
+  CustomButtonProps) => {
   return (
     <button
       type={type}
       onClick={handleClick}
-      className={`outline-none px-4 py-1.5 md:py-2.5  md:px-6 text-center flex items-center justify-center  capitalize ${containerStyle} relative`}
+      disabled={isLoading}
+      className={`outline-none px-4 py-1.5 md:py-2.5  md:px-6 text-center flex items-center justify-center  capitalize ${containerStyle} gap-2 ${isLoading && 'bg-opacity-90'}`}
     >
       <span>{title}</span>
-      {icon && <div className='absolute right-8'>
-        {icon}
-      </div>}
+      {isLoading && <Loader/>}
+      {icon && icon}
     </button>
   )
 }
