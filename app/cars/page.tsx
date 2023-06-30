@@ -13,7 +13,7 @@ const CardDetails = ({ searchParams }: { searchParams: Car }) => {
                             src={generateCarImageUrl(car)}
                             alt='car'
                             fill
-                            className='object-contain w-full h-full scale-[110%] md:hover:scale-[154%] md:hover:-rotate-6 md:hover:translate-x-1/6 z-30 transition-all duration-700 ease-linear'
+                            className='object-contain w-full h-full scale-[110%] md:hover:scale-[154%] md:hover:-rotate-6 md:hover:translate-x-1/6 z-10 transition-all duration-700 ease-linear'
                         />
                         <Image
                             src={'/images/pattern.png'}

@@ -1,5 +1,5 @@
 'use client'
-import { Car, FilterProps } from '@/types'
+import { CarProps, FilterProps } from '@/types'
 import { updateSearchParams } from '@/utils';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
@@ -8,7 +8,7 @@ import CarCard from './CarCard';
 import { availableFilterBrandOptions, availableFilterCylindersOptions, availableFilterDriveOptions, availableFilterFuelTypeOptions, availableFilterTypeOptions } from '@/constants';
 import Image from 'next/image';
 interface ShowAllCarsProps {
-  allCars: Car[],
+  allCars: CarProps[],
   limit: number
 }
 interface FilterCardProps {
@@ -19,7 +19,7 @@ interface FilterCardProps {
 const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
   const router = useRouter();
   const [searchInputVal, setSearchInputVal] = useState('');
-  const [searchCarResults, setSearchCarResults] = useState<Car[]>([]);
+  const [searchCarResults, setSearchCarResults] = useState<CarProps[]>([]);
   const [isShownFilter, setIsShownFilter] = useState(false);
   const [filters, setFilters] = useState<FilterProps>({
     brand: [],
@@ -39,15 +39,15 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
   let filteredCars = allCars.filter((car) => {
     const { brand, cylinders, rentPriceRange, type, drive, fuelType } = filters;
-    const calcRentalPrice = car.combination_mpg * car.displacement;
+    const calcRentalPrice = car.rentPrice;
 
     return (
-      (brand.length === 0 || brand.includes(car.make) || brand.includes(car.make)) &&
+      (brand.length === 0 || brand.includes(car.manufacturer) || brand.includes(car.model)) &&
       (cylinders.length === 0 || cylinders.includes(`${car.cylinders}`)) &&
       (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange)) &&
-      (type.length === 0 || car.class?.includes(type[0])) &&
+      (type.length === 0 || car.typeOfclass?.includes(type[0])) &&
       (drive.length === 0 || drive.includes(car.drive)) &&
-      (fuelType.length === 0 || car.fuel_type.includes(fuelType[0]))
+      (fuelType.length === 0 || car.fuelType.includes(fuelType[0]))
     );
   })
 
@@ -59,9 +59,9 @@ const ShowAllCars = ({ allCars, limit }: ShowAllCarsProps) => {
 
   const handleSearchValChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputVal(e.target.value);
-    const searchFilteredCar = allCars.filter((car) => car.class?.includes(searchInputVal.toLowerCase()) ||
+    const searchFilteredCar = allCars.filter((car) => car.typeOfclass?.includes(searchInputVal.toLowerCase()) ||
       car.model.includes(searchInputVal.toLowerCase()) ||
-      car.make.includes(searchInputVal.toLowerCase()));
+      car.manufacturer.includes(searchInputVal.toLowerCase()));
     setSearchCarResults(searchFilteredCar);
   }
 

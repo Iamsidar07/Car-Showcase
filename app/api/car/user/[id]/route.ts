@@ -26,6 +26,8 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     }
 }
 
+
+
 // delete a user car by its id;
 export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
     const { id } = params;
@@ -42,58 +44,21 @@ export const DELETE = async (req: Request, { params }: { params: { id: string } 
 // update a user car by its id;
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
     const { id } = params;
-    const {
-        carTitle,
-        location,
-        rentPrice,
-        capacity,
-        fuelCapacity,
-        shortDescription,
-        typeOfclass,
-        model,
-        manufacturer,
-        cylinders,
-        cityMPG,
-        combinationMPG,
-        highwayMPG,
-        year,
-        transmission,
-        fuelType,
-        carType,
-        drive,
-        imageFiles,
-    } = await req.json();
+    const carInfo = await req.json();
+    console.log({carInfo});
 
     try {
         await connectToDatabase();
         //upload all base64 of photos to cloudinary and get their urls 
-        const photoUploadPromises = imageFiles.map(async (base64: string) => {
+        const photoUploadPromises = carInfo.imageFiles.map(async (base64: string) => {
             const { url } = await cloudinary.uploader.upload(base64);
             return url;
         });
         //all photos urls
         const photosUrl = await Promise.all(photoUploadPromises);
         const updatedCar = await Car.findByIdAndUpdate(id,{
-            carTitle,
-            location,
-            rentPrice,
-            capacity,
-            fuelCapacity,
-            shortDescription,
-            typeOfclass,
-            model,
-            manufacturer,
-            cylinders,
-            cityMPG,
-            combinationMPG,
-            highwayMPG,
-            year,
-            transmission,
-            fuelType,
-            carType,
-            drive,
+            ...carInfo,
             imageFiles: photosUrl,
-            creator: id
         })
         return NextResponse.json(updatedCar, { status: 201 });
     } catch (error) {
@@ -107,32 +72,13 @@ export const POST = async (req: Request, { params }: { params: { id: string } })
     // user id
     const { id } = params;
     //all info
-    const {
-        carTitle,
-        location,
-        rentPrice,
-        capacity,
-        fuelCapacity,
-        shortDescription,
-        typeOfclass,
-        model,
-        manufacturer,
-        cylinders,
-        cityMPG,
-        combinationMPG,
-        highwayMPG,
-        year,
-        transmission,
-        fuelType,
-        carType,
-        drive,
-        imageFiles,
-    } = await req.json();
+    const carInfo = await req.json();
+    console.log(carInfo);
 
     try {
         await connectToDatabase();
         //upload all base64 of photos to cloudinary and get their urls 
-        const photoUploadPromises = imageFiles.map(async (base64: string) => {
+        const photoUploadPromises = carInfo.imageFiles.map(async (base64: string) => {
             const { url } = await cloudinary.uploader.upload(base64);
             return url;
         });
@@ -140,24 +86,7 @@ export const POST = async (req: Request, { params }: { params: { id: string } })
         const photosUrl = await Promise.all(photoUploadPromises);
         //create new car on mongodb
         const newCar = new Car({
-            carTitle,
-            location,
-            rentPrice,
-            capacity,
-            fuelCapacity,
-            shortDescription,
-            typeOfclass,
-            model,
-            manufacturer,
-            cylinders,
-            cityMPG,
-            combinationMPG,
-            highwayMPG,
-            year,
-            transmission,
-            fuelType,
-            carType,
-            drive,
+            ...carInfo,
             imageFiles: photosUrl,
             creator: id
         });

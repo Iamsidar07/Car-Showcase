@@ -1,61 +1,87 @@
 import { model, Schema, models } from 'mongoose';
 
 const FavoriteSchema = new Schema({
-    city_mpg: {
-        type: Number,
-        required: [true, 'city_mpg is required']
-    },
-    typeOfClass: {
+    carTitle: {
         type: String,
-        required: [true, 'typeofclass is required']
+        required: [true, 'Car title is required']
     },
-    combination_mpg: {
-        type: Number,
-        required: [true, 'combination_mpg is required']
+    location: {
+        type: String,
+        required: [true, 'Location is required']
     },
-    cylinders: {
+    rentPrice: {
         type: Number,
         required: [true, 'cylinders is required']
     },
-    displacement: {
+    capacity: {
         type: Number,
-        required: [true, 'displacement is required']
+        required: [true, 'Capacity is required']
     },
-    drive: {
-        type: String,
-        required: [true, 'drive is required']
-    },
-    fuel_type: {
-        type: String,
-        required: [true, 'fuel_type is required']
-    },
-    highway_mpg: {
+    fuelCapacity: {
         type: Number,
-        required: [true, 'highway_mpg is required']
+        required: [true, 'FuelCapacity is required']
     },
-    make: {
+    shortDescription: {
         type: String,
-        required: [true, 'make is required']
+        required: [true, 'Description is required']
+    },
+    typeOfclass: {
+        type: String,
+        required: [true, 'Typeofclass is required']
     },
     model: {
         type: String,
-        required: [true, 'model is required']
+        required: [true, 'Model is required']
+    },
+    manufacturer: {
+        type: String,
+        required: [true, 'Manufacturer is required']
+    },
+    cylinders: {
+        type: Number,
+        required: [true, 'Cylinders is required']
+    },
+    cityMPG: {
+        type: Number,
+        required: [true, 'CityMPG is required']
+    },
+    combinationMPG: {
+        type: Number,
+        required: [true, 'CombinationMPG is required']
+    },
+    highwayMPG: {
+        type: Number,
+        required: [true, 'HighwayMPG is required']
+    },
+    year: {
+        type: String,
+        required: [true, 'year is required']
     },
     transmission: {
         type: String,
-        required: [true, 'transmission is required']
+        required: [true, 'Transmission is required']
     },
-    year: {
-        type: Number,
-        required: [true, 'year is required']
+    fuelType: {
+        type: String,
+        required: [true, 'Fuel type is required']
     },
-    isFavorite:{
-      type: Boolean,
-      required: [true, 'isFavorite is required']
+    carType: {
+        type: String,
+        required: [true, 'Car type is required']
+    },
+    drive: {
+        type: String,
+        required: [true, 'Drive is required']
+    },
+    imageFiles: {
+        type: [String],
     },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    isFavorite:{
+        type: Boolean
     }
 });
 

@@ -1,12 +1,10 @@
 'use client'
 import { Form } from '@/components';
 import { CarInfoProps } from '@/types';
-import { useSession } from 'next-auth/react';
-import { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 
-
-const RentACar = () => {
-    const {data:session} = useSession();
+const EditCar = ({ params }: { params: { id: string } }) => {
+    const { id } = params;
     const [carInfo, setCarInfo] = useState<CarInfoProps>({
         carTitle: '',
         location: '',
@@ -28,25 +26,27 @@ const RentACar = () => {
         drive: '',
         imageFiles: [],
     });
+    useEffect(() => {
+        const getCarInfo = async () => {
+            const res = await fetch(`/api/car/${id}`);
+            const data = await res.json();
+            setCarInfo(data);
+        }
+        getCarInfo();
+    }, [id]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // Perform any additional validation or data processing here
         console.log(carInfo);
 
-        // check if there is a user
-        if (!session?.user?.id) {
-            alert('Login/Signup to rent a car.');
-            return;
-        }
-
         try {
-            const response = await fetch(`/api/car/user/${session?.user?.id}`, {
-                method: 'POST',
-                body: JSON.stringify(carInfo),
+            const response = await fetch(`/api/car/user/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(carInfo)
             });
             if (response.ok) {
-                alert('Car has been registered successfully.');
+                alert('Car has been edited successfully.');
             }
             console.log(response);
         } catch (error) {
@@ -57,9 +57,9 @@ const RentACar = () => {
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
-           <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Register car' title='Add your car to rent' handleSubmit={handleSubmit} />
+            <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Edit Car' title='Edit your car to rent' handleSubmit={handleSubmit} />
         </section>
     )
 }
 
-export default RentACar
+export default EditCar

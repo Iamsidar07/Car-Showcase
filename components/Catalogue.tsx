@@ -11,10 +11,12 @@ import Link from 'next/link';
 const Catalogue = ({ allCars, limit }: CatalogueProps) => {
     const router = useRouter();
     const handleClick = () => {
-        const newLimit = ((limit || 20) + 1) * 10;
+        const newLimit = ((limit || 10) + 1) * 10;
         const pathname = updateSearchParams('limit', `${newLimit}`);
         router.push(pathname);
     }
+
+    console.log(allCars?.length>limit,allCars.length,limit);
     return (
         <section id='explore' className='w-full relative mt-12 p-4 md:p-16 max-w-[1440px] mx-auto'>
             <h1 className='font-bold text-2xl md:text-4xl'>Car Catalogue</h1>
@@ -25,9 +27,9 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
             </div>
 
 
-            <div className='flex items-center justify-between'>
+            <div className='flex items-baseline justify-between'>
                 <h2 className='text-gray-500 text-left mt-6'>Recommonded Cars</h2>
-                <Link href={'/view-all'} className='text-blue-600 text-sm'>
+                <Link href={'/view-all'} className='text-blue-600 capitalize'>
                     view all
                 </Link>
             </div>
@@ -42,9 +44,9 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
                 }
 
             </div>
-            <div className='flex items-center justify-between'>
+            <div className='flex items-baseline justify-between'>
                 <h2 className='text-gray-500 text-left mt-6'>Popular Cars</h2>
-                <Link href={'/view-all'} className='text-blue-600 text-sm'>
+                <Link href={'/view-all'} className='text-blue-600 capitalize'>
                     view all
                 </Link>
             </div>
@@ -54,7 +56,7 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
                     allCars?.length === 0 ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars.slice(4).map((car, i) => <CarCard key={i} car={car} />)
+                            allCars.map((car, i) => <CarCard key={i} car={car} />)
                         )
                 }
 
