@@ -44,7 +44,6 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
       await fetch(`/api/favorite/remove/${id}`, {
         method: 'DELETE',
       });
-      console.log('Deleted successfully.');
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +58,6 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
   const url = `/cars?${queryParams}`;
 
   const handleHeartClick = (id: string | undefined) => {
-    console.log(car._id);
     if (!userId) {
       alert('Login/sign in to add to favorite 💖');
       return;
@@ -73,7 +71,7 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
   }
 
   return (
-    <div className='w-full h-fit  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-sm group '>
+    <div className='w-full h-fit  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border md:border-none md:hover:border group '>
       <div className='flex items-center justify-between'>
         <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{car.carTitle}
         </h1>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const ViewAllCars =  ({ searchParams }: { searchParams: FetchCarProps }) => {
     const { manufacturer, year, fuelType, limit, model } = searchParams;
     const [allCars, setAllCars] = useState<CarProps[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchAllCars = async () => {
@@ -16,16 +17,18 @@ const ViewAllCars =  ({ searchParams }: { searchParams: FetchCarProps }) => {
                 setAllCars(data);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchAllCars();
     }, [model, year, manufacturer, fuelType, limit]);
-    console.log(allCars)
+
 
     return (
-        <section className='max-w-[1440px] mx-auto relative pt-16'>
+        <section className='max-w-[1440px] mx-auto relative pt-16 md:pt-24'>
             {
-                allCars && <ShowAllCars allCars={allCars} limit={(limit || 20) / 10} />
+                allCars && <ShowAllCars allCars={allCars} limit={(limit || 20) / 10} isLoading={isLoading}/>
             }
         </section>
     )

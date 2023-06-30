@@ -4,13 +4,11 @@ import { NextRequest } from 'next/server';
 
 export const GET = async (req: NextRequest, { params }: { params: { id: string } }) => {
     const { id } = params;
-    console.log(id);
     try {
         await connectToDatabase();
         const favorites = await Favorite.find({
             creator: id
         }).populate('creator');
-        console.log('Favorites Fetched successfully,', favorites);
         return new Response(JSON.stringify(favorites), { status: 200 });
     } catch (error) {
         console.error(error);

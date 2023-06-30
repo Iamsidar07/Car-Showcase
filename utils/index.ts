@@ -20,7 +20,6 @@ export const fetchCars = async ({ manufacturer, year, model, limit, fuelType }: 
 export const fetchFavoriteCars =async () => {
     try {
         const response = await fetch('/api/favorite');
-        console.log(response);
         return response;
     } catch (error) {
         console.error(error);

@@ -1,16 +1,16 @@
 'use client'
 import { CarCard } from '@/components';
-import { CarProps,} from '@/types';
+import { CarCardSkeleton } from '@/components/skeleton';
+import { CarProps, } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
 
 const Favorites = ({ params }: { params: { id: string } }) => {
-  const [favoriteCars, setFavoriteCars] = useState<CarProps[]>([]);
-  const { data:session } = useSession();
-  const router = useRouter();
   const { id } = params;
-  
+  const [favoriteCars, setFavoriteCars] = useState<CarProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchFavCars = async () => {
@@ -23,15 +23,16 @@ const Favorites = ({ params }: { params: { id: string } }) => {
       } catch (error) {
         console.error(error);
         alert('Something went wrong');
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchFavCars();
-  }, [id,favoriteCars]);
-  console.log(favoriteCars)
+  }, [id, favoriteCars]);
   return (
-    <section className='max-w-[1440px] mx-auto relative pt-16 px-2 md:px-6'>
+    <section className='max-w-[1440px] mx-auto relative pt-16 md:pt-24 px-2 md:px-6'>
       {
-        favoriteCars?.length === 0 ? (
+        (favoriteCars?.length === 0 && (!isLoading)) ? (
           <h1>Nothing to see🥸</h1>
         ) :
           (
@@ -39,6 +40,14 @@ const Favorites = ({ params }: { params: { id: string } }) => {
               {favoriteCars.map((car, i) => <CarCard key={i} car={car} isFavorite />)}
             </div>
           )
+      }
+      {
+        isLoading && (
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4'>
+            {Array(12).fill(0).map((_, i) => <CarCardSkeleton key={i} />)}
+          </div>
+
+        )
       }
     </section>
   )

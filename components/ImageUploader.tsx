@@ -9,7 +9,6 @@ interface ImageUploaderProps {
   carInfo?: CarInfoProps;
 }
 const ImageUploader = ({ handleOnDrop, files, carInfo }: ImageUploaderProps) => {
-  console.log({ files });
   return (
     <Dropzone onDrop={handleOnDrop}>
       {
@@ -18,10 +17,10 @@ const ImageUploader = ({ handleOnDrop, files, carInfo }: ImageUploaderProps) => 
                 <div {...getRootProps()}>
                   <input {...getInputProps()} accept='images/*' />
                   <h1 className='font-bold'>Upload Images</h1>
-                  <div className='w-full h-fit min-h-[150px] md:min-h-[280px] border border-dashed border-gray-400 rounded-lg p-2 mt-3 flex flex-col items-center justify-center bg-[#f5f8ff]'>
+                  <div className='w-full h-fit min-h-[150px] md:min-h-[280px] border border-dashed border-gray-400 rounded-lg p-2 mt-3 flex flex-col items-center justify-center bg-[#f5f8ff] pt-6'>
                     <Image
                       alt='upload icon'
-                      src={'/icons/discord.svg'}
+                      src={'/icons/upload-file.svg'}
                       width={27}
                       height={27}
                       className='object-contain'

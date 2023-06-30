@@ -30,13 +30,11 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
     const { id } = params;
     const { coverImage } = await req.json();
-    console.log({coverImage});
     // update user profile data
     try {
         await connectToDatabase();
         const { url } = await cloudinary.uploader.upload(coverImage);
         const updatedProfile = await User.findByIdAndUpdate(id,{coverImage:url},{ new: true });
-        console.log(url,updatedProfile);
         return NextResponse.json(updatedProfile, { status: 200 });
     } catch (error) {
         console.error({ error });

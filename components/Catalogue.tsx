@@ -7,16 +7,15 @@ import { CatalogueProps, FilterProps } from '@/types';
 import { updateSearchParams } from '@/utils';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { CarCardSkeleton } from './skeleton';
 
-const Catalogue = ({ allCars, limit }: CatalogueProps) => {
+const Catalogue = ({ allCars, limit, isLoading }: CatalogueProps) => {
     const router = useRouter();
     const handleClick = () => {
         const newLimit = ((limit || 10) + 1) * 10;
         const pathname = updateSearchParams('limit', `${newLimit}`);
         router.push(pathname);
     }
-
-    console.log(allCars?.length>limit,allCars.length,limit);
     return (
         <section id='explore' className='w-full relative mt-12 p-4 md:p-16 max-w-[1440px] mx-auto'>
             <h1 className='font-bold text-2xl md:text-4xl'>Car Catalogue</h1>
@@ -36,11 +35,16 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 mt-6'
             >
                 {
-                    allCars?.length === 0 ?
+                    (allCars?.length === 0 && (!isLoading)) ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars.slice(0, 4).map((car, i) => <CarCard key={i} car={car} />)
+                            allCars?.slice(0, 4).map((car, i) => <CarCard key={i} car={car} />)
                         )
+                }
+                {
+                    isLoading && (
+                        Array(4).fill(0).map((_,i)=><CarCardSkeleton key={i}/>)
+                    )
                 }
 
             </div>
@@ -53,11 +57,16 @@ const Catalogue = ({ allCars, limit }: CatalogueProps) => {
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3 mt-6'
             >
                 {
-                    allCars?.length === 0 ?
+                    (allCars?.length === 0 && (!isLoading)) ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars.map((car, i) => <CarCard key={i} car={car} />)
+                            allCars?.map((car, i) => <CarCard key={i} car={car} />)
                         )
+                }
+                {
+                    isLoading && (
+                        Array(8).fill(0).map((_, i) => <CarCardSkeleton key={i} />)
+                    )
                 }
 
             </div>

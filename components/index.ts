@@ -12,6 +12,7 @@ import Provider from './Provider';
 import CustomInput from './CustomInput';
 import ImageUploader from './ImageUploader';
 import Form from './Form';
+import Loader from './Loader';
 export {
     Hero,
     CustomButton,
@@ -26,5 +27,6 @@ export {
     Provider,
     CustomInput,
     ImageUploader,
-    Form
+    Form,
+    Loader
 };

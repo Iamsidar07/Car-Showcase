@@ -14,13 +14,11 @@ interface QueryProps {
 // get all cars
 export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
-    console.log(searchParams);
     const model = searchParams.get('model');
     const limit = searchParams.get('limit');
     const fuelType = searchParams.get('fuelType');
     const year = searchParams.get('year');
     const manufacturer = searchParams.get('manufacturer');
-    console.log(model === 'undefined', limit, fuelType, year, manufacturer);
     try {
         await connectToDatabase();
         let query: QueryProps = {
@@ -37,9 +35,9 @@ export const GET = async (req: NextRequest) => {
         if (manufacturer !== 'undefined') {
             query.manufacturer = manufacturer;
         }
-        console.log(query);
+
         const allCars = await Car.find(query).limit(parseInt(limit || '25'));
-        console.log({allCars});
+
         return NextResponse.json(allCars, { status: 200 });
     } catch (error) {
         console.error({ error });

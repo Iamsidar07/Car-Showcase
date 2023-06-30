@@ -14,11 +14,9 @@ cloudinary.config({
 // get all cars specific to user
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
     const { id } = params;
-    console.log({id});
     try {
         await connectToDatabase();
         const allCars = await Car.find({ creator: id }).populate('creator');
-        console.log(allCars);
         return NextResponse.json(allCars, { status: 200 });
     } catch (error) {
         console.error({ error });
@@ -45,7 +43,6 @@ export const DELETE = async (req: Request, { params }: { params: { id: string } 
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
     const { id } = params;
     const carInfo = await req.json();
-    console.log({carInfo});
 
     try {
         await connectToDatabase();
@@ -56,10 +53,11 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
         });
         //all photos urls
         const photosUrl = await Promise.all(photoUploadPromises);
+        carInfo.imageFiles = photosUrl;
         const updatedCar = await Car.findByIdAndUpdate(id,{
             ...carInfo,
-            imageFiles: photosUrl,
-        })
+            imageFiles:photosUrl
+        });
         return NextResponse.json(updatedCar, { status: 201 });
     } catch (error) {
         console.error({ error });
@@ -73,7 +71,6 @@ export const POST = async (req: Request, { params }: { params: { id: string } })
     const { id } = params;
     //all info
     const carInfo = await req.json();
-    console.log(carInfo);
 
     try {
         await connectToDatabase();
