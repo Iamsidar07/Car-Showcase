@@ -40,7 +40,7 @@ const CarCardSkeleton = () => {
 
               </div>
               <div className='flex items-center justify-between mt-6'>
-                  <div className='relative w-[30px] h-6 '>
+                  <div className='relative w-12 h-3 bg-gray-400 '>
                       
                   </div>
                   <div className='w-32 h-10 rounded bg-gray-400'></div>
