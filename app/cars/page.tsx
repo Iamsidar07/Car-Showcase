@@ -1,8 +1,8 @@
-import { Car } from '@/types';
+import { CarProps } from '@/types';
 import { generateCarImageUrl } from '@/utils';
 import Image from 'next/image';
 
-const CardDetails = ({ searchParams }: { searchParams: Car }) => {
+const CardDetails = ({ searchParams }: { searchParams: CarProps }) => {
     const car = searchParams;
     return (
         <section className='relative max-w-[1440px] mx-auto overflow-hidden'>
@@ -51,7 +51,7 @@ const CardDetails = ({ searchParams }: { searchParams: Car }) => {
                     </div>
                 </div>
                 <div className='w-full max-w-lg h-full flex flex-col text-left gap-3 px-4 py-3 md:p-6 bg-white'>
-                    <h1 className='font-bold text-lg md:text-3xl capitalize'>{car.make} {car.model}</h1>
+                    <h1 className='font-bold text-lg md:text-3xl capitalize'>{car.carTitle}</h1>
                     {
                         Object.entries(car).map(([key, value], i) => <div key={i} className='flex items-center justify-between gap-2'>
                             <p className='text-gray-400 capitalize'>{key.replaceAll('_', ' ')}</p>
