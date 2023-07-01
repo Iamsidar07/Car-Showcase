@@ -10,7 +10,7 @@ const Profile = () => {
     const { data: session } = useSession();
     const router = useRouter();
     const [coverImageSource, setCoverImageSource] = useState<string | null>(null);
-    const [accepetedFile, SetAcceptedFile] = useState<File>();
+    const [acceptedFile, setAcceptedFile] = useState<File>();
     const [cars, setCars] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -19,17 +19,27 @@ const Profile = () => {
         if (file) {
             const url = `${URL.createObjectURL(file[0])}`;
             setCoverImageSource(url);
-            SetAcceptedFile(file[0]);
+            setAcceptedFile(file[0]);
         }
     }
 
 
     useEffect(() => {
         const getUserProfile = async () => {
-            const res = await fetch(`/api/profile/${session?.user?.id}`);
-            const data = await res.json();
-            setCoverImageSource(data.coverImage);
-        };
+            try {
+                const res = await fetch(`/api/profile/${session?.user?.id}`);
+                if (!res.ok) {
+                    throw new Error('Failed to fetch user profile data');
+                }
+                const userProfile = await res.json();
+                setCoverImageSource(userProfile.coverImage);
+            } catch (error) {
+                // Handle the error and provide appropriate user feedback
+                console.error(error);
+                // Display an error message to the user
+                alert('Failed to fetch user profile data. Please try again later.');
+            }
+        }
 
 
         const getCars = async () => {
@@ -65,7 +75,7 @@ const Profile = () => {
                 } catch (error) {
                     alert('Failed to update cover photo.')
                 } finally {
-                    SetAcceptedFile(undefined);
+                    setAcceptedFile(undefined);
                 }
             };
             reader.onerror = () => {
@@ -73,11 +83,11 @@ const Profile = () => {
                 console.error(reader.error);
             }
         };
-        if (accepetedFile) {
-            getBase64(accepetedFile);
+        if (acceptedFile) {
+            getBase64(acceptedFile);
         }
 
-    }, [session?.user?.id, accepetedFile]);
+    }, [session?.user?.id, acceptedFile]);
 
     const handleDelete = async (_id: string) => {
         const doYouReallyWannaToDelete = confirm('Do you really want to delete?');
@@ -95,7 +105,6 @@ const Profile = () => {
     const handleEdit = async (_id: string) => {
         router.push(`/cars/edit/${_id}`);
     }
-
 
     return (
         <section className=' relative pt-16 md:pt-24 '>
@@ -124,7 +133,7 @@ const Profile = () => {
                 </div>
                 <div className='mt-12 p-2'>
                     {
-                        (cars.length === 0 && (!isLoading)) ? (
+                        (cars.length === 0 && ((!isLoading))) ? (
                             <h1>Add your first car...</h1>
                         ) : <div>
                             <h1 className='text-lg md:text-2xl font-bold'>My Cars</h1>
