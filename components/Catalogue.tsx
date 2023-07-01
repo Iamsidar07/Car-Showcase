@@ -26,8 +26,8 @@ const Catalogue = ({ allCars, limit, isLoading }: CatalogueProps) => {
             </div>
 
 
-            <div className='flex items-baseline justify-between'>
-                <h2 className='text-gray-500 text-left mt-6'>Recommonded Cars</h2>
+            <div className='flex items-baseline justify-between mt-12'>
+                <h2 className='font-bold text-left text-lg md:text-2xl'>🚀 Recommendations</h2>
                 <Link href={'/view-all'} className='text-blue-600 capitalize'>
                     view all
                 </Link>
@@ -48,8 +48,8 @@ const Catalogue = ({ allCars, limit, isLoading }: CatalogueProps) => {
                 }
 
             </div>
-            <div className='flex items-baseline justify-between'>
-                <h2 className='text-gray-500 text-left mt-6'>Popular Cars</h2>
+            <div className='flex items-baseline justify-between mt-12'>
+                <h2 className='font-bold text-left text-lg md:text-2xl'>🔥 Hot Collections</h2>
                 <Link href={'/view-all'} className='text-blue-600 capitalize'>
                     view all
                 </Link>
@@ -60,7 +60,7 @@ const Catalogue = ({ allCars, limit, isLoading }: CatalogueProps) => {
                     (allCars?.length === 0 && (!isLoading)) ?
                         (<p className='text-center text-xl w-full'>No cars found</p>) :
                         (
-                            allCars?.map((car, i) => <CarCard key={i} car={car} />)
+                            allCars?.reverse()?.map((car, i) => <CarCard key={i} car={car} />)
                         )
                 }
                 {

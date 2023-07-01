@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, useEffect, useState } from "react"
+import toast from 'react-hot-toast';
 
 const Profile = () => {
     const { data: session } = useSession();
@@ -37,11 +38,19 @@ const Profile = () => {
                 // Handle the error and provide appropriate user feedback
                 console.error(error);
                 // Display an error message to the user
-                alert('Failed to fetch user profile data. Please try again later.');
+                toast.error('Failed to fetch user profile data. Please try again later.')
             }
         }
 
+        toast.promise(getUserProfile(), {
+            loading: 'Fetching user profile...',
+            success: 'Fetched user profile successfully.',
+            error: 'Failed to fetch user profile.',
+        });
 
+    }, [session?.user?.id, cars]);
+
+    useEffect(()=>{
         const getCars = async () => {
             try {
                 const res = await fetch(`/api/car/user/${session?.user?.id}`);
@@ -53,30 +62,41 @@ const Profile = () => {
                 setIsLoading(false);
             }
         }
-        getUserProfile();
-        getCars();
-    }, [session?.user?.id, cars]);
+        toast.promise(getCars(), {
+            loading: 'Fetching cars...',
+            success: 'Fetched cars successfully.',
+            error: 'Failed to fetch cars.',
+        });
+    },[session?.user?.id])
 
+    
     useEffect(() => {
         const getBase64 = (file: File) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = async () => {
-                try {
-                    const res = await fetch(`/api/profile/${session?.user?.id}`, {
-                        method: 'PATCH',
-                        body: JSON.stringify({
-                            coverImage: reader.result
-                        })
-                    });
-                    if (res.ok) {
-                        alert('Cover Image Updated.');
+            reader.onload = ()=>{
+                const updateCoverImage = async () => {
+                    try {
+                        const res = await fetch(`/api/profile/${session?.user?.id}`, {
+                            method: 'PATCH',
+                            body: JSON.stringify({
+                                coverImage: reader.result
+                            })
+                        });
+                        if (res.ok) {
+                            toast.success('Cover Image Updated.');
+                        }
+                    } catch (error) {
+                        toast.error('Failed to update cover photo.')
+                    } finally {
+                        setAcceptedFile(undefined);
                     }
-                } catch (error) {
-                    alert('Failed to update cover photo.')
-                } finally {
-                    setAcceptedFile(undefined);
                 }
+                toast.promise(updateCoverImage,{
+                    loading:'Updating cover image...',
+                    success:'Updated cover image.',
+                    error:(err)=>err.message
+                })
             };
             reader.onerror = () => {
                 // log the error
@@ -87,20 +107,30 @@ const Profile = () => {
             getBase64(acceptedFile);
         }
 
-    }, [session?.user?.id, acceptedFile]);
+    }, [session?.user?.id, acceptedFile,]);
 
     const handleDelete = async (_id: string) => {
         const doYouReallyWannaToDelete = confirm('Do you really want to delete?');
         if (!doYouReallyWannaToDelete) return;
-        try {
-            await fetch(`/api/car/user/${_id}`, {
-                method: 'DELETE'
-            })
-        } catch (error) {
-            alert('failed to delete.');
-        } finally {
-            alert('deleted successfully.');
-        }
+        toast.promise(
+            (async () => {
+                try {
+                    const res = await fetch(`/api/car/user/${_id}`, {
+                        method: 'DELETE',
+                    });
+                    if (!res.ok) throw new Error('Failed to delete.');
+                    return;
+                } catch (error) {
+                    console.error(error);
+                    throw error;
+                }
+            })(),
+            {
+                loading: 'Deleting...',
+                success: 'Deleted successfully.',
+                error: (error) => error.message,
+            }
+        );
     };
     const handleEdit = async (_id: string) => {
         router.push(`/cars/edit/${_id}`);
@@ -114,7 +144,7 @@ const Profile = () => {
                 }
             </div>
             <div className='max-w-[1440px] mx-auto'>
-                <div className={`relative bg-zinc-600`}>
+                <div className={`relative bg-[#d3bdad]`}>
                     <div className='py-1.5 md:py-2.5 px-5 bg-white/30 backdrop-blur rounded-full absolute right-2 bottom-2 shadow text-sm '>
                         <label htmlFor='file-input' className='flex items-center cursor-pointer'>
                             <Image src={'/icons/edit.svg'} alt='file uploader icon' width={20} height={20} className='object-contain mr-2' />
@@ -133,13 +163,13 @@ const Profile = () => {
                 </div>
                 <div className='mt-12 p-2'>
                     {
-                        (cars.length === 0 && ((!isLoading))) ? (
+                        (cars?.length === 0 && ((!isLoading))) ? (
                             <h1>Add your first car...</h1>
                         ) : <div>
                             <h1 className='text-lg md:text-2xl font-bold'>My Cars</h1>
                             <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2'>
                                 {
-                                    cars.map((car, index) => (
+                                    cars?.map((car, index) => (
                                         <CarCard key={index} car={car} handleDelete={handleDelete} handleEdit={handleEdit} />
                                     ))
                                 }

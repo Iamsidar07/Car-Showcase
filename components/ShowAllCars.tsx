@@ -42,13 +42,14 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
   let filteredCars = allCars.filter((car) => {
     const { brand, cylinders, rentPriceRange, type, drive, fuelType } = filters;
     const calcRentalPrice = car.rentPrice;
+
     return (
-      (brand.length === 0 || brand.includes(car.manufacturer) || brand.includes(car.model) || brand.includes(car.carTitle)) &&
+      (brand.length === 0 || brand.includes(car.manufacturer.replaceAll(' ','').toLowerCase()) || brand.includes(car.model.replaceAll(' ','').toLowerCase()) || brand.includes(car.carTitle.replaceAll(' ','').toLowerCase())) &&
       (cylinders.length === 0 || cylinders.includes(`${car.cylinders}`)) &&
       (rentPriceRange === '' || calcRentalPrice <= parseInt(rentPriceRange)) &&
-      (type.length === 0 || type[0].includes(car.typeOfclass.replaceAll(' ', '').toLowerCase())) &&
-      (drive.length === 0 || drive.includes(car.drive)) &&
-      (fuelType.length === 0 || car.fuelType.includes(fuelType[0]))
+      (type.length === 0 || car.typeOfclass.replaceAll(' ', '').toLowerCase().includes(type[0])) &&
+      (drive.length === 0 || drive.includes(car.drive.toLowerCase())) &&
+      (fuelType.length === 0 || car.fuelType.replaceAll(' ','').toLowerCase().includes(fuelType[0]))
 
     );
   });
@@ -141,7 +142,7 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
           </div>
         </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4  gap-2 md:gap-3  px-2 w-full h-fit'
+        <div className='grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3  gap-2 md:gap-3  px-2 w-full h-fit  '
         >
           {
             (((filteredCars?.length === 0) || (searchCarResults.length === 0 && searchInputVal)) && (!isLoading)) ?

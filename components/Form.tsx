@@ -8,6 +8,7 @@ import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import { yearsOfProduction } from '@/constants';
 import Loader from './Loader';
+import toast from 'react-hot-toast';
 interface AddCarProps {
     carInfo: CarInfoProps;
     setCarInfo: React.Dispatch<React.SetStateAction<CarInfoProps>>;
@@ -59,7 +60,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoad
     // Handle drop files
     const handleOnDrop = (files: File[]) => {
         if (files.length > 5) {
-            alert('You can upload upto 4 images only');
+            toast('You can upload upto 4 images only');
             return;
         }
         setAccepetedFiles(files);
@@ -89,7 +90,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoad
                     <CustomInput label='Manufacturer' name='manufacturer' placeholder='Enter manufacturer of car.' value={carInfo.manufacturer} onChange={handleInputChange} />
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Cylinders</h2>
-                        <CustomSelect label='Cylinders' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: '4', value: '4' }, { title: '6', value: '6' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' parentContainerStyle='z-40' name='cylinders' />
+                        <CustomSelect label='Cylinders' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: '4', value: '4' }, { title: '6', value: '6' }]} containerStyle='border rounded-md py-3' parentContainerStyle='z-40' name='cylinders' />
                     </div>
                 </div>
                 <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
@@ -98,26 +99,26 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoad
                     <CustomInput label='Highway MPG' name='highwayMPG' placeholder='24' type='number' value={carInfo.highwayMPG} onChange={handleInputChange} />
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Model Year</h2>
-                        <CustomSelect label='year' onChange={(value, name) => handleSelectChange(value, name)} options={yearsOfProduction} containerStyle='rounded-sm bg-[#f5f8ff] py-3' parentContainerStyle='z-20' name='year' />
+                        <CustomSelect label='year' onChange={(value, name) => handleSelectChange(value, name)} options={yearsOfProduction} containerStyle='border rounded-md py-3' parentContainerStyle='z-20' name='year' />
                     </div>
                 </div>
 
                 <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Transmission</h2>
-                        <CustomSelect label='Transmission' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'A', value: 'a' }, { title: 'M', value: 'm' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' name='transmission' />
+                        <CustomSelect label='Transmission' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'A', value: 'a' }, { title: 'M', value: 'm' }]} containerStyle='border rounded-md py-3' name='transmission' />
                     </div>
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Fuel Type</h2>
-                        <CustomSelect label='Fuel Type' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'Fuel', value: 'fuel' }, { title: 'Gas', value: 'gas' }, { title: 'Electricity', value: 'electricity' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' name='fuelType' />
+                        <CustomSelect label='Fuel Type' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'Fuel', value: 'fuel' }, { title: 'Gas', value: 'gas' }, { title: 'Electricity', value: 'electricity' }]} containerStyle='border rounded-md py-3' name='fuelType' />
                     </div>
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Car Type</h2>
-                        <CustomSelect label='Car Type' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'Kia', value: 'kia' }, { title: 'BMW', value: 'bmw' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' name='carType' />
+                        <CustomSelect label='Car Type' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'Kia', value: 'kia' }, { title: 'BMW', value: 'bmw' }]} containerStyle='border rounded-md py-3' name='carType' />
                     </div>
                     <div className='w-full'>
                         <h2 className='mb-2 font-bold'>Drive</h2>
-                        <CustomSelect label='Drive' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'FWD', value: 'fwd' }, { title: 'AWD', value: 'awd' }]} containerStyle='rounded-sm bg-[#f5f8ff] py-3' name='drive' />
+                        <CustomSelect label='Drive' onChange={(value, name) => handleSelectChange(value, name)} options={[{ title: 'FWD', value: 'fwd' }, { title: 'AWD', value: 'awd' }]} containerStyle='border rounded-md py-3' name='drive' />
                     </div>
                 </div>
                 <ImageUploader files={accepetedFiles} handleOnDrop={handleOnDrop} carInfo={carInfo} />

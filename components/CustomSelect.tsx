@@ -8,7 +8,7 @@ const CustomSelect = ({ options, onChange, label, containerStyle, parentContaine
     const [selectedOption, setSelectedOption] = useState(label);
     return (
         <div className={`w-full  relative ${parentContainerStyle}`}>
-            <button type='button' className={`flex items-center justify-between px-4 py-2.5 rounded w-full text-sm relative min-w-[130px] ${containerStyle}`}
+            <button type='button' className={`flex items-center justify-between px-4 py-2.5 w-full text-sm relative min-w-[130px] ${containerStyle}`}
                 onClick={() => setIsShownOptions(true)}
             >
                 <span className='block truncate text-sm capitalize'>{selectedOption}</span>

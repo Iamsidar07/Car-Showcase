@@ -3,6 +3,7 @@ import { manufacturers } from '@/constants';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const Searchbar = () => {
     const router = useRouter();
@@ -28,7 +29,7 @@ const Searchbar = () => {
     const handleSearch = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (manufacturer === '' && carName === '') {
-            return alert('Plase enter a manufacturer or car name');
+            return toast('Plase enter a manufacturer or car name');
         }
         updateSearchParams(carName.toLowerCase(), manufacturer.toLowerCase());
     }

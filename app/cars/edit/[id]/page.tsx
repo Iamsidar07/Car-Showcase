@@ -2,6 +2,7 @@
 import { Form } from '@/components';
 import { CarInfoProps } from '@/types';
 import React, { FormEvent, useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 
 const EditCar = ({ params }: { params: { id: string } }) => {
     const { id } = params;
@@ -34,31 +35,42 @@ const EditCar = ({ params }: { params: { id: string } }) => {
                 const data = await res.json();
                 setCarInfo(data);
             } catch (error) {
-                alert('Something went wrong!');
+                toast.error('Something went wrong!');
+                
                 console.error(error);
             }
         }
+        toast.promise(getCarInfo(),{
+            loading:'Fetching car details..',
+            success:'Fetched car detail.',
+            error:(err)=>err.message
+        })
         getCarInfo();
     }, [id]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true);
-        // Perform any additional validation or data processing here
-        try {
-            const response = await fetch(`/api/car/user/${id}`, {
-                method: 'PATCH',
-                body: JSON.stringify(carInfo)
-            });
-            if (response.ok) {
-                alert('Car has been edited successfully.');
+        toast.promise((async()=>{
+            try {
+                const response = await fetch(`/api/car/user/${id}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(carInfo)
+                });
+                if (response.ok) {
+                    toast.success('Car has been edited successfully.');
+                }
+            } catch (error) {
+                console.error(error);
+                toast.error('Something went wrong!');
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            console.error(error);
-            alert('Something went wrong!');
-        } finally {
-            setIsLoading(false);
-        }
+        })(),{
+            loading:'Editing car details...',
+            success:'Edited successfully.',
+            error:(err)=>err.message
+        })
     };
 
     return (
