@@ -101,12 +101,12 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
 
   return (
     <section className='w-full'>
-      <div className='flex flex-col md:flex-row gap-4'>
+      <div className='flex flex-col md:flex-row gap-4 '>
         <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2 flex items-center' onClick={() => setIsShownFilter((prevState) => !prevState)}>
           <span>Filters</span>
           <Image src={'/icons/filter.svg'} alt='filter icon' width={17} height={17} className='object-contain ml-1' />
         </button>
-        <div className={`px-4 md:p-6 py-3 md:flex  md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter ? 'flex' : 'hidden'}`}>
+        <div className={`px-4 md:p-6 py-3 md:flex mx-2  md:mx-0 md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter ? 'flex' : 'hidden'}`}>
           {/* <Searchbar /> */}
           <div className='items-center py-1.5 border-b-[0.5px] hidden md:flex '>
             <Image
