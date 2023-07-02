@@ -92,7 +92,7 @@ const Profile = () => {
                         setAcceptedFile(undefined);
                     }
                 }
-                toast.promise(updateCoverImage,{
+                toast.promise(updateCoverImage(),{
                     loading:'Updating cover image...',
                     success:'Updated cover image.',
                     error:(err)=>err.message
