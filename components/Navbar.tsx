@@ -66,16 +66,9 @@ const Navbar = () => {
               </>
 
             ) : (
-              <div className='flex items-center gap-3'>
-                {providers && Object.values(providers).map((provider: any) => <CustomButton
-                  key={provider.id}
-                  handleClick={() => signIn(provider.id)}
-                  type='button'
-                  title={`${provider.name}`}
-                  containerStyle='bg-white text-blue-500 border rounded-full'
-                />
-                )}
-              </div>
+                <Link href={'/user/login'}>
+                  <CustomButton title='Login' type='button' containerStyle='bg-white rounded-full border text-blue-500 w-full' />
+                </Link>
             )
           }
         </div>
@@ -123,16 +116,9 @@ const Navbar = () => {
                   </>
 
                 ) : (
-                  <div className='flex flex-col gap-2'>
-                    {providers && Object.values(providers).map((provider: any) => <CustomButton
-                      key={provider.id}
-                      handleClick={() => signIn(provider.id)}
-                      type='button'
-                      title={`${provider.name}`}
-                      containerStyle='bg-white text-blue-500 border rounded-full w-full'
-                    />
-                    )}
-                  </div>
+                    <Link href={'/user/login'}>
+                      <CustomButton title='Login' type='button' containerStyle='bg-white rounded-md border text-blue-500 w-full' />
+                    </Link>
                 )
               }
             </div>

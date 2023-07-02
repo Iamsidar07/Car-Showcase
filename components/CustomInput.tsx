@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 interface CustomInputProps {
     label:string;
     placeholder:string;
@@ -8,7 +9,7 @@ interface CustomInputProps {
 }
 const CustomInput = ({  label, placeholder,name, type = 'text',value,onChange}:CustomInputProps) => {
     if (placeholder.length === 250) {
-        alert('Reached max length');
+        toast('Reached max length');
     }
     return (
         <div className='flex flex-col w-full gap-2'>
@@ -19,7 +20,7 @@ const CustomInput = ({  label, placeholder,name, type = 'text',value,onChange}:C
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder.slice(0,251)}
-                className='pl-4 py-2.5 bg-[#f5f8ff] rounded-lg outline-none w-full'
+                className='pl-4 py-2.5 bg-transparent rounded-md border outline-none w-full'
             />
         </div>
     )

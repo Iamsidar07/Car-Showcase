@@ -2,7 +2,8 @@
 import { Form } from '@/components';
 import { CarInfoProps } from '@/types';
 import { useSession } from 'next-auth/react';
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 
 
 const RentACar = () => {
@@ -37,24 +38,29 @@ const RentACar = () => {
 
         // check if there is a user
         if (!session?.user?.id) {
-            alert('Login/Signup to rent a car.');
+            toast('Login/Signup to rent a car.');
             return;
         }
-
-        try {
-            const response = await fetch(`/api/car/user/${session?.user?.id}`, {
-                method: 'POST',
-                body: JSON.stringify(carInfo),
-            });
-            if (response.ok) {
-                alert('Car has been registered successfully.');
+        toast.promise((async()=>{
+            try {
+                const response = await fetch(`/api/car/user/${session?.user?.id}`, {
+                    method: 'POST',
+                    body: JSON.stringify(carInfo),
+                });
+                if (response.ok) {
+                    toast.success('Car has been registered successfully.');
+                }
+            } catch (error) {
+                console.error(error);
+                toast.error('Something went wrong!');
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            console.error(error);
-            alert('Something went wrong!');
-        }finally{
-            setIsLoading(false);
-        }
+        })(),{
+            loading: 'Registering car...',
+            success: 'Car registered successfully.',
+            error:(err)=>err.message,
+        })
     };
 
     return (

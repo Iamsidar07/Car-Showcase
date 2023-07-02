@@ -19,22 +19,13 @@ const CarCardSkeleton = () => {
           </div>
           <div className='w-full mt-2 p-2 h-fit'>
               <div className='flex w-full items-center justify-between gap-4'>
-                  <div className='flex flex-col items-center justify-center space-y-2 w-full'>
-                      <div className='w-[30px] h-[30px] rounded-full bg-gray-400'>
-
-                      </div>
+                  <div className='flex gap-2 items-center justify-center max-w-xs w-full'>
                       <span className='text-gray-400 text-sm h-3 bg-gray-400 w-full'></span>
                   </div>
-                  <div className='flex flex-col items-center justify-center space-y-2 w-full'>
-                      <div className='w-[30px] h-[30px] rounded-full bg-gray-400'>
-
-                      </div>
+                  <div className='flex gap-2 items-center justify-center max-w-xs w-full'>
                       <span className='text-gray-400 text-sm h-3 bg-gray-400 w-full'></span>
                   </div>
-                  <div className='flex flex-col items-center justify-center space-y-2 w-full'>
-                      <div className='w-[30px] h-[30px] rounded-full bg-gray-400'>
-
-                      </div>
+                  <div className='flex gap-2 items-center justify-center max-w-xs w-full'>
                       <span className='text-gray-400 text-sm h-3 bg-gray-400 w-full'></span>
                   </div>
 

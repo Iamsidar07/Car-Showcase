@@ -1,12 +1,12 @@
 'use client'
 import Image from 'next/image';
 import CustomButton from './CustomButton';
-import { CardCardProps, FavoriteCarProps } from '@/types';
+import { CardCardProps } from '@/types';
 import Link from 'next/link';
-import { generateCarImageUrl } from '@/utils';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) => {
   const { data: session } = useSession();
@@ -24,42 +24,41 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
         })
       });
       if (response.ok) {
-        alert('Added to favorite');
+        toast.success('Added to favorite');
       }
       if (response.status === 409) {
-        alert('Already added to favorite');
+        toast('Already added to favorite');
       }
     } catch (error) {
       console.error(error);
+      toast.error('Failed to add favorite.');
+
     }
   }
   const removeFromFavorite = async (id: string | undefined) => {
     if (!id) {
-      alert('Missing id');
+      toast('Missing id');
       return;
     }
     const isReallyWantToDelete = confirm(`Do you really want to delete this car with id:${id}`);
     if (!isReallyWantToDelete) return;
     try {
-      await fetch(`/api/favorite/remove/${id}`, {
+      const res = await fetch(`/api/favorite/remove/${id}`, {
         method: 'DELETE',
       });
+      if (res.ok) {
+        toast.success('Removed from favorite');
+      }
+
     } catch (error) {
       console.error(error);
+      toast.error('Failed to remove from favorite.');
     }
   }
 
-  // Convert the car object into a compatible format
-  const queryParams = Object.entries(car)
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-    .join('&');
-
-  // Construct the URL with the query string
-  const url = `/cars?${queryParams}`;
-
   const handleHeartClick = (id: string | undefined) => {
     if (!userId) {
-      alert('Login/sign in to add to favorite 💖');
+      toast('Login/sign in to add to favorite 💖');
       return;
     }
     if (isFavoriteBtnActive) {
@@ -71,7 +70,7 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
   }
 
   return (
-    <div className='w-full h-fit  max-w-lg bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border md:border-none md:hover:border group '>
+    <div className='w-full h-fit  max-w-lg mx-auto bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border group  '>
       <div className='flex items-center justify-between'>
         <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{car.carTitle}
         </h1>
@@ -98,35 +97,35 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
       </div>
       <div className='w-full mt-2 p-2 h-fit'>
         <div className='flex w-full items-center justify-between '>
-          <div className='flex flex-col items-center justify-center space-y-2'>
+          <div className='flex  items-center justify-center gap-1'>
             <Image
               src={'/icons/steering-wheel.svg'}
               alt='steering wheel'
-              width={20}
-              height={20}
+              width={15}
+              height={15}
               className='object-contain'
             />
-            <span className='text-gray-400 text-sm'>Automatic</span>
+            <span className='text-gray-400 text-sm'>Manual</span>
           </div>
-          <div className='flex flex-col items-center justify-center space-y-2'>
+          <div className='flex  items-center justify-center gap-1'>
             <Image
-              src={'/icons/tire.svg'}
-              alt='tire'
-              width={20}
-              height={20}
+              src={'/icons/fuel-tank.svg'}
+              alt='fuel-tank'
+              width={15}
+              height={15}
               className='object-contain'
             />
-            <span className='text-gray-400 text-sm uppercase'>{car.drive}</span>
+            <span className='text-gray-400 text-sm'>{car.fuelCapacity}L</span>
           </div>
-          <div className='flex flex-col items-center justify-center space-y-2'>
+          <div className='flex  items-center justify-center gap-1'>
             <Image
-              src={'/icons/gas.svg'}
-              alt='gas'
-              width={20}
-              height={20}
+              src={'/icons/people.svg'}
+              alt='people'
+              width={15}
+              height={15}
               className='object-contain'
             />
-            <span className='text-gray-400 text-sm'>{car.combinationMPG} MPG</span>
+            <span className='text-gray-400 text-sm '>{car.capacity} People</span>
           </div>
 
         </div>
@@ -136,7 +135,7 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
             <span className='text-lg md:text-2xl font-bold text-center ml-2'>{car.rentPrice?.toFixed(2)}</span>
             <span className='absolute bottom-0 text-xs font-bold'>/day</span>
           </div>
-          <Link href={url} >
+          <Link href={`/cars/${car._id}`} >
             <CustomButton
               title='More Info'
               type='button'

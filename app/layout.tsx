@@ -1,6 +1,7 @@
 import { Footer, Navbar, Provider } from '@/components';
 import '@/styles/globals.css';
 import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: 'Carshub',
@@ -23,6 +24,10 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <Toaster
+            position="top-left"
+            reverseOrder={false}
+          />
         </body>
       </html>
     </Provider>
