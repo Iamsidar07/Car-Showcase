@@ -20,7 +20,7 @@ const Navbar = () => {
     setupProviders();
   }, []);
   return (
-    <nav className='absolute z-10 left-0 right-0 w-full'>
+    <nav className='absolute z-10 left-0 right-0 w-full bg-gradient-to-t from-white/90 to-white bg-opacity-30 backdrop-blur'>
       <div className='flex items-center justify-between px-2 md:px-6 max-w-[1440px] mx-auto'>
         <Link href={'/'} className='h-16 w-32' >
           <Image

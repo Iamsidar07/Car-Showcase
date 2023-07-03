@@ -137,8 +137,8 @@ const Profile = () => {
     }
 
     return (
-        <section className=' relative pt-16 md:pt-24 '>
-            <div className='relative h-52 md:h-64'>
+        <section className=' relative pt-16 '>
+            <div className='relative h-52 md:h-72'>
                 {
                     coverImageSource && <Image src={coverImageSource || '/images/car.webp'} quality={100} alt='cover photo' fill className='object-cover w-full bg-top h-full ' />
                 }
