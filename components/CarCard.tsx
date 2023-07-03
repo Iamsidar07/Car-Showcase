@@ -40,7 +40,7 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
       toast('Missing id');
       return;
     }
-    const isReallyWantToDelete = confirm(`Do you really want to delete this car with id:${id}`);
+    const isReallyWantToDelete = confirm(`Do you really want to remove this car with id:${id} from favorites.`);
     if (!isReallyWantToDelete) return;
     try {
       const res = await fetch(`/api/favorite/remove/${id}`, {
@@ -80,7 +80,7 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
             alt='favorite buttn'
             width={20}
             height={20}
-            className={`object-contain cursor-pointer`}
+            className={`object-contain cursor-pointer ${isFavoriteBtnActive && "scale-150 transition-transform duration-150 ease-in"}`}
           />
         </button>
       </div>
