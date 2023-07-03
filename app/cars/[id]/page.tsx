@@ -38,12 +38,12 @@ const CardDetails = ({ params }: { params: { id: string } }) => {
                             <h1 className='text-lg md:text-2xl font-semibold capitalize'>{car.carTitle}</h1>
                             <p className='mt-1 text-xs md:text-sm text-gray-500 capitalize'>{car.manufacturer} | {car.model}</p>
                             <Image
-                            src={car.imageFiles[0]}
+                            src={generateCarImageUrl(car)}
                             alt={car.carTitle}
                             fill
                             className='object-contain mt-2 scale-110'
                             />
-                            <div className='absolute bottom-4 '>
+                            <div className='absolute -bottom-4 '>
                                 <span className='absolute top-0 text-sm font-bold'>$</span>
                                 <span className='text-lg md:text-2xl font-bold text-center ml-2'>{car.rentPrice?.toFixed(2)}</span>
                                 <span className='absolute bottom-0 text-sm font-bold'>/day</span>
