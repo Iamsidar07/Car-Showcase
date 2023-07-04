@@ -67,7 +67,7 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoad
     }
 
     return (
-        <form className='max-w-[1440px] mx-auto bg-white dark:bg-slate-800 dark:border-slate-700 border p-3 md:p-5 rounded-lg' onSubmit={handleSubmit}>
+        <form className='max-w-[1440px] mx-auto bg-white dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  dark:border-slate-700 border p-3 md:p-5 rounded-lg' onSubmit={handleSubmit}>
             <h1 className='text-lg font-bold'>{title}</h1>
             <p className='text-gray-400 text-sm font-light'>Please enter your car ℹ️info.</p>
             <h2 className='text-xl md:text-2xl text-blue-500 tracking-wide font-bold my-6 uppercase'>Car info</h2>

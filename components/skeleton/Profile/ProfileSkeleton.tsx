@@ -4,7 +4,7 @@ import CarCardSkeleton from '../CarCard/CarCardSkeleton'
 const ProfileSkeleton = () => {
     return (
         <section className=' relative pt-16 md:pt-16 animate-pulse '>
-            <div className='relative h-52 md:h-64 bg-gray-400 dark:bg-slate-800'>
+            <div className='relative h-52 md:h-64 bg-gray-400 dark:bg-gradient-radial from-slate-700 to-slate-900 '>
             </div>
             <div className='max-w-[1440px] mx-auto'>
                 <div className={`relative bg-zinc-600`}>

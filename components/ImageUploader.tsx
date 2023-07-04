@@ -17,7 +17,7 @@ const ImageUploader = ({ handleOnDrop, files, carInfo }: ImageUploaderProps) => 
                 <div {...getRootProps()}>
                   <input {...getInputProps()} accept='images/*' />
                   <h1 className='font-bold'>Upload Images</h1>
-                  <div className='w-full h-fit min-h-[150px] md:min-h-[280px] border border-dashed border-gray-400 rounded-lg p-2 mt-3 flex flex-col items-center justify-center bg-[#f5f8ff] dark:bg-slate-700 dark:border-slate-600 pt-6'>
+              <div className='w-full h-fit min-h-[150px] md:min-h-[280px] border border-dashed border-gray-400 rounded-lg p-2 mt-3 flex flex-col items-center justify-center bg-[#f5f8ff] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  dark:border-zinc-600  pt-6'>
                     <Image
                       alt='upload icon'
                       src={'/icons/upload-file.svg'}

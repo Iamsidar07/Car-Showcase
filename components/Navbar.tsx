@@ -7,7 +7,7 @@ import { getProviders, signIn, signOut, useSession } from 'next-auth/react';
 import ThemeSwitcher from './theme/ThemeSwitcher';
 import { BsGithub, BsTwitter } from 'react-icons/bs';
 import { useTheme } from 'next-themes';
-import { RiMenu3Line } from 'react-icons/ri';
+import { RiLogoutBoxLine, RiMenu3Line } from 'react-icons/ri';
 const Navbar = () => {
   const { data: session, } = useSession();
   const [providers, setProviders] = useState<any>(null);
@@ -24,16 +24,17 @@ const Navbar = () => {
     setupProviders();
   }, []);
   return (
-    <nav className='absolute z-10 left-0 right-0 w-full bg-transparent '>
+    <nav className='absolute z-10 left-0 right-0 w-full bg-transparent p-2'>
       <div className='flex items-center justify-between px-2 md:px-6 max-w-[1440px] mx-auto'>
-        <Link href={'/'} className='h-16 w-32' >
-          <Image
+        <Link href={'/'}>
+          {/* <Image
             src={'/icons/logo.svg'}
             alt='logo'
             width={100}
             height={20}
             className='h-full object-contain'
-          />
+          /> */}
+          <span className='text-xl md:text-3xl text-indigo-700 font-bold dark:text-white'>Carsify</span>
         </Link>
 
 
@@ -65,14 +66,14 @@ const Navbar = () => {
                   title='Logout'
                   type='button'
                   handleClick={() => { signOut() }}
-                  containerStyle='bg-white text-blue-500 border rounded-full'
-                  icon={<Image src={'/icons/logout.svg'} alt='logout' width={20} height={20} />}
+                  containerStyle='bg-white rounded-full border text-blue-500 rounded-full dark:bg-pink-700 dark:text-slate-300 dark:border-slate-700 dark:text-slate-300'
+                  icon={<RiLogoutBoxLine size={16} className={`text-white`} />}
                 />
               </>
 
             ) : (
               <Link href={'/user/login'}>
-                <CustomButton title='Login' type='button' containerStyle='bg-white rounded-full border text-blue-500 w-full rounded-full dark:bg-slate-700 dark:text-slate-300 dark:border-slate-700 dark:text-slate-300' />
+                <CustomButton title='Login' type='button' containerStyle='bg-white rounded-full border text-blue-500 w-full rounded-full dark:bg-pink-700 dark:text-slate-300 dark:border-slate-700 dark:text-slate-300' />
               </Link>
             )
           }
@@ -96,7 +97,7 @@ const Navbar = () => {
        </div>
         {
           isDropdownShown && (
-            <div className='bg-white/30 dark:bg-slate-700/70 border dark:border-slate-600 min-w-[290px]  rounded-md shadow backdrop-blur-sm absolute top-16 right-8 p-3 flex flex-col gap-2 text-left md:hidden z-50'>
+            <div className='bg-white/30 dark:bg-gradient-radial from-slate-700 to-slate-900 border dark:border-zinc-600 min-w-[290px]  rounded-lg shadow backdrop-blur-sm absolute top-16 right-8 py-6 px-5 flex flex-col gap-2 text-left md:hidden z-50 min-h-[270px] '>
               <Link href={'/view-all'} onClick={() => setIsDropdownShown(false)}>
                 <span>Search</span>
               </Link>
@@ -113,8 +114,8 @@ const Navbar = () => {
                       <Image
                         src={session?.user?.image || '/assets/images/user.svg'}
                         alt='Profile Picture'
-                        width={40}
-                        height={40}
+                        width={30}
+                        height={30}
                         className='cursor-pointer objcet-contain rounded-full'
                       />
                       <span className='ml-2'>My Profile</span>
@@ -123,25 +124,27 @@ const Navbar = () => {
                       title='Logout'
                       type='button'
                       handleClick={() => { signOut() }}
-                      containerStyle='rounded-full dark:bg-slate-700 dark:text-slate-300'
-                      icon={<Image src={'/icons/logout.svg'} alt='logout' width={20} height={20} />}
+                      containerStyle='rounded-full text-white dark:bg-pink-700 dark:text-slate-300  px-6'
+                      icon={<RiLogoutBoxLine size={16} className={`text-white`}/>}
                     />
                   </>
 
                 ) : (
                   <Link href={'/user/login'}>
-                    <CustomButton title='Login' type='button' containerStyle='rounded-full dark:bg-purple-700 dark:text-slate-300 w-full text-white' />
+                    <CustomButton title='Login' type='button' containerStyle='rounded-full dark:bg-pink-700 dark:text-slate-300 text-white mt-4 px-6' />
                   </Link>
                 )
               }
-              <Link href={'https://github.com/Iamsidar07/Car-Showcase'} onClick={() => setIsDropdownShown(false)} className='flex  gap-2'>
-                <BsGithub size={20} className={`h-6 w-6 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-700'}`} />
-                <span>Github</span>
-              </Link>
-              <Link href={'https://twitter.com/iamsidar07'} onClick={() => setIsDropdownShown(false)} className='flex gap-2'>
-                <BsTwitter size={20} className={`h-6 w-6 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-700'}`} />
-                <span>Twitter</span>
-              </Link>
+              <div className='flex items-baseline gap-2 absolute bottom-4 flex-1'>
+                <Link href={'https://github.com/Iamsidar07/Car-Showcase'} onClick={() => setIsDropdownShown(false)} className='flex gap-2 mr-4'>
+                  <BsGithub size={20} className={`h-6 w-6 ${theme === 'dark' ? 'text-slate-50' : 'text-slate-700'}`} />
+                  <span>Github</span>
+                </Link>
+                <Link href={'https://twitter.com/iamsidar07'} onClick={() => setIsDropdownShown(false)} className='flex gap-2 border-l pl-4 dark:border-zinc-500'>
+                  <BsTwitter size={20} className={`h-6 w-6 ${theme === 'dark' ? 'text-slate-50' : 'text-slate-700'}`} />
+                  <span>Twitter</span>
+                </Link>
+              </div>
             </div>
           )
         }

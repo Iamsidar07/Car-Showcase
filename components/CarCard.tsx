@@ -70,7 +70,7 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
   }
 
   return (
-    <div className='w-full h-fit  max-w-lg mx-auto bg-white dark:bg-slate-800 dark:border dark:border-slate-700/70 md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border group  group-hover:scale-125'>
+    <div className='w-full h-fit  max-w-lg mx-auto bg-white dark:bg-gradient-radial from-slate-700 to-slate-900 dark:border-slate-700/70 md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border group  group-hover:scale-125'>
       <div className='flex items-center justify-between'>
         <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{car.carTitle}
         </h1>
