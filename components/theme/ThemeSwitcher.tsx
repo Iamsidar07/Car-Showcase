@@ -14,12 +14,8 @@ const ThemeSwitcher = () => {
     return (
         <div className='relative'>
             
-            
             {
-                theme === 'light' && (<BsSun size={20} className={`h-6 w-6 text-slate-800 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />)
-            }
-            {
-                theme === 'dark' && (<MdDarkMode size={20} className={`h-6 w-6 text-blue-500 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />)
+                theme === 'light' ? (<BsSun size={20} className={`h-6 w-6 text-slate-800 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />) : (<MdDarkMode size={20} className={`h-6 w-6 text-blue-500 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />)
             }
             {
                 isDropdownShown && (
