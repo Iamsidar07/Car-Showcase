@@ -79,7 +79,7 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
               type="checkbox"
               checked={filters[`${category}`].includes(value)}
               onChange={() => handleFilterChange(`${category}`, value === '' ? '' : [value])}
-              className='w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 gap-2'
+              className='w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-blue-700 dark:border-pink-600 gap-2'
             />
             <span className='ml-2 text-sm'>
               {label}
@@ -102,13 +102,13 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
   return (
     <section className='w-full'>
       <div className='flex flex-col md:flex-row gap-4 '>
-        <button type='button' className='bg-blue-500 text-white px-5 py-1.5 rounded-full w-fit md:hidden ml-2 flex items-center' onClick={() => setIsShownFilter((prevState) => !prevState)}>
+        <button type='button' className='bg-blue-500 border dark:bg-slate-800 dark:border-slate-700 px-5 py-1.5 rounded-full w-fit md:hidden ml-2 flex items-center' onClick={() => setIsShownFilter((prevState) => !prevState)}>
           <span>Filters</span>
           <Image src={'/icons/filter.svg'} alt='filter icon' width={17} height={17} className='object-contain ml-1' />
         </button>
-        <div className={`px-4 md:p-6 py-3 md:flex mx-2  md:mx-0 md:flex-col bg-white shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter ? 'flex' : 'hidden'}`}>
+        <div className={`px-4 md:p-6 py-3 md:flex mx-2 min-w-[260px]  md:mx-0 md:flex-col bg-white border dark:bg-transparent dark:border-slate-700 shadow-sm rounded-lg gap-3 sticky md:min-h-screen flex-wrap transition-all duration-200 ease-linear ${isShownFilter ? 'flex' : 'hidden'}`}>
           {/* <Searchbar /> */}
-          <div className='items-center py-1.5 border-b-[0.5px] hidden md:flex '>
+          <div className='items-center py-1.5  hidden md:flex '>
             <Image
               src={'/icons/search.svg'}
               alt='search icon'
@@ -121,9 +121,10 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
               value={searchInputVal}
               onChange={handleSearchValChange}
               placeholder='Search by brand or title'
-              className='outline-none bg-transparent text-sm'
+              className='outline-none bg-transparent text-sm w-full'
             />
           </div>
+          <div className='border-b-[0.5px] dark:border-slate-700 w-full'/>
 
           {
             filterData.map(({ title, category, options }, i) => (<FilterCard key={i} title={title} options={options} category={category} />))
@@ -165,7 +166,7 @@ const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
         (
           <CustomButton title='Show More'
             type='button'
-            containerStyle='mt-12 mx-auto bg-blue-600 text-white px-6' handleClick={handleClick}
+            containerStyle='mt-12 mx-auto bg-blue-600 text-white px-6 border dark:border-slate-600 rounded-full dark:bg-slate-700 dark:text-slate-300' handleClick={handleClick}
           />)
       }
 

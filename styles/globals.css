@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 * {
   margin: 0;
   padding: 0;
@@ -12,11 +13,14 @@
   scroll-behavior: smooth;
 }
 
-body {
-  background-color: #f5f8ff;
+/* .hero-dark{
+  background-image: url('/images/hero-dark.jpg');
+  background-size: 86rem;
 }
-
-
+.hero-light{
+  background-image: url('/images/hero-light.jpg');
+  background-size: 86rem;
+} */
 
 .animate-car {
   animation-name: animate-car;

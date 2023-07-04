@@ -52,8 +52,8 @@ const Searchbar = () => {
     }
 
     return (
-        <form className='w-full flex flex-col md:flex-row items-center justify-center gap-2 max-w-3xl bg-white  rounded border' onSubmit={handleSearch}>
-            <div className='flex items-center w-full py-2.5 px-4 relative md:border-r '>
+        <form className='w-full flex flex-col md:flex-row items-center justify-center gap-2 max-w-3xl bg-white dark:bg-slate-800  rounded border dark:border-slate-700 px-2' onSubmit={handleSearch}>
+            <div className='flex items-center w-full py-2.5 px-4 relative md:border-r dark:border-slate-700 '>
                 <Image
                     src={'/icons/car-logo.svg'}
                     alt='car company logo'
@@ -71,10 +71,10 @@ const Searchbar = () => {
 
                 <button type='submit'>
                     <Image
-                        src={'/icons/magnifying-glass.svg'}
+                        src={'/icons/search.svg'}
                         alt='magnifying glass'
-                        width={30}
-                        height={30}
+                        width={20}
+                        height={20}
                         className='object-contain flex md:hidden'
                     />
                 </button>
@@ -112,20 +112,20 @@ const Searchbar = () => {
                 />
                 <button type='submit'>
                     <Image
-                        src={'/icons/magnifying-glass.svg'}
+                        src={'/icons/search.svg'}
                         alt='magnifying glass'
-                        width={30}
-                        height={30}
+                        width={20}
+                        height={20}
                         className='object-contain flex md:hidden'
                     />
                 </button>
             </div>
             <button type='submit'>
                 <Image
-                    src={'/icons/magnifying-glass.svg'}
-                    alt='magnifying glass'
-                    width={100}
-                    height={100}
+                    src={'/icons/search.svg'}
+                    alt='search'
+                    width={30}
+                    height={30}
                     className='object-contain hidden md:flex'
                 />
             </button>
