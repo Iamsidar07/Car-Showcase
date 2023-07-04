@@ -30,14 +30,14 @@ const Hero = () => {
         </Link>
       </div>
      
-      <div className='flex items-end lg:flex-[1.5] justify-end w-full h-[590px] lg:h-screen '>
+      <div className='flex items-end lg:flex-[1.25] justify-end w-full h-[590px] lg:h-screen '>
         <div className='w-full h-full relative'>
           <Image
             src={'/images/main-car.png'}
             alt='hero'
             quality={100}
             fill
-            className='absolute top-0 bottom-0 left-0 right-0 w-[80%] h-[590px] lg:h-full lg:w-full object-contain scale-110 md:scale-125 animate-car'
+            className='absolute top-0 bottom-0 left-0 right-0 w-[80%] h-[590px] lg:h-full lg:w-full object-contain md:scale-125 animate-car'
           />
         </div>
       </div>

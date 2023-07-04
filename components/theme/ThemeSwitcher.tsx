@@ -23,7 +23,7 @@ const ThemeSwitcher = () => {
             }
             {
                 isDropdownShown && (
-                    <div className='bg-white/70 dark:bg-slate-800 min-w-[140px]  rounded-md backdrop-blur-lg absolute top-12 -right-6 md:-right-1/3 flex flex-col  z-50 text-center border dark:border-slate-700/95 '>
+                    <div className='bg-white/70 dark:bg-gradient-radial from-slate-700 to-slate-900 min-w-[140px]  rounded-md backdrop-blur-lg absolute top-12 -right-6 md:-right-1/3 flex flex-col  z-50 text-center border dark:border-slate-700/95 '>
 
                         <button onClick={() => {
                             setIsDropdownShown(false);
