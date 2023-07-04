@@ -70,14 +70,14 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
   }
 
   return (
-    <div className='w-full h-fit  max-w-lg mx-auto bg-white md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border group  '>
+    <div className='w-full h-fit  max-w-lg mx-auto bg-white dark:bg-slate-800 dark:border dark:border-slate-700/70 md:hover:shadow-lg transition-all duration-150 ease-linear p-3 md:p-4 rounded-2xl border group  group-hover:scale-125'>
       <div className='flex items-center justify-between'>
         <h1 className='text-lg md:text-xl font-bold capitalize truncate max-w-[75%]'>{car.carTitle}
         </h1>
         <button type='button' onClick={() => handleHeartClick(car._id)}>
           <Image
             src={`/icons/${isFavoriteBtnActive ? 'heart-filled' : 'heart-outline'}.svg`}
-            alt='favorite buttn'
+            alt='favorite button'
             width={20}
             height={20}
             className={`object-contain cursor-pointer ${isFavoriteBtnActive && "scale-150 transition-transform duration-150 ease-in"}`}
@@ -139,17 +139,17 @@ const CarCard = ({ car, isFavorite, handleDelete, handleEdit }: CardCardProps) =
             <CustomButton
               title='More Info'
               type='button'
-              containerStyle='bg-blue-600 text-white w-full px-5 rounded-sm '
+              containerStyle='bg-blue-600 text-white w-full px-5 rounded-full dark:bg-slate-700 dark:text-slate-300'
             />
           </Link>
         </div>
         {
           ((car.creator.email === session?.user.email) && (pathname === '/profile')) &&  (<div className='mt-4 flex items-center justify-between gap-2'>
             <CustomButton title='Edit' type='button' handleClick={()=>handleEdit && handleEdit(car._id)}
-            containerStyle='bg-green-600 text-white w-full px-5 rounded-full '
+            containerStyle='bg-green-600 text-white w-full px-5 rounded-full rounded-full dark:bg-blue-500 dark:text-slate-300 '
             />
             <CustomButton title='Delete' type='button' handleClick={()=>handleDelete && handleDelete(car._id)}
-            containerStyle='border border-red-500 w-full px-5 rounded-full '
+            containerStyle='border border-red-500 w-full px-5 rounded-full rounded-full dark:bg-red-500 dark:text-slate-300'
             />
           </div>)
         }

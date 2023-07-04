@@ -4,20 +4,21 @@ import { CarProps, FetchCarProps } from '@/types';
 import { fetchCars } from '@/utils';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-export default  function Home({ searchParams }: { searchParams: FetchCarProps }) {
-  const { manufacturer, year, fuelType, limit, model } = searchParams;
-  const [allCars,setAllCars] = useState<CarProps[]>([]);
-  const [isLoading,setIsLoading] = useState(true);
 
-  useEffect(()=>{
-    const fetchAllCars =async () => {
+export default function Home({ searchParams }: { searchParams: FetchCarProps }) {
+  const { manufacturer, year, fuelType, limit, model } = searchParams;
+  const [allCars, setAllCars] = useState<CarProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAllCars = async () => {
       try {
         const res = await fetch(`/api/car?model=${model}&limit=${limit}&fuelType=${fuelType}&year=${year}&manufacturer=${manufacturer}`);
         const data = await res.json();
         setAllCars(data?.reverse());
       } catch (error) {
         console.error(error);
-      }finally{
+      } finally {
         setIsLoading(false);
       }
     };
@@ -27,16 +28,16 @@ export default  function Home({ searchParams }: { searchParams: FetchCarProps })
       success: 'Fetched cars successfully.',
       error: 'Failed to fetch cars.',
     });
-  },[model,year,manufacturer,fuelType,limit]);
-
+  }, [model, year, manufacturer, fuelType, limit]);
 
   return (
-    <main className='overflow-hidden'>
+    <main className="overflow-hidden relative  dark:bg-slate-900 backdrop-blur-3xl backdrop-filter">
+      <div className="w-44 h-44 hidden md:flex dark:bg-gradient-radial from-pink-500 to-purple-700 rounded-full rotate-12 absolute top-16 right-8 blur-3xl"></div>
+      <div className="w-44 h-44 dark:bg-gradient-radial from-pink-500 to-purple-700 rounded-2xl rotate-12 absolute top-1/4 left-8 blur-3xl"></div>
+      <div className="w-72 h-72 dark:bg-gradient-radial from-pink-500 to-pink-900 rounded-2xl rotate-12 absolute top-1/2 left-1/2 blur-3xl"></div>
+      <div className="w-72 h-20 dark:bg-gradient-radial from-teal-500 to-green-700 rounded-2xl rotate-12 absolute top-0 left-4 blur-3xl"></div>
       <Hero />
-      {
-        allCars && <Catalogue isLoading={isLoading} allCars={allCars} limit={(limit || 20) / 10} />
-      }
-
+      {allCars && <Catalogue isLoading={isLoading} allCars={allCars} limit={(limit || 20) / 10} />}
     </main>
-  )
+  );
 }

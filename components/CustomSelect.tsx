@@ -1,9 +1,11 @@
 'use client'
 import { CustomSelectProps } from '@/types';
-import Image from 'next/image';
+import { useTheme } from 'next-themes';
 import { useState } from 'react';
+import { BsChevronContract } from 'react-icons/bs';
 
 const CustomSelect = ({ options, onChange, label, containerStyle, parentContainerStyle, name }: CustomSelectProps) => {
+    const { theme } = useTheme();
     const [isShownOptions, setIsShownOptions] = useState(false);
     const [selectedOption, setSelectedOption] = useState(label);
     return (
@@ -12,12 +14,12 @@ const CustomSelect = ({ options, onChange, label, containerStyle, parentContaine
                 onClick={() => setIsShownOptions(true)}
             >
                 <span className='block truncate text-sm capitalize'>{selectedOption}</span>
-                <Image src={'/icons/chevron-up-down.svg'} alt='up down icon' width={20} height={20} className='object-contain' />
+                <BsChevronContract size={16} className={`ml-4 ${theme === 'dark'?'text-slate-400':'text-slate-700'}`}/>
             </button>
             {
-                isShownOptions && (<ul className='bg-white shadow rounded absolute mt-2 max-h-60 overflow-y-auto space-y-1 flex flex-col items-center w-full z-10 '>
+                isShownOptions && (<ul className='bg-white dark:bg-slate-800 border dark:border-slate-700 shadow rounded absolute mt-2 max-h-60 overflow-y-auto space-y-1 flex flex-col items-center w-full z-10 '>
                     {
-                        options.map(({ value, title }, i) => (<li key={i} className='text-sm px-2 py-1.5 w-full hover:bg-blue-600 hover:text-white bg-white cursor-pointer' onClick={() => {
+                        options.map(({ value, title }, i) => (<li key={i} className='text-sm px-2 py-1.5 w-full hover:bg-blue-600 dark:hover:bg-slate-700 hover:text-white  cursor-pointer' onClick={() => {
                             onChange(value, name);
                             setSelectedOption(value);
                             setIsShownOptions(false);

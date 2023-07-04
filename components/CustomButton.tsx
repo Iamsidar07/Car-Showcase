@@ -8,7 +8,7 @@ const CustomButton = ({ title, handleClick, containerStyle, type,isLoading,icon 
       type={type}
       onClick={handleClick}
       disabled={isLoading}
-      className={`outline-none px-4 py-1.5 md:py-2.5  md:px-6 text-center flex items-center justify-center  capitalize ${containerStyle} gap-2 ${isLoading && 'bg-opacity-90'}`}
+      className={`outline-none px-4 py-1.5 md:py-2.5  md:px-6 text-center flex items-center justify-center  capitalize bg-blue-500  dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600 rounded-full ${containerStyle} gap-2 ${isLoading && 'bg-opacity-90 '}`}
     >
       <span>{title}</span>
       {isLoading && <Loader/>}

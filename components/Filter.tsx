@@ -22,8 +22,8 @@ const Filter = () => {
 
     return (
         <div className='flex items-center space-x-2 w-full md:w-fit'>
-            <CustomSelect label='Choose Model' onChange={handleModelChange} options={yearsOfProduction} containerStyle='z-40 border bg-white' name='model'/>
-            <CustomSelect label='Choose Fuel Type' onChange={handleFuelTypeChange} options={fuels} containerStyle='border bg-white' name='fueltype'/>
+            <CustomSelect label='Choose Model' onChange={handleModelChange} options={yearsOfProduction} containerStyle='z-40 border bg-white dark:bg-slate-800 dark:border-slate-700 rounded-md' name='model'/>
+            <CustomSelect label='Choose Fuel Type' onChange={handleFuelTypeChange} options={fuels} containerStyle='border bg-white  dark:bg-slate-800 dark:border-slate-700 rounded-md' name='fueltype'/>
         </div>
     )
 }
