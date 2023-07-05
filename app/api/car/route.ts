@@ -2,14 +2,8 @@ import { connectToDatabase } from '@/utils/database';
 import { NextResponse } from 'next/server';
 import Car from '@/models/Car';
 import { NextRequest } from 'next/server';
+import { QueryProps } from '@/types';
 
-interface QueryProps {
-    model?: string | null | undefined;
-    limit?: string | null | undefined;
-    fuelType?: string | null | undefined;
-    year?: string | null | undefined;
-    manufacturer?: string | null | undefined;
-}
 
 // get all cars
 export const GET = async (req: NextRequest) => {

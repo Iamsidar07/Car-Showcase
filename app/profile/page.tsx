@@ -1,10 +1,11 @@
 'use client'
-import { CarCard } from "@/components"
-import { CarCardSkeleton, ProfileSkeleton } from "@/components/skeleton"
-import { useSession } from "next-auth/react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { ChangeEvent, useEffect, useState } from "react"
+import { CarCard } from '@/components';
+import { CarCardSkeleton } from '@/components/skeleton';
+import { CarProps } from '@/types';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
@@ -12,7 +13,7 @@ const Profile = () => {
     const router = useRouter();
     const [coverImageSource, setCoverImageSource] = useState<string | null>(null);
     const [acceptedFile, setAcceptedFile] = useState<File>();
-    const [cars, setCars] = useState<any[]>([]);
+    const [cars, setCars] = useState<CarProps[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const handleCoverImageSourceChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,7 @@ const Profile = () => {
             setCoverImageSource(url);
             setAcceptedFile(file[0]);
         }
-    }
+    };
 
 
     useEffect(() => {
@@ -67,7 +68,7 @@ const Profile = () => {
             success: 'Fetched cars successfully.',
             error: 'Failed to fetch cars.',
         });
-    },[session?.user?.id])
+    },[session?.user?.id]);
 
     
     useEffect(() => {
@@ -132,6 +133,7 @@ const Profile = () => {
             }
         );
     };
+
     const handleEdit = async (_id: string) => {
         router.push(`/cars/edit/${_id}`);
     }

@@ -1,12 +1,6 @@
+import { CustomInputProps } from '@/types';
 import toast from 'react-hot-toast';
-interface CustomInputProps {
-    label:string;
-    placeholder:string;
-    name:string;
-    type?:'text'|'number'|'radio'|'number';
-    value?:string| number;
-    onChange:(event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+
 const CustomInput = ({  label, placeholder,name, type = 'text',value,onChange}:CustomInputProps) => {
     if (placeholder.length === 250) {
         toast('Reached max length');

@@ -8,14 +8,8 @@ const Footer = () => {
             <div className='flex flex-col items-center justify-between md:flex-row mt-16 border-t dark:border-slate-800 group group-hover:shadow-lg gap-2'>
                 <div className='flex flex-col items-start  md:flex-row md:justify-between py-12 px-4 md:p-12 w-full  md:items-start gap-4'>
                     <div>
-                        <Link href={'/'} className='h-16 w-32' >
-                            <Image
-                                src={'/icons/logo.svg'}
-                                alt='logo'
-                                width={100}
-                                height={40}
-                                className='h-full object-contain'
-                            />
+                        <Link href={'/'}>
+                            <span className='text-xl md:text-3xl text-indigo-700 font-bold dark:text-white'>Carsify</span>
                         </Link>
                         <p className='mt-4'>Carhub 2023 <br /> All Rights Reserved &copy;</p>
                     </div>

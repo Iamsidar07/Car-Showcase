@@ -1,5 +1,4 @@
-import { ProfileSkeleton } from '@/components/skeleton'
-import React from 'react'
+import { ProfileSkeleton } from '@/components/skeleton';
 
 const Loading = () => {
   return (

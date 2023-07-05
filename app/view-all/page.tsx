@@ -1,9 +1,8 @@
 'use client'
-import { ShowAllCars } from "@/components";
-import { CarProps, FetchCarProps } from "@/types";
-import { fetchCars } from "@/utils";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import { ShowAllCars } from '@/components';
+import { CarProps, FetchCarProps } from '@/types';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 const ViewAllCars = ({ searchParams }: { searchParams: FetchCarProps }) => {
     const { manufacturer, year, fuelType, limit, model } = searchParams;
     const [allCars, setAllCars] = useState<CarProps[]>([]);
@@ -28,7 +27,7 @@ const ViewAllCars = ({ searchParams }: { searchParams: FetchCarProps }) => {
             {
                 loading: 'Fetching Cars...',
                 success: 'Cars fetched successfully',
-                error: (err)=>err.message,
+                error: (err) => err.message,
             }
         );
     }, [model, year, manufacturer, fuelType, limit]);
@@ -37,7 +36,11 @@ const ViewAllCars = ({ searchParams }: { searchParams: FetchCarProps }) => {
     return (
         <section className='max-w-[1440px] mx-auto relative pt-16 md:pt-24'>
             {
-                allCars && <ShowAllCars allCars={allCars} limit={(limit || 20) / 10} isLoading={isLoading} />
+                allCars && <ShowAllCars
+                    allCars={allCars}
+                    limit={(limit || 20) / 10}
+                    isLoading={isLoading}
+                />
             }
         </section>
     )

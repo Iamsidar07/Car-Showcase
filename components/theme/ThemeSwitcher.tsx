@@ -1,7 +1,6 @@
 'use client'
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdDarkMode } from 'react-icons/md';
 import { BsSun } from 'react-icons/bs';
 
@@ -15,7 +14,7 @@ const ThemeSwitcher = () => {
         <div className='relative'>
             
             {
-                theme === 'light' ? (<BsSun size={20} className={`h-6 w-6 text-slate-800 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />) : (<MdDarkMode size={20} className={`h-6 w-6 text-blue-500 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />)
+                theme === 'light' ? (<BsSun size={20} className={`h-6 w-6 text-slate-700 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />) : (<MdDarkMode size={20} className={`h-6 w-6 text-slate-400 cursor-pointer `} onClick={() => setIsDropdownShown((prevState) => !prevState)} />)
             }
             {
                 isDropdownShown && (

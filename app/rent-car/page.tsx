@@ -1,40 +1,40 @@
 'use client'
 import { Form } from '@/components';
-import { CarInfoProps } from '@/types';
+import {  CarInfoProps } from '@/types';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import useWindowSize from 'react-use/lib/useWindowSize'
-import Confetti from 'react-confetti'
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Confetti from 'react-confetti';
 
 
 
 const RentACar = () => {
-    const {data:session} = useSession();
+    const { data: session } = useSession();
     const { width, height } = useWindowSize();
     const [carInfo, setCarInfo] = useState<CarInfoProps>({
-        carTitle: '',
-        location: '',
-        rentPrice: 0,
         capacity: 0,
-        fuelCapacity: 0,
-        shortDescription: '',
-        typeOfclass: '',
-        model: '',
-        manufacturer: '',
-        cylinders: 4,
-        cityMPG: 0,
-        combinationMPG: 0,
-        highwayMPG: 0,
-        year: '',
-        transmission: '',
-        fuelType: '',
+        carTitle: '',
         carType: '',
+        cityMPG: 0,
+        highwayMPG: 0,
+        combinationMPG: 0,
+        cylinders: 0,
         drive: '',
+        fuelCapacity: 0,
+        fuelType: '',
         imageFiles: [],
+        location: '',
+        manufacturer:'',
+        model:'',
+        rentPrice:1,
+        shortDescription:'',
+        transmission:'',
+        typeOfclass:'',
+        year:'',
     });
-    const [isLoading,setIsLoading] = useState(false);
-    const [isSuccess,setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
         if (isSuccess) {
@@ -53,8 +53,9 @@ const RentACar = () => {
         if (!session?.user?.id) {
             toast('Login/Signup to rent a car.');
             return;
-        }
-        toast.promise((async()=>{
+        };
+        
+        toast.promise((async () => {
             try {
                 const response = await fetch(`/api/car/user/${session?.user?.id}`, {
                     method: 'POST',
@@ -66,22 +67,28 @@ const RentACar = () => {
                 }
             } catch (error) {
                 console.error(error);
-                toast.error('Something went wrong!');
                 setIsSuccess(false);
             } finally {
                 setIsLoading(false);
             }
-        })(),{
+        })(), {
             loading: 'Registering car...',
             success: 'Car registered successfully.',
-            error:(err)=>err.message,
-        })
+            error: (err) => err.message,
+        });
     };
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
-            {isSuccess && <Confetti width={width-100} height={height-100} />}
-           <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Register car' title='Add your car to rent' handleSubmit={handleSubmit} isLoading={isLoading}  />
+            {isSuccess && <Confetti width={width - 100} height={height - 100} />}
+            <Form
+                carInfo={carInfo}
+                setCarInfo={setCarInfo}
+                submitBtnTitle='Register car'
+                title='Add your car to rent'
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+            />
         </section>
     )
 }

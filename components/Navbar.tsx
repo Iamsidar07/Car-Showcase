@@ -24,7 +24,7 @@ const Navbar = () => {
     setupProviders();
   }, []);
   return (
-    <nav className='absolute z-10 left-0 right-0 w-full bg-transparent p-2'>
+    <nav className='absolute z-10 left-0 right-0 w-full bg-transparent p-2 border-b dark:border-0'>
       <div className='flex items-center justify-between px-2 md:px-6 max-w-[1440px] mx-auto'>
         <Link href={'/'}>
           {/* <Image
