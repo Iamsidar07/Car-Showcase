@@ -3,9 +3,12 @@ import { Form } from '@/components';
 import { CarInfoProps } from '@/types';
 import React, { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 const EditCar = ({ params }: { params: { id: string } }) => {
     const { id } = params;
+    const { width, height } = useWindowSize();
     const [carInfo, setCarInfo] = useState<CarInfoProps>({
         carTitle: '',
         location: '',
@@ -28,6 +31,7 @@ const EditCar = ({ params }: { params: { id: string } }) => {
         imageFiles: [],
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     useEffect(() => {
         const getCarInfo = async () => {
             try {
@@ -48,6 +52,14 @@ const EditCar = ({ params }: { params: { id: string } }) => {
         getCarInfo();
     }, [id]);
 
+    useEffect(()=>{
+        if(isSuccess){
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 5000);
+        }
+    },[isSuccess]);
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true);
@@ -58,10 +70,12 @@ const EditCar = ({ params }: { params: { id: string } }) => {
                     body: JSON.stringify(carInfo)
                 });
                 if (response.ok) {
+                    setIsSuccess(true);
                     toast.success('Car has been edited successfully.');
                 }
             } catch (error) {
                 console.error(error);
+                setIsSuccess(false);
                 toast.error('Something went wrong!');
             } finally {
                 setIsLoading(false);
@@ -75,6 +89,12 @@ const EditCar = ({ params }: { params: { id: string } }) => {
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
+            {
+                isSuccess && <Confetti
+                    width={width-100}
+                    height={height-100}
+                />
+            }
             <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Edit Car' title='Edit your car to rent' handleSubmit={handleSubmit} isLoading={isLoading} />
         </section>
     )
