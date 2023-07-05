@@ -2,12 +2,16 @@
 import { Form } from '@/components';
 import { CarInfoProps } from '@/types';
 import { useSession } from 'next-auth/react';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
+
 
 
 const RentACar = () => {
     const {data:session} = useSession();
+    const { width, height } = useWindowSize();
     const [carInfo, setCarInfo] = useState<CarInfoProps>({
         carTitle: '',
         location: '',
@@ -30,6 +34,15 @@ const RentACar = () => {
         imageFiles: [],
     });
     const [isLoading,setIsLoading] = useState(false);
+    const [isSuccess,setIsSuccess] = useState(false);
+
+    useEffect(() => {
+        if (isSuccess) {
+            setTimeout(() => {
+                setIsSuccess(false);
+            }, 5000);
+        }
+    }, [isSuccess]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -48,11 +61,13 @@ const RentACar = () => {
                     body: JSON.stringify(carInfo),
                 });
                 if (response.ok) {
+                    setIsSuccess(true);
                     toast.success('Car has been registered successfully.');
                 }
             } catch (error) {
                 console.error(error);
                 toast.error('Something went wrong!');
+                setIsSuccess(false);
             } finally {
                 setIsLoading(false);
             }
@@ -65,7 +80,8 @@ const RentACar = () => {
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
-           <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Register car' title='Add your car to rent' handleSubmit={handleSubmit} isLoading={isLoading} />
+            {isSuccess && <Confetti width={width-100} height={height-100} />}
+           <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Register car' title='Add your car to rent' handleSubmit={handleSubmit} isLoading={isLoading}  />
         </section>
     )
 }

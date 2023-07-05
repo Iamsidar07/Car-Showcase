@@ -17,9 +17,10 @@ interface AddCarProps {
     handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
     isLoading?: boolean;
 }
-const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoading }: AddCarProps) => {
+const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoading,  }: AddCarProps) => {
     const { data: session } = useSession();
     const [accepetedFiles, setAccepetedFiles] = useState<File[]>([]);
+
 
     // convert image into base64 for that I have to use useeffect
     useEffect(() => {
