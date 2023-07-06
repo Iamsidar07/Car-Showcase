@@ -1,10 +1,10 @@
 'use client'
+import { FormEvent, useEffect, useState } from 'react';
 import { Form } from '@/components';
 import { CarInfoProps } from '@/types';
-import React, { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
-import useWindowSize from 'react-use/lib/useWindowSize'
-import Confetti from 'react-confetti'
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Confetti from 'react-confetti';
 
 const EditCar = ({ params }: { params: { id: string } }) => {
     const { id } = params;
@@ -32,6 +32,8 @@ const EditCar = ({ params }: { params: { id: string } }) => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+
+
     useEffect(() => {
         const getCarInfo = async () => {
             try {
@@ -39,31 +41,29 @@ const EditCar = ({ params }: { params: { id: string } }) => {
                 const data = await res.json();
                 setCarInfo(data);
             } catch (error) {
-                toast.error('Something went wrong!');
-                
                 console.error(error);
             }
         }
-        toast.promise(getCarInfo(),{
-            loading:'Fetching car details..',
-            success:'Fetched car detail.',
-            error:(err)=>err.message
+        toast.promise(getCarInfo(), {
+            loading: 'Fetching car details..',
+            success: 'Fetched car detail.',
+            error: (err) => err.message
         })
         getCarInfo();
     }, [id]);
 
-    useEffect(()=>{
-        if(isSuccess){
+    useEffect(() => {
+        if (isSuccess) {
             setTimeout(() => {
                 setIsSuccess(false);
             }, 5000);
         }
-    },[isSuccess]);
+    }, [isSuccess]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true);
-        toast.promise((async()=>{
+        toast.promise((async () => {
             try {
                 const response = await fetch(`/api/car/user/${id}`, {
                     method: 'PATCH',
@@ -71,31 +71,36 @@ const EditCar = ({ params }: { params: { id: string } }) => {
                 });
                 if (response.ok) {
                     setIsSuccess(true);
-                    toast.success('Car has been edited successfully.');
                 }
             } catch (error) {
                 console.error(error);
                 setIsSuccess(false);
-                toast.error('Something went wrong!');
             } finally {
                 setIsLoading(false);
             }
-        })(),{
-            loading:'Editing car details...',
-            success:'Edited successfully.',
-            error:(err)=>err.message
-        })
+        })(), {
+            loading: 'Editing car details...',
+            success: 'Edited successfully.',
+            error: (err) => err.message
+        });
     };
 
     return (
         <section className='relative pt-16 md:pt-20 px-1 '>
             {
                 isSuccess && <Confetti
-                    width={width-100}
-                    height={height-100}
+                    width={width - 100}
+                    height={height - 100}
                 />
             }
-            <Form carInfo={carInfo} setCarInfo={setCarInfo} submitBtnTitle='Edit Car' title='Edit your car to rent' handleSubmit={handleSubmit} isLoading={isLoading} />
+            <Form
+                carInfo={carInfo}
+                setCarInfo={setCarInfo}
+                submitBtnTitle='Edit Car'
+                title='Edit your car to rent'
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+            />
         </section>
     )
 }

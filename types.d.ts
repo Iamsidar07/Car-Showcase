@@ -1,11 +1,7 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from 'react';
 
 export interface FuelsProps {
     fuel: string;
-    id: number;
-}
-export interface ModelsProps {
-    model: string;
     id: number;
 }
 
@@ -14,9 +10,8 @@ export interface CarProps {
     carTitle: string;
     carType: string;
     cityMPG: number;
-    cylinders:number;
+    cylinders: number;
     combinationMPG: number;
-    creator: Creator;
     drive: string;
     fuelCapacity: number;
     fuelType: string;
@@ -30,7 +25,13 @@ export interface CarProps {
     transmission: string;
     typeOfclass: string;
     year: string;
+    creator: Creator;
     _id: string;
+}
+
+export interface CarInfoProps extends CarProps {
+    creator?: Creator;
+    _id?: string;
 }
 
 export interface CreatorProps {
@@ -39,12 +40,7 @@ export interface CreatorProps {
     username: string;
     email: string;
 }
-export interface FavoriteCarProps extends Car {
-    typeOfClass: string;
-    isFavorite: boolean;
-    _id: string;
-    creator: CreatorProps;
-}
+
 export interface FetchCarProps {
     manufacturer?: string;
     year?: number;
@@ -56,21 +52,21 @@ export interface FetchCarProps {
 export interface CardCardProps {
     car: CarProps;
     isFavorite?: boolean;
-    handleDelete?:(id: string) => void;
-    handleEdit?:(id: string) => void;
+    handleDelete?: (id: string) => void;
+    handleEdit?: (id: string) => void;
 }
 
 export interface CatalogueProps {
     allCars: CarProps[];
     limit: number;
-    isLoading:boolean;
+    isLoading: boolean;
 }
 
 export interface CustomButtonProps {
     title: string;
     type: 'button' | 'submit' | 'reset';
     handleClick?: MouseEventHandler<HTMLButtonElement>;
-    icon?: JSX.Element|undefined;
+    icon?: JSX.Element | undefined;
     containerStyle?: string;
     isLoading?: boolean;
 }
@@ -110,24 +106,45 @@ export interface FileProps {
     base64: string;
 }
 
-export interface CarInfoProps {
-    carTitle: string;
-    location: string;
-    rentPrice: number;
-    capacity: number;
-    fuelCapacity: number;
-    shortDescription: string;
-    typeOfclass: string;
-    model: string;
-    manufacturer: string;
-    cylinders: number;
-    cityMPG: number;
-    combinationMPG: number;
-    highwayMPG: number;
-    year: string;
-    transmission: string;
-    fuelType: string;
-    carType: string;
-    drive: string;
-    imageFiles: string[];
+export interface ImageUploaderProps {
+    handleOnDrop: (acceptedFiles: File[]) => void;
+    files: File[];
+    carInfo?: CarInfoProps;
+}
+
+export interface CustomInputProps {
+    label: string;
+    placeholder: string;
+    name: string;
+    type?: 'text' | 'number' | 'radio' | 'number';
+    value?: string | number;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface FormProps {
+    carInfo: CarInfoProps;
+    setCarInfo: React.Dispatch<React.SetStateAction<CarInfoProps>>;
+    submitBtnTitle: string;
+    title: string;
+    handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+    isLoading?: boolean;
+}
+
+export interface ShowAllCarsProps {
+    allCars: CarProps[];
+    limit: number;
+    isLoading: boolean;
+}
+export interface FilterCardProps {
+    title: string,
+    category: keyof FilterProps,
+    options: { value: string, label: string }[]
+}
+
+export interface QueryProps {
+    model?: string | null | undefined;
+    limit?: string | null | undefined;
+    fuelType?: string | null | undefined;
+    year?: string | null | undefined;
+    manufacturer?: string | null | undefined;
 }

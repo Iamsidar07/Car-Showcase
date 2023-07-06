@@ -1,23 +1,14 @@
 'use client'
-import { CarProps, FilterProps } from '@/types'
+import { CarProps, FilterCardProps, FilterProps, ShowAllCarsProps } from '@/types'
 import { updateSearchParams } from '@/utils';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import CustomButton from './CustomButton';
 import CarCard from './CarCard';
 import { availableFilterBrandOptions, availableFilterCylindersOptions, availableFilterDriveOptions, availableFilterFuelTypeOptions, availableFilterTypeOptions } from '@/constants';
 import Image from 'next/image';
 import { CarCardSkeleton } from './skeleton';
-interface ShowAllCarsProps {
-  allCars: CarProps[];
-  limit: number;
-  isLoading: boolean;
-}
-interface FilterCardProps {
-  title: string,
-  category: keyof FilterProps,
-  options: { value: string, label: string }[]
-}
+
 const ShowAllCars = ({ allCars, limit, isLoading }: ShowAllCarsProps) => {
   const router = useRouter();
   const [searchInputVal, setSearchInputVal] = useState('');

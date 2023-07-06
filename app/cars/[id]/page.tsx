@@ -1,8 +1,8 @@
-import { CarInfoProps, CarProps } from '@/types';
 'use client'
+import { useEffect, useState } from 'react';
+import { CarProps } from '@/types';
 import { generateCarImageUrl } from '@/utils';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const CardDetails = ({ params }: { params: { id: string } }) => {
@@ -38,10 +38,10 @@ const CardDetails = ({ params }: { params: { id: string } }) => {
                             <h1 className='text-lg md:text-2xl font-semibold capitalize'>{car.carTitle}</h1>
                             <p className='mt-1 text-xs md:text-sm  capitalize'>{car.manufacturer} | {car.model}</p>
                             <Image
-                            src={generateCarImageUrl(car)}
-                            alt={car.carTitle}
-                            fill
-                            className='object-contain mt-2 scale-110'
+                                src={generateCarImageUrl(car)}
+                                alt={car.carTitle}
+                                fill
+                                className='object-contain mt-2 scale-110'
                             />
                             <div className='absolute -bottom-4 '>
                                 <span className='absolute top-0 text-sm font-bold'>$</span>
@@ -77,11 +77,11 @@ const CardDetails = ({ params }: { params: { id: string } }) => {
                             </div>
                             <div className='p-2 md:p-6 rounded-lg md:rounded-3xl bg-[#edf4ff] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  border dark:border-slate-600 gap-2 flex items-center flex-col w-full col-span-2 '>
                                 <div className='w-12 h-12 flex items-center justify-center rounded-full bg-[#d4dceae9] dark:bg-slate-600 border dark:border-slate-500 text-2xl'>
-                                💁🏽‍♂️
+                                    💁🏽‍♂️
                                 </div>
                                 <p>{car.shortDescription}</p>
                             </div>
-                            
+
 
                         </div>
 

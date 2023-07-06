@@ -1,24 +1,16 @@
 'use client'
-import { CarInfoProps } from '@/types';
+import { FormProps } from '@/types';
 import { useSession } from 'next-auth/react';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import CustomSelect from './CustomSelect';
 import ImageUploader from './ImageUploader';
 import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import { yearsOfProduction } from '@/constants';
-import Loader from './Loader';
 import toast from 'react-hot-toast';
-interface AddCarProps {
-    carInfo: CarInfoProps;
-    setCarInfo: React.Dispatch<React.SetStateAction<CarInfoProps>>;
-    submitBtnTitle: string;
-    title: string;
-    handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
-    isLoading?: boolean;
-}
-const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoading,  }: AddCarProps) => {
-    const { data: session } = useSession();
+
+const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoading,  }: FormProps) => {
+
     const [accepetedFiles, setAccepetedFiles] = useState<File[]>([]);
 
 
@@ -68,14 +60,14 @@ const Form = ({ carInfo, setCarInfo, submitBtnTitle, title, handleSubmit, isLoad
     }
 
     return (
-        <form className='max-w-[1440px] mx-auto bg-white dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  dark:border-slate-700 border p-3 md:p-5 rounded-lg' onSubmit={handleSubmit}>
+        <form className='max-w-[1440px] mx-auto  p-3 md:p-5 rounded-lg' onSubmit={handleSubmit}>
             <h1 className='text-lg font-bold'>{title}</h1>
             <p className='text-gray-400 text-sm font-light'>Please enter your car ℹ️info.</p>
             <h2 className='text-xl md:text-2xl text-blue-500 tracking-wide font-bold my-6 uppercase'>Car info</h2>
             <div className='flex flex-col gap-6 md:gap-7'>
                 <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='Car Title' name='carTitle' placeholder='Your title' value={carInfo.carTitle} onChange={handleInputChange} />
-                    <CustomInput label='Location' name='location' placeholder='📌 location' value={carInfo.location} onChange={handleInputChange} />
+                    <CustomInput label='Location' name='location' placeholder='🗾 location' value={carInfo.location} onChange={handleInputChange} />
                 </div>
                 <div className='flex flex-col md:flex-row items-center w-full gap-1 md:gap-4'>
                     <CustomInput label='Rent Price' name='rentPrice' placeholder='Price in dollar $' type='number' value={carInfo.rentPrice} onChange={handleInputChange} />
