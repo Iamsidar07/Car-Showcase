@@ -38,7 +38,7 @@ const CardDetails = ({ params }: { params: { id: string } }) => {
                             <h1 className='text-lg md:text-2xl font-semibold capitalize'>{car.carTitle}</h1>
                             <p className='mt-1 text-xs md:text-sm  capitalize'>{car.manufacturer} | {car.model}</p>
                             <Image
-                                src={generateCarImageUrl(car)}
+                                src={car.imageFiles[0]}
                                 alt={car.carTitle}
                                 fill
                                 className='object-contain mt-2 scale-110'
