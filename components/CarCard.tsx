@@ -82,28 +82,26 @@ const CarCard = ({
         </h1>
         <button type="button" onClick={() => handleHeartClick(car._id)}>
           <Image
-            src={`/icons/${
-              isFavoriteBtnActive ? "heart-filled" : "heart-outline"
-            }.svg`}
+            src={`/icons/${isFavoriteBtnActive ? "heart-filled" : "heart-outline"
+              }.svg`}
             alt="favorite button"
             width={20}
             height={20}
-            className={`object-contain cursor-pointer ${
-              isFavoriteBtnActive &&
+            className={`object-contain cursor-pointer ${isFavoriteBtnActive &&
               "scale-150 transition-transform duration-150 ease-in"
-            }`}
+              }`}
           />
         </button>
       </div>
       <p className="text-gray-400 capitalize mt-1">{car.typeOfclass}</p>
 
-      <div className="relative w-full h-40 rounded-lg mt-1">
+      <div className="relative w-full h-48 rounded-lg mt-1">
         <Image
           // src={generateCarImageUrl(car)}
           src={car.imageFiles[1] || car.imageFiles[0]}
           alt="car"
           fill
-          className="object-cover w-full rounded-lg"
+          className="object-contain absolute w-full rounded-lg "
         />
       </div>
       <div className="w-full mt-2 p-2 h-fit">

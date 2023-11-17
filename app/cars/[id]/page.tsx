@@ -44,7 +44,7 @@ const CardDetails = ({ params }: { params: { id: string } }) => {
               fill
               className="object-cover absolute inset-0 rounded-lg  md:rounded-3xl w-full -z-10"
             />
-            <div className="absolute bg-gradient-to-tr from-green-500/20 to-transparent from inset-0 z-0 rounded-lg" />
+            <div className="absolute bg-gradient-to-tr from-green-500/20 to-transparent from inset-0 z-0 rounded-lg md:rounded-3xl" />
             <div className="absolute bottom-4 ">
               <span className="absolute top-0 text-sm font-bold">$</span>
               <span className="text-lg md:text-2xl font-bold text-center ml-2">
