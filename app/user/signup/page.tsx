@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const Signup = () => {
-    const {data:session} = useSession();
+    const { data: session } = useSession();
     const router = useRouter();
     const [providers, setProviders] = useState<any>(null);
     const [user, setUser] = useState({
-        username:'',
+        username: '',
         email: '',
         password: ''
     });
@@ -25,8 +25,8 @@ const Signup = () => {
         if (session?.user?.id) {
             router.push('/');
         }
-    }, [session?.user?.id]);
-    
+    }, [router, session?.user?.id]);
+
     const onSignup = async () => { }
     return (
         <section className='w-full min-h-screen p-2 flex flex-col items-center justify-center'>
@@ -34,7 +34,7 @@ const Signup = () => {
             <div className='bg-white/80 dark:bg-slate-800/60 dark:border-slate-700 rounded-lg p-2 py-3 md:px-6 md:py-4 w-full max-w-md  gap-3 flex flex-col shadow-sm  backdrop-blur-2xl'>
                 <h1 className='text-lg text-center'>Signup</h1>
                 <div className='border-b-[1px] dark:border-slate-700' />
-                <label htmlFor='username' className='text-sm'>Username</label>
+                {/* <label htmlFor='username' className='text-sm'>Username</label>
                 <input
                     className='pl-4 py-2.5 border bg-transparent rounded-md  outline-none dark:border-slate-700'
                     id='username'
@@ -73,7 +73,7 @@ const Signup = () => {
                     <div className='border-b-[1px] w-full dark:border-slate-700' />
                     <span>Or</span>
                     <div className='border-b-[1px] w-full dark:border-slate-700' />
-                </div>
+                </div> */}
                 <div className='flex flex-col items-center  gap-2'>
                     {
                         providers && Object.values(providers).map((provider: any) => <button

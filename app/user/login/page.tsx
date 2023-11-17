@@ -24,7 +24,7 @@ const Login = () => {
         if(session?.user?.id){
             router.push('/');
         } 
-    },[session?.user?.id]);
+    },[router, session?.user?.id]);
 
     const onLogin = async () => { }
     return (
@@ -33,7 +33,7 @@ const Login = () => {
             <div className='bg-white/80 dark:bg-slate-800/60 dark:border-slate-700 rounded-lg p-2 py-3 md:px-6 md:py-4 w-full max-w-md  gap-3 flex flex-col shadow-sm  backdrop-blur-2xl'>
                 <h1 className='text-lg text-center'>Login</h1>
                 <div className='border-b-[1px] dark:border-slate-700' />
-                <label htmlFor='email' className='text-sm'>Email</label>
+                {/* <label htmlFor='email' className='text-sm'>Email</label>
                 <input
                     className='pl-4 py-2.5 border bg-transparent rounded-md  outline-none dark:border-slate-700'
                     id='email'
@@ -41,8 +41,8 @@ const Login = () => {
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
                     placeholder='email'
-                />
-                <label htmlFor='password' className='text-sm'>Password</label>
+                /> */}
+                {/* <label htmlFor='password' className='text-sm'>Password</label>
                 <input
                     className='pl-4 py-2.5 border bg-transparent rounded-md  outline-none dark:border-slate-700'
                     id='password'
@@ -63,7 +63,7 @@ const Login = () => {
                     <div className='border-b-[1px] w-full dark:border-slate-700' />
                     <span>Or</span>
                     <div className='border-b-[1px] w-full dark:border-slate-700' />
-                </div>
+                </div> */}
                 <div className='flex flex-col items-center  gap-2'>
                     {
                         providers && Object.values(providers).map((provider: any) => <button
