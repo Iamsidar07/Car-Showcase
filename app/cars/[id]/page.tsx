@@ -28,65 +28,94 @@ const CardDetails = ({ params }: { params: { id: string } }) => {
   }, [id]);
 
   return (
-    <section className="relative max-w-[1440px] mx-auto overflow-hidden pt-16 md:pt-24 p-2">
-      {car && (
-        <div className="w-full relative h-full  dark:text-slate-300 border dark:border-zinc-600 flex flex-col md:flex-row items-center md:items-start justify-center gap-6 dark:bg-red-800! p-2.5 md:p-6 rounded-lg  md:rounded-3xl ">
-          <div className="gap-2 min-h-[350px] w-full ">
-            <h1 className="text-lg md:text-2xl font-semibold capitalize">
-              {car.carTitle}
-            </h1>
-            <p className="mt-1 text-xs md:text-sm  capitalize">
-              {car.manufacturer} | {car.model}
-            </p>
-            <Image
-              src={car.imageFiles[0]}
-              alt={car.carTitle}
-              fill
-              className="object-cover absolute inset-0 rounded-lg  md:rounded-3xl w-full -z-10"
-            />
-            <div className="absolute bg-gradient-to-tr from-green-500/20 to-transparent from inset-0 z-0 rounded-lg md:rounded-3xl" />
-            <div className="absolute bottom-4 ">
-              <span className="absolute top-0 text-sm font-bold">$</span>
-              <span className="text-lg md:text-2xl font-bold text-center ml-2">
-                {car.rentPrice?.toFixed(2)}
-              </span>
-              <span className="absolute bottom-0 text-sm font-bold">/day</span>
+    <section className="relative max-w-[1440px] mx-auto pt-16 md:pt-24 p-2">
+      {car ? (
+        <div>
+          <div className="flex flex-col md:flex-row gap-2 md:gap-6 w-full">
+            <div className="bg-gray-100 dark:bg-gray-900 md:w-1/2 rounded-2xl">
+              <Image
+                src={car.imageFiles[0]}
+                alt="car"
+                width={1024}
+                height={1024}
+                className="w-full h-full"
+              />
+            </div>
+            <div className="flex flex-col w-full max-w-sm p-4">
+              <h2 className="font-bold text-lg md:text-3xl">{car.carTitle}</h2>
+              <p className="text-gray-700 dark:text-gray-300">
+                {car.model}|{car.year}
+              </p>
+              <div className="space-y-2 md:space-y-4 mt-4 md:mt-6 w-full">
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-1/2">
+                    <h4 className="md:text-lg font-semibold capitalize">
+                      Engine
+                    </h4>
+                    <p className="font-normal">{car.model}</p>
+                  </div>
+                  <div className="w-1/2">
+                    <h4 className="md:text-lg font-semibold capitalize text-left">
+                      Fuel Type
+                    </h4>
+                    <p className="font-normal">{car.fuelType}</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-1/2">
+                    <h4 className="md:text-lg font-semibold capitalize">
+                      Fuel capacity
+                    </h4>
+                    <p className="font-normal">{car.fuelCapacity} ltrs</p>
+                  </div>
+                  <div className="w-1/2">
+                    <h4 className="md:text-lg font-semibold capitalize">
+                      transmission
+                    </h4>
+                    <p className="font-normal">{car.transmission}</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between w-full">
+                  <div className="w-1/2">
+                    <h4 className="md:text-lg font-semibold capitalize">
+                      City Mpg
+                    </h4>
+                    <p className="font-normal">{car.cityMPG} mpg</p>
+                  </div>
+                  <div className="w-1/2">
+                    <h4 className="md:text-lg font-semibold capitalize">
+                      Highway MPG
+                    </h4>
+                    <p className="font-normal">{car.highwayMPG} mpg</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="w-full gap-2 grid grid-cols-2 ">
-            <div className="p-2 md:p-6 rounded-lg md:rounded-3xl bg-[#fbe1cc] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  border dark:border-slate-600 gap-2 flex items-center flex-col justify-center w-full row-span-1.25">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#f2d6c2] dark:bg-slate-600 border dark:border-slate-500 text-2xl">
-                🚔
+          <div className="bg-gray-100 dark:bg-gray-900 p-4 md:p-6 mt-4 md:mt-6 rounded-2xl">
+            <h3 className="capitalize font-bold text-lg md:text-2xl">
+              About the {car.carTitle}
+            </h3>
+            <p className="mt-1.5 text-gray-800 dark:text-gray-400 text-normal md:text-lg">
+              {car.shortDescription}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-8">
+              <div className="gap-2 w-full ">
+                <h4 className="text-lg md:text-xl"> 👨 Creator</h4>
+                <p className="text-sm md:text-lg">{car.manufacturer}</p>
               </div>
-              <p>{car.manufacturer}</p>
-            </div>
-            <div className="p-2 md:p-6 rounded-lg md:rounded-3xl bg-[#f7fce7] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  border dark:border-slate-600 gap-2 flex items-center flex-col justify-center w-full">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#e3e7d7] dark:bg-slate-600 border dark:border-slate-500 text-2xl">
-                🧑🏽
+              <div className="gap-2 w-full ">
+                <h4 className="text-lg md:text-xl"> 📌 Location</h4>
+                <p className="text-sm md:text-lg">{car.location}</p>
               </div>
-              <p>{car.year} Model</p>
-            </div>
-            <div className="p-2 md:p-6 rounded-lg md:rounded-3xl bg-[#eeefb1] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  border dark:border-slate-600 gap-2 flex items-center flex-col justify-center w-full">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#dddeb4] dark:bg-slate-600 border dark:border-slate-500 text-2xl">
-                👯
+              <div className="gap-2 w-full">
+                <h4 className="text-lg md:text-xl"> 💸 Rental Price</h4>
+                <p className="text-sm md:text-lg">${car.rentPrice} per day</p>
               </div>
-              <p>{car.capacity} People</p>
-            </div>
-            <div className="p-2 md:p-6 rounded-lg md:rounded-3xl bg-[#edf4ff] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  border dark:border-slate-600 gap-2 flex items-center flex-col justify-center w-full ">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#d4dceae9] dark:bg-slate-600 border dark:border-slate-500 text-2xl">
-                😮‍💨
-              </div>
-              <p>{car.cylinders} Cylinders</p>
-            </div>
-            <div className="p-2 md:p-6 rounded-lg md:rounded-3xl bg-[#edf4ff] dark:bg-gradient-radial from-slate-700 to-slate-900 dark:text-slate-300  border dark:border-slate-600 gap-2 flex items-center flex-col w-full col-span-2 ">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#d4dceae9] dark:bg-slate-600 border dark:border-slate-500 text-2xl">
-                💁🏽‍♂️
-              </div>
-              <p>{car.shortDescription}</p>
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </section>
   );
 };
